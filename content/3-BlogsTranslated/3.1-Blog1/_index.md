@@ -1,126 +1,112 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-02
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Accessing Amazon S3 Privately from a VPC Using a VPC Endpoint
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+_This article is shared by the Otokoshi team based on our learning and hands-on practice with AWS._
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+When deploying demo environments on AWS, the simplest way for an EC2 instance to upload or download data from Amazon S3 is to place the EC2 instance in a public subnet, assign a public IP, route traffic through an Internet Gateway, and use the AWS CLI or SDK.
 
----
-
-## Architecture Guidance
-
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
-
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
-
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+However, for production systems (backends, internal services, data processing) running in a **private subnet**, routing data over the public internet is not an optimal solution in terms of security or cost. This article will guide you through designing an architecture to access Amazon S3 completely privately from within a VPC using a **Gateway VPC Endpoint**.
 
 ---
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## Context and Problem Statement
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+Suppose our system has an internal backend running on an EC2 instance within a private subnet, which is not directly exposed to the internet for security reasons. This backend needs to perform the following tasks:
 
----
+- Store system log files.
+- Export periodic reports.
+- Backup configurations and batch data to Amazon S3.
 
-## Technology Choices and Communication Scope
-
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Without an internet connection, the EC2 instance cannot connect to the default S3 endpoint. Instead of configuring the private subnet to route outbound traffic through a NAT Gateway (which incurs costly data processing fees), we can use a **Gateway VPC Endpoint for S3** to establish a private, more secure, and cost-effective internal route.
 
 ---
 
-## The Pub/Sub Hub
+## Overall Architecture and Workflow
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+The MVP (Minimum Viable Product) model consists of the following core components:
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+- **EC2 Instance**: Located in a private subnet (no public IP).
+- **Amazon S3 Bucket**: Stores the target data, with _Block Public Access_ enabled.
+- **Gateway VPC Endpoint**: A Gateway-type VPC endpoint dedicated to Amazon S3.
+- **Route Table**: The private subnet's route table configured to route S3-destined traffic through the endpoint.
+- **IAM & Policies**: Includes an IAM Role for the EC2 instance, an Endpoint Policy, and a Bucket Policy to regulate access control.
 
----
+### Data Processing Workflow:
 
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+1. The EC2 instance in the private subnet sends a request (read/write) to Amazon S3.
+2. The subnet's route table identifies that the traffic destination is S3 (via an AWS Prefix List) and routes the request through the **Gateway VPC Endpoint**.
+3. Amazon S3 receives the request and undergoes multi-layer authentication: verifying the EC2 instance's IAM Role, the Endpoint policy, and the Bucket policy.
+4. If all security layers are valid, the EC2 instance interacts with the bucket without needing an Internet Gateway or a NAT Gateway.
 
 ---
 
-## Front Door Microservice
+## Choosing a Solution: VPC Endpoint vs. NAT Gateway
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+A VPC Endpoint does not completely replace a NAT Gateway. Below is a comparison table clarifying the role of each technology in a network architecture:
 
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+| Criteria                  | Gateway VPC Endpoint (S3/DynamoDB)                                       | NAT Gateway                                                                       |
+| ------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| **Connection Scope**      | Only connects privately to supported AWS services (S3, DynamoDB).        | Connects to the entire internet (calling external APIs, updating packages, etc.). |
+| **Traffic Path**          | Stays entirely within the internal AWS backbone network.                 | Passes through the public internet.                                               |
+| **Cost**                  | **Free** hourly usage and data processing fees.                          | Charges per hour of operation plus data processing fees per GB.                   |
+| **Network Configuration** | Updates the Route Table with the Endpoint ID (`vpce-xxx`) as the target. | Updates the Route Table with the NAT Gateway ID (`nat-xxx`) as the target.        |
 
 ---
 
-## New Features in the Solution
+## Critical Security Layers to Note
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+> **Architectural Tip:** A VPC Endpoint only addresses network connectivity; it does not automatically grant data access. To keep the system robust and secure, you must tightly integrate a **Defense in Depth** mechanism across three policy layers:
+
+- **IAM Role (EC2)**: Defines what actions the EC2 instance itself is allowed to perform on S3 (e.g., `s3:GetObject`, `s3:PutObject`).
+- **Endpoint Policy**: Restricts which actions or buckets are allowed to transmit traffic through this specific endpoint.
+- **Bucket Policy**: Controls incoming requests to the bucket. To tighten security, you should configure the bucket policy to only accept requests coming from a specific VPC Endpoint using the `aws:sourceVpce` condition.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Allow-Access-From-Specific-VPCE-Only",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name",
+        "arn:aws:s3:::your-bucket-name/*"
+      ],
+      "Condition": {
+        "StringNotEquals": {
+          "aws:sourceVpce": "vpce-1a2b3c4d"
+        }
+      }
+    }
+  ]
+}
+```
+
+### Connection Troubleshooting & Debugging Tips:
+
+When an EC2 instance fails to connect or is denied access to S3, look beyond the application source code. Go through this checklist systematically:
+
+- [ ] **IAM Role**: Is the correct IAM Role attached to the EC2 instance with Least Privilege permissions?
+- [ ] **Route Table**: Does the private subnet have a route directing S3 traffic to `vpce-xxx`?
+- [ ] **DNS & Region**: Are the bucket name and region configured accurately in the code?
+- [ ] **Policies**: Is there an accidental `Deny` block in either the Bucket Policy or the Endpoint Policy?
+
+---
+
+## Key Takeaways
+
+Through this hands-on implementation of private Amazon S3 access, our team gathered three valuable lessons:
+
+1. **Private Subnets do not mean complete isolation**: When network paths are properly designed with a VPC Endpoint, resources inside a private subnet can seamlessly and securely communicate with required AWS services.
+2. **Integrated Security Mindset**: A VPC Endpoint is more than just a network configuration; it reduces the attack surface by completely eliminating the need for public internet connections when they aren't necessary.
+3. **Synergy of Multiple Services**: A well-architected cloud system is the intersection of Network knowledge (Route tables, Endpoints) and Security practices (IAM, Bucket Policies, Logging). Understanding exactly where a request travels and at which layer permissions are enforced is the key to running a secure, optimized, and operational system.
+   ![Illustration image](/images/3-BlogsTranslated/Blog1/blog1.jpg)

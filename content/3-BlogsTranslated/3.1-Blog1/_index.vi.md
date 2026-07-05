@@ -1,126 +1,111 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-02
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Truy cập Amazon S3 riêng tư từ VPC bằng VPC Endpoint
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+_Bài chia sẻ được thực hiện bởi nhóm Otokoshi trong quá trình học và thực hành AWS._
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Khi triển khai các mô hình demo trên AWS, cách tiếp cận đơn giản nhất để một EC2 Instance có thể upload/download dữ liệu từ Amazon S3 là đặt EC2 trong public subnet, gắn public IP, mở route ra Internet Gateway và sử dụng AWS CLI hoặc SDK.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Tuy nhiên, đối với các hệ thống production (backend, internal services, data processing) chạy trong **private subnet**, việc định tuyến dữ liệu qua public internet không phải là giải pháp tối ưu về mặt bảo mật và chi phí. Bài viết này sẽ hướng dẫn cách thiết kế mô hình truy cập Amazon S3 hoàn toàn riêng tư từ bên trong VPC sử dụng **Gateway VPC Endpoint**.
 
 ---
 
-## Hướng dẫn kiến trúc
+## Bối cảnh và Bài toán đặt ra
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+Giả sử hệ thống có một backend nội bộ chạy trên EC2 nằm trong private subnet, không được expose trực tiếp ra internet để đảm bảo an toàn. Backend này cần thực hiện các tác vụ:
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+- Lưu trữ file log hệ thống.
+- Xuất (export) báo cáo định kỳ.
+- Sao lưu (backup) cấu hình và dữ liệu batch lên Amazon S3.
 
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
-
----
-
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
-
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Nếu không có đường internet, EC2 không thể kết nối tới S3 endpoint mặc định. Thay vì cấu hình cho private subnet đi ra ngoài qua NAT Gateway (gây tốn chi phí băng thông), chúng ta có thể sử dụng **Gateway VPC Endpoint cho S3** để tạo một đường truyền nội bộ, an toàn và tối ưu hơn.
 
 ---
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Kiến trúc tổng quan và Luồng xử lý
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Mô hình MVP (Minimum Viable Product) bao gồm các thành phần cốt lõi sau:
 
----
+- **EC2 Instance**: Nằm trong private subnet (không có public IP).
+- **Amazon S3 Bucket**: Lưu trữ dữ liệu đích, kích hoạt tính năng _Block Public Access_.
+- **Gateway VPC Endpoint**: Điểm cuối VPC dạng Gateway dành cho Amazon S3.
+- **Route Table**: Bảng định tuyến của private subnet được cấu hình để điều hướng traffic đến S3 đi qua endpoint.
+- **IAM & Policies**: Gồm IAM Role cho EC2, Endpoint Policy và Bucket Policy để kiểm soát quyền truy cập.
 
-## The pub/sub hub
+### Luồng xử lý dữ liệu (Workflow):
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
-
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+1. EC2 Instance trong private subnet gửi request (đọc/ghi) đến Amazon S3.
+2. Route table của subnet nhận biết traffic có đích đến là S3 (thông qua Prefix List của AWS) và định tuyến request qua **Gateway VPC Endpoint**.
+3. Amazon S3 tiếp nhận request và tiến hành xác thực đa lớp: kiểm tra IAM Role của EC2, Endpoint policy và Bucket policy.
+4. Nếu tất cả các lớp bảo mật hợp lệ, EC2 có thể tương tác với bucket mà không cần đi qua Internet Gateway hoặc NAT Gateway.
 
 ---
 
-## Core microservice
+## Lựa chọn giải pháp: VPC Endpoint vs NAT Gateway
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+VPC Endpoint không thay thế hoàn toàn NAT Gateway. Dưới đây là bảng so sánh để làm rõ vai trò của từng công nghệ trong kiến trúc Network:
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+| Tiêu chí                 | Gateway VPC Endpoint (S3/DynamoDB)                                | NAT Gateway                                                       |
+| ------------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| **Phạm vi kết nối**      | Chỉ kết nối riêng tư tới dịch vụ AWS được hỗ trợ (S3, DynamoDB).  | Kết nối ra toàn bộ internet (gọi API ngoài, cập nhật package...). |
+| **Đường đi của traffic** | Hoàn toàn nằm trong mạng nội bộ của AWS (AWS backbone network).   | Đi qua môi trường internet public.                                |
+| **Chi phí**              | **Miễn phí** giờ chạy và chi phí xử lý dữ liệu (Data processing). | Tính phí theo giờ chạy và phí xử lý dữ liệu trên mỗi GB.          |
+| **Cấu hình Network**     | Cập nhật Route Table với target là Endpoint ID (`vpce-xxx`).      | Cập nhật Route Table với target là NAT Gateway ID (`nat-xxx`).    |
 
 ---
 
-## Staging ER7 microservice
+## Các điểm lưu ý quan trọng về Bảo mật (Security Layers)
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+> **Mẹo kiến trúc:** VPC Endpoint chỉ giải quyết bài toán về đường đi của Network (Network Connectivity), không tự động cấp quyền truy cập dữ liệu. Để hệ thống hoạt động ổn định và an toàn, cần kết hợp chặt chẽ cơ chế **Phòng thủ chiều sâu (Defense in Depth)** qua 3 lớp Policy:
+
+- **IAM Role (EC2)**: Xác định bản thân EC2 Instance được phép thực hiện những hành động nào trên S3 (Ví dụ: `s3:GetObject`, `s3:PutObject`).
+- **Endpoint Policy**: Giới hạn những hành động hoặc những bucket nào được phép truyền tải traffic đi qua endpoint này.
+- **Bucket Policy**: Kiểm soát các request đi vào bucket. Để thắt chặt bảo mật, nên cấu hình bucket policy chỉ chấp nhận request đến từ một VPC Endpoint cụ thể bằng điều kiện `aws:sourceVpce`.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Allow-Access-From-Specific-VPCE-Only",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name",
+        "arn:aws:s3:::your-bucket-name/*"
+      ],
+      "Condition": {
+        "StringNotEquals": {
+          "aws:sourceVpce": "vpce-1a2b3c4d"
+        }
+      }
+    }
+  ]
+}
+```
+
+### Kinh nghiệm Debug khi gặp lỗi kết nối:
+
+Khi EC2 không thể kết nối hoặc bị từ chối truy cập S3, không nên chỉ kiểm tra mã nguồn. Hãy rà soát tuần tự theo các checklist sau:
+
+- [ ] **IAM Role**: EC2 đã được gắn đúng IAM Role với quyền hạn tối thiểu (Least Privilege) chưa?
+- [ ] **Route Table**: Private subnet đã có route chỉ định traffic S3 qua `vpce-xxx` chưa?
+- [ ] **DNS & Region**: Tên bucket và region trong code đã chính xác chưa?
+- [ ] **Policies**: Có cấu hình `Deny` nhầm lẫn nào trong Bucket Policy hoặc Endpoint Policy không?
 
 ---
 
-## Tính năng mới trong giải pháp
+## Bài học rút ra
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Qua quá trình thực hành triển khai mô hình truy cập Amazon S3 riêng tư, nhóm rút ra 3 bài học kinh nghiệm quan trọng:
+
+1. **Private Subnet không cô lập hoàn toàn tài nguyên**: Nếu được thiết kế network đúng cách với VPC Endpoint, các tài nguyên bên trong private subnet vẫn dễ dàng giao tiếp với các dịch vụ AWS cần thiết một cách an toàn.
+2. **Tuy duy bảo mật tích hợp**: VPC Endpoint không đơn thuần là một cấu hình network, nó giúp thu hẹp bề mặt tấn công (attack surface) bằng cách loại bỏ hoàn toàn nhu cầu mở kết nối public internet khi không cần thiết.
+3. **Sự phối hợp của nhiều dịch vụ**: Một hệ thống Cloud chuẩn chỉnh là sự giao thoa kiến thức giữa Network (Route table, Endpoint) và Security (IAM, Bucket Policy, Logging). Hiểu rõ request đi qua đâu và quyền được kiểm soát ở lớp nào chính là chìa khóa để vận hành hệ thống an toàn, tối ưu.
+   ![Ảnh minh họa](/images/3-BlogsTranslated/Blog1/blog1.jpg)
