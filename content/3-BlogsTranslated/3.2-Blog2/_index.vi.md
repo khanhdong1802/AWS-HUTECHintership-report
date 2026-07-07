@@ -74,7 +74,7 @@ Không chỉ dừng lại ở việc phục vụ static content (nội dung tĩn
 * Tùy chỉnh Cache Behavior cho từng loại nội dung cụ thể.
 * Truy cập bằng domain do CloudFront cấp để kiểm tra kết quả.
 * Đánh giá tốc độ tải trang và kiểm tra xem nội dung đã được cache thành công hay chưa.
-   ![Ảnh minh họa](/aws-intership-report/images/3-BlogsTranslated/Blog2/blog2(0).jpg)
+   ![Ảnh minh họa](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog2/blog2(0).jpg)
 ---
 
 ## Kết luận

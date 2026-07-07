@@ -208,5 +208,5 @@ Joining this event about AI, CloudFront, and multi-agent systems was a valuable 
 #### Event Photos
 
 * Add your event photos here.
-![Event Participation Evidence Image](</AWS-HUTECHintership-report/images/4-EventParticipated/Event2/event2(0).jpg>)
+![Event Participation Evidence Image](</AWS-HUTECHintership-report/images/4-EventParticipated/4.2-Event2/event2(0).jpg>)
 > Overall, the event helped me expand my knowledge of AI, cloud infrastructure, and intelligent system design. It was especially useful for students and beginners who want to learn how AI and cloud technologies can be applied in real-world projects.

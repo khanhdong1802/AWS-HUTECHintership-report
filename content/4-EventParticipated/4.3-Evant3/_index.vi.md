@@ -352,6 +352,6 @@ Tham gia event này giúp tôi có cái nhìn thực tế hơn về AWS, cloud a
 
 #### Một số hình ảnh khi tham gia sự kiện
 
-![Ảnh minh chứng: tham gia event](</AWS-HUTECHintership-report/images/4-EventParticipated/Event3/event3(0).jpg>)
+![Ảnh minh chứng: tham gia event](</AWS-HUTECHintership-report/images/4-EventParticipated/4.3-Event3/event3(0).jpg>)
 
 > Tổng thể, event giúp tôi hiểu rõ hơn cách tiếp cận AWS theo hướng thực tế, an toàn và có lộ trình. Bên cạnh kiến thức cloud, tôi cũng học được thêm về hackathon, sự tự tin và tầm quan trọng của DevOps trong quá trình xây dựng sản phẩm công nghệ.

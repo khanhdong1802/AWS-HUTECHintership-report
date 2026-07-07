@@ -352,6 +352,6 @@ Participating in this event gave me a more practical view of AWS, cloud architec
 
 #### Some Images from the Event
 
-![Event Participation Evidence Photo](/AWS-HUTECHintership-report/images/4-EventParticipated/Event3/event3(0).jpg)
+![Event Participation Evidence Photo](/AWS-HUTECHintership-report/images/4-EventParticipated/4.3-Event3/event3(0).jpg)
 
 > Overall, the event helped me better understand how to approach AWS in a practical, safe, and structured way. In addition to cloud knowledge, I also learned more about hackathons, confidence, and the importance of DevOps in building technology products.

@@ -101,6 +101,6 @@ pre: " <b> 4.3. </b> "
 
 #### Một số hình ảnh khi tham gia sự kiện
 
-![Ảnh minh chứng: tham gia event](<//AWS-HUTECHintership-report/images/4-EventParticipated/Event4/event4(0).jpg>)
+![Ảnh minh chứng: tham gia event](<//AWS-HUTECHintership-report/images/4-EventParticipated/4.4-Event4/event4(0).jpg>)
 
 > Tóm lại, sự kiện đã mang đến một lăng kính công nghệ vô cùng sắc bén và toàn diện. Đây không chỉ là những kiến thức bổ trợ cho cuốn báo cáo thực tập, mà còn là kim chỉ nam giúp tôi định hình rõ ràng con đường trở thành một kỹ sư giải pháp đám mây tử tế và chuẩn mực quốc tế.
