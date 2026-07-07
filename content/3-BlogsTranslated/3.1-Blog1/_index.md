@@ -109,4 +109,4 @@ Through this hands-on implementation of private Amazon S3 access, our team gathe
 1. **Private Subnets do not mean complete isolation**: When network paths are properly designed with a VPC Endpoint, resources inside a private subnet can seamlessly and securely communicate with required AWS services.
 2. **Integrated Security Mindset**: A VPC Endpoint is more than just a network configuration; it reduces the attack surface by completely eliminating the need for public internet connections when they aren't necessary.
 3. **Synergy of Multiple Services**: A well-architected cloud system is the intersection of Network knowledge (Route tables, Endpoints) and Security practices (IAM, Bucket Policies, Logging). Understanding exactly where a request travels and at which layer permissions are enforced is the key to running a secure, optimized, and operational system.
-   ![Illustration image](/images/3-BlogsTranslated/Blog1/blog1.jpg)
+   ![Illustration image](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1.jpg)

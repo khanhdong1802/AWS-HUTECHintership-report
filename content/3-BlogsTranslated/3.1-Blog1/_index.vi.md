@@ -108,4 +108,4 @@ Qua quá trình thực hành triển khai mô hình truy cập Amazon S3 riêng 
 1. **Private Subnet không cô lập hoàn toàn tài nguyên**: Nếu được thiết kế network đúng cách với VPC Endpoint, các tài nguyên bên trong private subnet vẫn dễ dàng giao tiếp với các dịch vụ AWS cần thiết một cách an toàn.
 2. **Tuy duy bảo mật tích hợp**: VPC Endpoint không đơn thuần là một cấu hình network, nó giúp thu hẹp bề mặt tấn công (attack surface) bằng cách loại bỏ hoàn toàn nhu cầu mở kết nối public internet khi không cần thiết.
 3. **Sự phối hợp của nhiều dịch vụ**: Một hệ thống Cloud chuẩn chỉnh là sự giao thoa kiến thức giữa Network (Route table, Endpoint) và Security (IAM, Bucket Policy, Logging). Hiểu rõ request đi qua đâu và quyền được kiểm soát ở lớp nào chính là chìa khóa để vận hành hệ thống an toàn, tối ưu.
-   ![Ảnh minh họa](/images/3-BlogsTranslated/Blog1/blog1.jpg)
+   ![Ảnh minh họa](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1.jpg)

@@ -1,127 +1,84 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
-weight: 1
+date: 2026-07-06
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Amazon CloudFront – Tăng tốc phân phối nội dung từ Edge đến Origin
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Trong quá trình xây dựng website hoặc ứng dụng web, một vấn đề rất thường gặp là tốc độ tải trang không ổn định khi người dùng truy cập từ nhiều khu vực khác nhau. Nếu tất cả request đều đi trực tiếp về server gốc, hệ thống có thể bị tăng độ trễ, tốn tài nguyên xử lý và dễ bị quá tải khi lượng truy cập tăng cao.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Đây là lúc **Amazon CloudFront** trở nên hữu ích.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+**CloudFront** là dịch vụ CDN (Content Delivery Network) của AWS, giúp phân phối nội dung thông qua hệ thống edge location trên toàn cầu. Thay vì để người dùng luôn truy cập trực tiếp vào origin như Amazon S3, EC2, Application Load Balancer hoặc backend server, CloudFront sẽ đưa nội dung đến gần người dùng hơn, từ đó cải thiện tốc độ phản hồi và giảm tải đáng kể cho hệ thống gốc.
 
 ---
 
-## Hướng dẫn kiến trúc
+## Những điểm chính cần biết về CloudFront
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
-
----
-
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
-
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+* Giúp tăng tốc độ tải nội dung như hình ảnh, video, file tĩnh, website tĩnh hoặc API.
+* Nội dung có thể được lưu trữ (cache) tại edge location, giúp người dùng truy cập cực nhanh ở những lần request tiếp theo.
+* Giảm tải cho origin, vì không phải request nào cũng cần đi thẳng về server gốc.
+* Hỗ trợ giao thức HTTPS, giúp dữ liệu truyền tải giữa người dùng và CloudFront luôn được bảo mật.
+* Có thể kết hợp mượt mà với **AWS WAF** để tăng khả năng bảo vệ ứng dụng trước các request bất thường hoặc các đợt tấn công web phổ biến.
+* Hỗ trợ đa dạng các loại origin, ví dụ như Amazon S3, EC2, Load Balancer hoặc thậm chí là server nằm bên ngoài hạ tầng AWS.
+* Cho phép tùy chỉnh Cache Behavior linh hoạt, giúp bạn kiểm soát chính xác nội dung nào nên cache lâu, nội dung nào cần lấy mới thường xuyên.
 
 ---
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Kiến trúc và Mô hình hoạt động
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Hãy lấy ví dụ về một website thương mại điện tử có rất nhiều hình ảnh sản phẩm. Nếu người dùng ở nhiều khu vực khác nhau đều tải ảnh trực tiếp từ S3 hoặc backend server, thời gian phản hồi sẽ chậm đi và origin phải gồng gánh xử lý rất nhiều request.
 
----
+Khi đặt CloudFront ở phía trước, hình ảnh sản phẩm có thể được cache tại các edge location gần người dùng nhất. Ở những lần truy cập sau, CloudFront có thể trả nội dung ngay lập tức mà không cần rớt request về origin. Điều này giúp website tải nhanh hơn, giảm độ trễ và cải thiện mạnh mẽ trải nghiệm người dùng.
 
-## The pub/sub hub
+**Mô hình luồng dữ liệu cơ bản:**
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+> *User → CloudFront Edge Location → Origin*
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Trong mô hình này, **Origin** có thể là: Amazon S3 bucket, EC2 Instance, Application Load Balancer, Backend API, hoặc Server ngoài AWS.
+
+Khi người dùng gửi request, CloudFront sẽ kiểm tra xem nội dung đã có trong cache hay chưa:
+
+* **Nếu đã có (Cache Hit):** CloudFront trả nội dung trực tiếp từ edge location.
+* **Nếu chưa có (Cache Miss):** CloudFront sẽ lấy dữ liệu từ origin, trả về cho người dùng và lưu lại bản sao để phục vụ các request tiếp theo.
 
 ---
 
-## Core microservice
+## Các Use Case ứng dụng hiện đại
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Không chỉ dừng lại ở việc phục vụ static content (nội dung tĩnh), CloudFront còn tỏa sáng trong các kiến trúc hiện đại sau:
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+| Loại hệ thống / Kiến trúc | Vai trò ứng dụng tiêu biểu |
+| --- | --- |
+| **Website tĩnh** | Phân phối nhanh chóng các web được lưu trữ hoàn toàn trên Amazon S3. |
+| **Web App hiện đại** | Tối ưu hóa hệ thống có frontend deploy riêng và backend API riêng. |
+| **E-commerce** | Phân phối và cache số lượng lớn hình ảnh sản phẩm để giảm tải server. |
+| **Hệ thống Media** | Phân phối mượt mà các file, video hoặc tài liệu có dung lượng lớn. |
+| **API Services** | Giảm độ trễ mạng khi phục vụ dữ liệu API cho người dùng ở nhiều khu vực. |
+| **Bảo mật hệ thống** | Đóng vai trò làm lớp bảo vệ vững chắc phía trước origin khi kết hợp với AWS WAF. |
 
 ---
 
-## Staging ER7 microservice
+## Luồng thực hành cơ bản
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+Để bắt đầu làm quen và tự tay triển khai CloudFront, bạn có thể đi theo các bước cơ bản sau:
 
+* Tạo một Amazon S3 bucket hoặc chuẩn bị một backend server để làm origin.
+* Upload các nội dung tĩnh như file HTML, CSS, JavaScript hoặc hình ảnh lên origin.
+* Khởi tạo một CloudFront Distribution trên AWS Console.
+* Cấu hình origin trỏ về S3 bucket hoặc backend server vừa chuẩn bị.
+* Bật giao thức HTTPS nếu ứng dụng của bạn yêu cầu bảo mật.
+* Tùy chỉnh Cache Behavior cho từng loại nội dung cụ thể.
+* Truy cập bằng domain do CloudFront cấp để kiểm tra kết quả.
+* Đánh giá tốc độ tải trang và kiểm tra xem nội dung đã được cache thành công hay chưa.
+   ![Ảnh minh họa](/aws-intership-report/images/3-BlogsTranslated/Blog2/blog2(0).jpg)
 ---
 
-## Tính năng mới trong giải pháp
+## Kết luận
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+**Amazon CloudFront** là một thành phần không thể thiếu trong các kiến trúc cloud hiện đại, đặc biệt đối với những hệ thống cần phục vụ lượng người dùng phân tán trên nhiều vùng địa lý. Dịch vụ này không chỉ giúp tăng tốc độ tải nội dung, mà còn giúp bảo vệ origin khỏi tình trạng quá tải, cải thiện độ ổn định và tăng cường bảo mật toàn diện.
+
+Điểm hay nhất của CloudFront là bạn có thể bắt đầu từ những use case rất đơn giản như phân phối vài bức ảnh từ S3, sau đó dần dần mở rộng ra để phục vụ website tĩnh, API, video stream hoặc các hệ thống production phức tạp. Nếu ứng dụng của bạn cần nhanh hơn, ổn định hơn và tối ưu hơn, CloudFront chắc chắn là một mảnh ghép bạn nên áp dụng ngay!

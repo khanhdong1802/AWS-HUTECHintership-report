@@ -1,208 +1,357 @@
 ---
-title: "Event 2"
-date: 2026-05-23
-weight: 2
+title: "Event 3"
+date: 2026-05-30
+weight: 3
 chapter: false
-pre: " <b> 4.3. </b> "
+pre: " <b> 4.4. </b> "
 ---
 
 
 
-# Bài thu hoạch “AI, CloudFront and Multi-Agent System Event”
+# Bài thu hoạch “Level Up Your AWS Skills with Cloud Quest and Floci”
 
 ### Mục Đích Của Sự Kiện
 
-- Tìm hiểu cách AI hoạt động hiệu quả hơn khi được cung cấp đầy đủ ngữ cảnh.
-- Hiểu vai trò của context, memory và khái niệm Second AI Brain trong quá trình sử dụng AI.
-- Lắng nghe chia sẻ thực tế về quá trình xây dựng sản phẩm trong cuộc thi hackathon.
-- Tìm hiểu cách Amazon CloudFront hỗ trợ tối ưu hiệu năng, chi phí, bảo mật và độ tin cậy cho hệ thống.
-- Khám phá các công cụ AI assistant và workflow thông minh trong hệ sinh thái Amazon Quick.
-- Hiểu rõ hơn về tính không xác định của LLM ngay cả khi thiết lập deterministic.
-- Tìm hiểu mô hình multi-agent system trong bài toán credit scoring cho startup.
+- Tìm hiểu cách học AWS hiệu quả hơn thông qua hình thức thực hành, trò chơi hóa và các bài nhiệm vụ có hướng dẫn.
+- Hiểu những khó khăn phổ biến của người mới khi học AWS, đặc biệt là vấn đề chi phí, tài nguyên chưa xóa và nỗi lo phát sinh phí ngoài dự kiến.
+- Khám phá **AWS Cloud Quest** như một môi trường học tập nhập vai, giúp người học làm quen với kiến trúc cloud và các dịch vụ AWS thông qua nhiệm vụ thực tế.
+- Tìm hiểu **Floci**, một AWS service emulator mã nguồn mở, hỗ trợ kiểm thử kiến trúc và dịch vụ AWS ở môi trường local mà không cần tạo tài nguyên cloud thật ngay từ đầu.
+- Nhận diện sự khác nhau giữa việc học lý thuyết, thực hành trên môi trường giả lập và triển khai thực tế trên AWS.
+- Lắng nghe chia sẻ về hackathon, tinh thần làm sản phẩm trong thời gian ngắn và cách xây dựng MVP.
+- Hiểu thêm vai trò của sự tự tin trong học tập, sự nghiệp và quá trình phát triển bản thân.
+- Quan sát một ví dụ thực tế về migration từ tech stack hiện tại sang kiến trúc AWS, từ đó hiểu hơn về tư duy cloud architecture và DevOps.
 
 ---
 
-### Lịch Trình Sự Kiện
+### Lịch Trình Nội Dung
 
-| Thời gian | Nội dung |
+| Thứ tự | Nội dung |
 | --- | --- |
-| 8:30 - 9:00 AM | Settle into your seat |
-| 9:00 - 9:30 AM | Context Is Everything: Making AI Actually Work for You |
-| 9:30 - 10:00 AM | 36 hrs with LotusHacks – Building UTMorpho from Idea to Reality |
-| 10:00 - 10:40 AM | From Edge To Origin: CloudFront as Your Foundation |
-| 10:40 - 10:55 AM | Friendly AI Assistant with Amazon Quick |
-| 10:55 - 11:00 AM | Break |
-| 11:00 - 11:30 AM | Non-Determinism of "Deterministic" LLM Settings |
-| 11:30 - 12:00 PM | Enterprise-Grade Multi-Agent System: The Case of Startup Credit Scoring |
+| 1 | Level Up Your AWS Skills with Cloud Quest and Floci |
+| 2 | The Challenges of Learning AWS Hands-on |
+| 3 | AWS Cloud Quest |
+| 4 | Open Source Floci |
+| 5 | Combining Cloud Quest and Floci Effectively |
+| 6 | Hackathon: What it is, why students should join, and real experience |
+| 7 | Why We Always Need Confidence |
+| 8 | Current Stack vs AWS Infrastructure Migration |
+| 9 | The Hidden Iceberg of a Project: DevOps Before Disaster |
 
 ---
 
 ### Nội Dung Nổi Bật
 
-#### Context Is Everything: Making AI Actually Work for You
+#### Level Up Your AWS Skills with Cloud Quest and Floci
 
-Phiên chia sẻ đầu tiên tập trung vào vai trò của **context** trong việc sử dụng AI hiệu quả. Một trong những lý do khiến AI đưa ra kết quả chưa tốt là do người dùng cung cấp thiếu ngữ cảnh hoặc mô tả vấn đề chưa rõ ràng.
+Phiên chia sẻ chính có tiêu đề **“Level Up Your AWS Skills with Cloud Quest and Floci”**, do **Huỳnh Thái Linh** trình bày trong khuôn khổ First Cloud AI Journey. Nội dung tập trung vào cách sinh viên và người mới bắt đầu có thể học AWS theo hướng thực hành, dễ tiếp cận hơn và ít rủi ro hơn về chi phí.
 
-Các nội dung chính gồm:
+Các nội dung chính của phần này gồm:
 
-- Vì sao AI có thể thất bại khi thiếu context.
-- Context thật sự có nghĩa là gì trong quá trình làm việc với AI.
-- Sự phát triển từ prompt đơn giản đến memory và Second AI Brain.
-- Cách cung cấp context tốt hơn để nhận được kết quả chính xác hơn.
-- Tư duy thực tế khi sử dụng AI trong học tập, công việc và phát triển nghề nghiệp.
-- Gợi ý cho sinh viên bắt đầu xây dựng sản phẩm với AI.
+- Những khó khăn khi học AWS hands-on.
+- Giới thiệu AWS Cloud Quest.
+- Giới thiệu công cụ mã nguồn mở Floci.
+- Cách kết hợp Cloud Quest và Floci để học AWS hiệu quả hơn.
 
-#### 36 hrs with LotusHacks – Building UTMorpho from Idea to Reality
+#### Những Khó Khăn Khi Người Mới Học AWS
 
-Phiên này chia sẻ hành trình xây dựng sản phẩm **UTMorpho** trong vòng 36 giờ tại LotusHacks. Nội dung giúp người tham dự hiểu rõ quá trình biến một ý tưởng ban đầu thành sản phẩm thực tế dưới áp lực thời gian.
+Một vấn đề lớn khi học AWS là người học thường lo lắng về chi phí. Khi thực hành trực tiếp trên cloud thật, việc tạo tài nguyên sai cách, quên xóa tài nguyên hoặc chưa hiểu cơ chế tính phí có thể dẫn đến phát sinh chi phí ngoài dự kiến.
+
+Các nỗi lo được nhắc đến gồm:
+
+- Thường xuyên phải kiểm tra hóa đơn AWS.
+- Quên xóa tài nguyên sau khi thực hành.
+- Lo lắng về các khoản phí phát sinh thêm.
+- Chưa tự tin khi triển khai thử các kiến trúc cloud vì sợ cấu hình sai.
+
+Điểm đáng chú ý là khó khăn của người mới không chỉ nằm ở kiến thức kỹ thuật, mà còn nằm ở tâm lý sợ sai và sợ mất tiền. Vì vậy, một lộ trình học tốt cần vừa giúp người học hiểu kiến trúc, vừa tạo môi trường thực hành an toàn.
+
+#### AWS Cloud Quest
+
+**AWS Cloud Quest** được giới thiệu như một nền tảng học AWS theo hướng trò chơi hóa. Thay vì chỉ đọc tài liệu hoặc xem video, người học có thể hoàn thành các nhiệm vụ mô phỏng tình huống thực tế, từ đó rèn luyện kỹ năng cloud theo từng vai trò cụ thể.
 
 Các điểm nổi bật:
 
-- Lý do nhóm tham gia LotusHacks.
-- Quá trình brainstorming từ con số 0 đến khi hình thành ý tưởng.
-- Cách xác định vấn đề và định hình sản phẩm UTMorpho.
-- Trải nghiệm phát triển sản phẩm trong sprint 36 giờ.
-- Những khó khăn, thất bại và bước ngoặt trong quá trình xây dựng.
-- Tổng quan sản phẩm UTMorpho và phần demo.
-- Các bài học kinh nghiệm và định hướng phát triển tiếp theo.
+- Học AWS thông qua game và các nhiệm vụ thực hành.
+- Có hướng dẫn từng bước, phù hợp với người mới bắt đầu.
+- Giúp người học hiểu tư duy kiến trúc trước khi đi sâu vào code.
+- Có hệ thống badge cho các vai trò như Cloud Practitioner, Solutions Architect, Serverless Developer, Machine Learning và Security.
+- Tạo cảm giác học tập chủ động hơn vì người học phải giải quyết vấn đề thay vì chỉ tiếp nhận lý thuyết.
 
-#### From Edge To Origin: CloudFront as Your Foundation
+Qua phần này, tôi nhận ra rằng Cloud Quest phù hợp để xây nền tảng tư duy cloud. Người mới có thể hình dung cách các dịch vụ AWS phối hợp với nhau, trước khi phải đối mặt với những cấu hình phức tạp trong môi trường production thật.
 
-Phiên chia sẻ về **Amazon CloudFront** giúp người tham dự hiểu cách dịch vụ CDN này hỗ trợ nhiều loại workload khác nhau, từ tăng hiệu năng đến tối ưu bảo mật và chi phí.
+#### Open Source Floci
 
-Các nội dung chính:
+Phần tiếp theo giới thiệu **Floci**, một công cụ giả lập dịch vụ AWS ở môi trường local. Floci giúp người học và lập trình viên kiểm thử nhanh kiến trúc hoặc logic tích hợp AWS mà không cần triển khai ngay lên cloud thật.
 
-- Amazon CloudFront cho nhiều loại workload khác nhau.
-- Tối ưu chi phí với Amazon CloudFront.
-- Các khả năng bảo mật của CloudFront.
-- Tăng độ tin cậy cho hệ thống.
-- Cải thiện hiệu năng thông qua việc phân phối nội dung từ edge location.
-- Vai trò của CloudFront trong kiến trúc từ edge đến origin.
+Các giá trị chính của Floci:
 
-#### Friendly AI Assistant with Amazon Quick
+- Có thể giả lập một số dịch vụ AWS ở local.
+- Không phát sinh chi phí cloud trong giai đoạn thử nghiệm.
+- Hỗ trợ kiểm thử kiến trúc nhanh.
+- Phù hợp cho giai đoạn học, demo, prototype hoặc thử nghiệm ý tưởng.
+- Giúp giảm tâm lý sợ thao tác sai trên tài khoản AWS thật.
 
-Phiên này giới thiệu các công cụ AI assistant thân thiện, hỗ trợ người dùng khai thác dữ liệu, phân tích insight và xây dựng workflow thông minh bằng ngôn ngữ tự nhiên.
+Floci đặc biệt hữu ích trong bối cảnh người học muốn viết code, thử API, kiểm tra luồng xử lý hoặc mô phỏng một phần hệ thống cloud nhưng chưa muốn tạo tài nguyên thật trên AWS.
 
-Các nội dung chính:
+#### So Sánh Floci Và LocalStack
 
-- **Quick Chat Agent**: AI assistant hỗ trợ khám phá dữ liệu và phân tích insight.
-- **Quick Flows**: Tạo workflow thông minh bằng ngôn ngữ tự nhiên, không cần lập trình.
-- **Quick Spaces**: Không gian cộng tác giúp chuyển insight cá nhân thành tri thức chung của nhóm.
-- **Quick Sight**: Xây dựng dashboard và báo cáo từ dữ liệu thô bằng ngôn ngữ tự nhiên.
+Trong phần trình bày, Floci được đặt cạnh **LocalStack** để so sánh trên nhiều khía cạnh. Các tiêu chí được nhắc đến gồm:
 
-#### Non-Determinism of "Deterministic" LLM Settings
+- Tốc độ và hiệu năng.
+- Mức sử dụng bộ nhớ và lưu trữ.
+- Mức độ hỗ trợ dịch vụ và khả năng tương thích.
+- Chính sách license và chi phí sử dụng.
 
-Phiên này giúp người tham dự hiểu rằng ngay cả khi thiết lập LLM với các tham số tưởng chừng deterministic, kết quả vẫn có thể không hoàn toàn giống nhau trong mọi lần chạy.
+Theo nội dung slide, Floci được nhấn mạnh ở lợi thế nhẹ, nhanh và phù hợp cho việc kiểm thử nhanh. Tuy nhiên, điểm cần nhìn thẳng là một công cụ local emulator không thể thay thế hoàn toàn môi trường AWS thật. Nó chỉ nên được xem là một lớp hỗ trợ trong quá trình học và phát triển.
 
-Các nội dung chính:
+#### Giới Hạn Của Floci
 
-- Cách LLM lựa chọn token tiếp theo.
-- Giả định phổ biến: `Temperature = 0` sẽ đảm bảo kết quả deterministic.
-- Thực tế: các tối ưu hóa trong quá trình inference có thể làm kết quả thay đổi.
-- Tác động thực tế đến quá trình sử dụng LLM trong sản phẩm.
-- Các chiến lược giảm thiểu rủi ro khi triển khai LLM.
+Một phần quan trọng của bài chia sẻ là các giới hạn của Floci. Đây là điểm đáng chú ý vì người học dễ nhầm rằng một công cụ giả lập có thể thay thế hoàn toàn cloud thật.
 
-#### Enterprise-Grade Multi-Agent System: The Case of Startup Credit Scoring
+Các giới hạn được nêu gồm:
 
-Phiên cuối tập trung vào mô hình **multi-agent system** cấp doanh nghiệp trong bài toán đánh giá tín dụng cho startup. Nội dung cho thấy cách nhiều agent có thể phối hợp để xử lý những bài toán phức tạp, đặc biệt trong lĩnh vực tài chính.
+- Chỉ hỗ trợ một số dịch vụ AWS nhất định.
+- Một số dịch vụ có thể dùng kết quả giả lập hoặc mock result.
+- Không hoàn toàn giống với AWS thật.
+- Không thể thay thế hoàn toàn việc kiểm thử trên môi trường AWS thật.
 
-Các nội dung chính:
+Điều này cho thấy Floci phù hợp nhất ở giai đoạn học, viết code, kiểm thử nhanh và prototype. Khi hệ thống chuẩn bị đưa vào production, vẫn cần triển khai và kiểm thử trên AWS thật để đánh giá chính xác hiệu năng, bảo mật, chi phí và độ ổn định.
 
-- Sự không tương thích giữa hệ thống ngân hàng truyền thống và dữ liệu startup.
-- Khi nào nên sử dụng single agent và khi nào không nên.
-- Tư duy về multi-agent paradigm.
-- Blueprint của một Virtual Credit Committee.
-- Guardrails và yêu cầu compliance trong hệ thống.
-- ROI vận hành và lộ trình triển khai.
-- Định hướng tiếp theo và phần Q&A.
+#### Lộ Trình Học AWS Thực Tế
+
+Một điểm rất hữu ích trong sự kiện là lộ trình học thực tế gồm ba giai đoạn:
+
+| Giai đoạn | Nội dung | Công cụ phù hợp |
+| --- | --- | --- |
+| Phase 1 | Xây dựng tư duy kiến trúc và hiểu cách các dịch vụ AWS phối hợp | AWS Cloud Quest |
+| Phase 2 | Viết code, kiểm thử nhanh và thử nghiệm kiến trúc | Open-Source Floci |
+| Phase 3 | Triển khai thật và vận hành production | Real AWS |
+
+Lộ trình này hợp lý vì không đẩy người mới vào môi trường cloud thật quá sớm. Trước tiên, người học cần hiểu kiến trúc. Sau đó mới chuyển sang viết code và kiểm thử local. Cuối cùng mới triển khai thật trên AWS để tiếp xúc với các vấn đề thực tế như chi phí, bảo mật, logging, monitoring và vận hành.
+
+---
+
+### Hackathon Và Tư Duy Xây Dựng Sản Phẩm
+
+Một phần khác của sự kiện chia sẻ về **Hackathon** bởi nhóm **The Ballers**, gồm các thành viên Huỳnh An Khuong, Mai Quoc Anh và Nguyen Tran Minh Quan. Nội dung tập trung vào việc giải thích hackathon là gì, vì sao sinh viên nên tham gia và kinh nghiệm thực tế khi làm sản phẩm trong thời gian ngắn.
+
+#### Hackathon Là Gì?
+
+Hackathon được trình bày như một sự kiện có nhịp độ nhanh, nơi người tham gia phải xây dựng giải pháp trong thời gian giới hạn, thường khoảng 24 đến 48 giờ. Mục tiêu chính không phải là tạo ra một sản phẩm hoàn hảo, mà là hình thành một prototype hoặc MVP đủ rõ để chứng minh ý tưởng.
+
+Các đặc điểm chính:
+
+- Diễn ra trong thời gian ngắn.
+- Tập trung giải quyết vấn đề thực tế.
+- Ưu tiên prototype hoặc MVP.
+- Khuyến khích cộng tác, sáng tạo và lặp nhanh.
+- Tạo môi trường để sinh viên thử sức với áp lực gần giống dự án thật.
+
+#### Trải Nghiệm Trong Hackathon
+
+Nhóm chia sẻ nhiều trải nghiệm thực tế trong quá trình tham gia hackathon, đặc biệt là các hoạt động trong ngày đầu tiên:
+
+- Tham gia vì đồ ăn, như donuts và pizza, nhưng sau đó bị cuốn vào quá trình xây dựng sản phẩm.
+- Tham gia workshop và phần mở đầu sự kiện.
+- Brainstorming để tìm ý tưởng.
+- Gặp sự cố kỹ thuật với laptop.
+- Trải qua ngày đầu tiên gần như không ngủ.
+
+Điểm đáng học ở đây là hackathon không chỉ kiểm tra kỹ năng code. Nó còn kiểm tra khả năng làm việc nhóm, ra quyết định nhanh, xử lý sự cố, quản lý năng lượng và giữ tinh thần trong điều kiện áp lực cao.
+
+#### Bài Học Từ Hackathon
+
+Từ phần chia sẻ, tôi rút ra một số bài học:
+
+- Không nên chờ có ý tưởng hoàn hảo mới bắt đầu.
+- Cần xác định vấn đề thật rõ trước khi chọn công nghệ.
+- Trong thời gian ngắn, phải ưu tiên tính năng cốt lõi.
+- MVP nên chứng minh được giá trị chính, không cần đầy đủ mọi tính năng.
+- Làm việc nhóm và giao tiếp quan trọng không kém kỹ thuật.
+- Sự cố là một phần bình thường của quá trình làm sản phẩm.
+
+---
+
+### Why We Always Need Confidence
+
+Một phiên khác có tiêu đề **“Why We Always Need Confidence”**, do **Nguyễn Thị Quỳnh Như** trình bày. Nội dung xoay quanh vai trò của sự tự tin trong sự nghiệp, đời sống sinh viên và quá trình phát triển cá nhân.
+
+Các phần chính trong agenda gồm:
+
+- Let’s Talk Confidence.
+- The Cost of Self-Doubt in Student Life.
+- The Science Behind the Struggle.
+- The Power of Confidence - Why It’s Essential.
+- How to “Hack” Everyday Confidence.
+- Wrap-up.
+
+#### Ý Nghĩa Của Sự Tự Tin
+
+Sự tự tin không chỉ là cảm giác cá nhân, mà còn ảnh hưởng trực tiếp đến cách một sinh viên học tập, giao tiếp, tham gia hoạt động, phỏng vấn và nắm bắt cơ hội. Thiếu tự tin có thể khiến người học không dám đặt câu hỏi, không dám tham gia dự án, không dám thử vai trò mới hoặc tự đánh giá thấp năng lực của mình.
+
+Điểm tôi thấy quan trọng là sự tự tin không phải một phẩm chất có sẵn hoàn toàn. Nó có thể được rèn luyện thông qua trải nghiệm nhỏ, phản hồi tích cực, chuẩn bị kỹ và thói quen hành động đều đặn.
+
+#### Cách Rèn Luyện Sự Tự Tin Mỗi Ngày
+
+Từ nội dung bài chia sẻ, có thể rút ra một số hướng áp dụng:
+
+- Bắt đầu từ những mục tiêu nhỏ và hoàn thành đều đặn.
+- Chuẩn bị kỹ trước khi thuyết trình, phỏng vấn hoặc làm việc nhóm.
+- Chủ động đặt câu hỏi thay vì giữ im lặng vì sợ sai.
+- Xem thất bại là dữ liệu phản hồi, không phải bằng chứng cho việc bản thân kém.
+- Tham gia các môi trường như workshop, hackathon, câu lạc bộ hoặc dự án nhỏ để tăng trải nghiệm thực tế.
+
+---
+
+### Current Stack Vs AWS Infrastructure Migration
+
+Một nội dung kỹ thuật đáng chú ý trong sự kiện là phần so sánh giữa **current stack** và hướng migration sang kiến trúc AWS. Phần này giúp tôi hình dung rõ hơn cách một hệ thống web hiện tại có thể được chuyển đổi dần sang hạ tầng cloud.
+
+#### Stack Hiện Tại
+
+| Layer | Technology |
+| --- | --- |
+| Backend/Frontend | Next.js + TypeScript + React |
+| Database | MySQL + Prisma ORM |
+| Data fetching | SWR |
+| Payment gateway | PayOS |
+| Email delivery | Resend |
+| PDF generation | jsPDF + html2canvas |
+| AI / LLM | OpenAI GPT-4.5 |
+| Analytics | GA4 + Meta Pixel |
+| CI/CD | GitHub Actions |
+| Background jobs | Cron jobs |
+| Hosting | VPS với Nginx + PM2 |
+| Caching | Redis |
+
+#### Hướng Kiến Trúc AWS Mục Tiêu
+
+| Layer | Technology |
+| --- | --- |
+| Backend/Frontend | ECS hoặc Amplify tùy thành phần triển khai |
+| Database | Amazon RDS |
+| Data fetching | SWR |
+| Payment gateway | PayOS |
+| Email delivery | Resend |
+| PDF generation | jsPDF + html2canvas |
+| AI / LLM | Amazon Bedrock |
+| Analytics | GA4 + Meta Pixel |
+| CI/CD | GitHub Actions |
+| Background jobs | CloudWatch / Lambda |
+| Hosting | Amplify Hosting |
+| Caching | ElastiCache |
+
+Phần này cho thấy migration lên AWS không có nghĩa là thay toàn bộ công nghệ cùng lúc. Một số thành phần có thể giữ nguyên như PayOS, Resend, SWR, GA4 hoặc GitHub Actions. Những phần nên chuyển sang dịch vụ AWS là các phần liên quan đến hạ tầng, vận hành, database, background job, caching và AI service.
+
+#### Sơ Đồ Kiến Trúc AWS
+
+Sơ đồ kiến trúc trình bày một hệ thống web sử dụng các thành phần AWS như:
+
+- **CloudFront** để phân phối nội dung và làm lớp truy cập phía trước.
+- **AWS Amplify** cho web application.
+- **Amazon Cognito** cho xác thực người dùng.
+- **Amazon RDS** cho database.
+- **Amazon S3** để lưu static assets và report PDF.
+- **AWS Lambda** cho tác vụ generate report.
+- **Amazon Bedrock** cho phần AI và report generation.
+- **CloudWatch** cho logging và metrics.
+- Các dịch vụ bên ngoài như PayOS hoặc Resend vẫn có thể được tích hợp trong kiến trúc.
+
+Điểm quan trọng là kiến trúc cloud cần được thiết kế theo luồng dữ liệu rõ ràng: người dùng truy cập web, hệ thống xác thực, xử lý dữ liệu, lưu trữ kết quả, sinh báo cáo, gửi link qua email và theo dõi hệ thống bằng logging/monitoring.
+
+---
+
+### The Hidden Iceberg Of A Project: DevOps Before Disaster
+
+Phiên cuối trong ảnh có tiêu đề **“The Hidden Iceberg of a Project: DevOps Before Disaster”**, do **Trần Minh Quân** trình bày. Dù ảnh chỉ thể hiện slide tiêu đề, nội dung này gợi ra một bài học quan trọng: phần khó của dự án thường không nằm ở giao diện hay tính năng nhìn thấy được, mà nằm ở lớp vận hành phía sau.
+
+#### Ý Nghĩa Của “Hidden Iceberg”
+
+Trong một dự án phần mềm, người dùng thường chỉ nhìn thấy giao diện, tính năng và kết quả cuối cùng. Tuy nhiên, phía sau đó là nhiều yếu tố kỹ thuật ít được chú ý nhưng rất quan trọng:
+
+- Quy trình deploy.
+- CI/CD.
+- Logging và monitoring.
+- Backup và recovery.
+- Quản lý môi trường dev, staging, production.
+- Bảo mật thông tin và phân quyền.
+- Kiểm soát chi phí cloud.
+- Khả năng mở rộng khi traffic tăng.
+- Cách xử lý sự cố khi hệ thống gặp lỗi.
+
+Nếu bỏ qua DevOps ngay từ đầu, dự án có thể chạy được ở bản demo nhưng dễ gặp vấn đề khi đưa vào sử dụng thật. Vì vậy, DevOps cần được xem là một phần của thiết kế hệ thống, không phải việc làm sau cùng.
 
 ---
 
 ### Những Gì Học Được
 
-#### Tư Duy Sử Dụng AI
+#### Kiến Thức Về AWS Và Cloud Learning
 
-- AI không chỉ phụ thuộc vào prompt, mà còn phụ thuộc rất nhiều vào context.
-- Context càng rõ ràng thì kết quả AI trả về càng phù hợp với nhu cầu thực tế.
-- Memory và Second AI Brain là hướng phát triển quan trọng giúp AI hiểu người dùng tốt hơn.
-- Khi sử dụng AI, cần cung cấp mục tiêu, dữ liệu nền, ràng buộc và ví dụ cụ thể.
+- Người mới học AWS thường gặp rào cản không chỉ vì kiến thức khó, mà còn vì sợ phát sinh chi phí khi thực hành.
+- AWS Cloud Quest là công cụ phù hợp để xây nền tảng tư duy kiến trúc cloud thông qua trò chơi và nhiệm vụ thực hành.
+- Floci giúp kiểm thử nhanh ở local, giảm rủi ro chi phí và phù hợp cho giai đoạn học hoặc prototype.
+- Môi trường giả lập không thể thay thế hoàn toàn môi trường AWS thật.
+- Lộ trình học hợp lý nên đi từ hiểu kiến trúc, đến kiểm thử local, rồi mới triển khai thật.
 
-#### Tư Duy Xây Dựng Sản Phẩm
+#### Kiến Thức Về Hackathon Và Sản Phẩm
 
-- Một sản phẩm tốt thường bắt đầu từ việc xác định đúng vấn đề.
-- Hackathon giúp rèn luyện khả năng brainstorming, ra quyết định nhanh và xây dựng MVP.
-- Khi làm việc dưới áp lực thời gian, nhóm cần ưu tiên tính năng cốt lõi thay vì cố gắng làm quá nhiều.
-- Demo sản phẩm là phần quan trọng để truyền tải giá trị của ý tưởng.
+- Hackathon giúp sinh viên học cách làm sản phẩm trong điều kiện áp lực thời gian.
+- MVP quan trọng hơn việc cố xây một sản phẩm quá đầy đủ.
+- Brainstorming, phân chia nhiệm vụ và giao tiếp nhóm là yếu tố quyết định.
+- Sự cố kỹ thuật là điều khó tránh, nhưng cũng là cơ hội để rèn khả năng xử lý vấn đề.
+- Tham gia hackathon giúp tăng kinh nghiệm thực tế, portfolio và sự tự tin.
 
-#### Kiến Thức Về CloudFront
+#### Kiến Thức Về Confidence
 
-- CloudFront giúp phân phối nội dung nhanh hơn thông qua edge locations.
-- CloudFront không chỉ phục vụ static content mà còn có thể hỗ trợ nhiều workload khác nhau.
-- Dịch vụ này giúp cải thiện hiệu năng, bảo mật, độ tin cậy và tối ưu chi phí.
-- CloudFront là một thành phần quan trọng trong kiến trúc cloud hiện đại.
+- Sự tự tin ảnh hưởng trực tiếp đến khả năng học tập, giao tiếp và nắm bắt cơ hội.
+- Tự nghi ngờ quá mức có thể làm sinh viên bỏ lỡ nhiều cơ hội phát triển.
+- Sự tự tin có thể được rèn luyện thông qua hành động nhỏ, chuẩn bị kỹ và trải nghiệm thực tế.
+- Môi trường cộng đồng, workshop và hackathon là nơi tốt để luyện tập sự tự tin.
 
-#### Kiến Thức Về AI Assistant Và Workflow
+#### Kiến Thức Về AWS Migration Và DevOps
 
-- AI assistant có thể giúp người dùng phân tích dữ liệu nhanh hơn.
-- Workflow thông minh có thể được tạo bằng ngôn ngữ tự nhiên, giúp giảm rào cản kỹ thuật.
-- Shared spaces giúp tăng khả năng cộng tác và chia sẻ tri thức trong nhóm.
-- Natural language interface đang trở thành xu hướng trong việc xây dựng dashboard và báo cáo.
-
-#### Kiến Thức Về LLM
-
-- `Temperature = 0` không luôn đảm bảo kết quả hoàn toàn giống nhau.
-- LLM có thể bị ảnh hưởng bởi cách hệ thống inference được tối ưu hóa.
-- Khi triển khai LLM trong sản phẩm thực tế, cần có cơ chế kiểm thử, logging và guardrails.
-- Cần hiểu rõ giới hạn của LLM để tránh phụ thuộc tuyệt đối vào kết quả mô hình.
-
-#### Kiến Thức Về Multi-Agent System
-
-- Multi-agent system phù hợp với các bài toán phức tạp cần nhiều vai trò xử lý khác nhau.
-- Trong credit scoring, mỗi agent có thể đảm nhiệm một nhiệm vụ riêng như phân tích dữ liệu, đánh giá rủi ro, kiểm tra compliance.
-- Mô hình Virtual Credit Committee giúp mô phỏng quy trình ra quyết định của hội đồng tín dụng.
-- Guardrails là yếu tố bắt buộc khi triển khai AI trong môi trường doanh nghiệp và tài chính.
+- Migration lên AWS nên được thực hiện có chiến lược, không nhất thiết thay toàn bộ công nghệ cùng lúc.
+- Các dịch vụ như RDS, S3, Lambda, CloudFront, Cognito, Bedrock, CloudWatch và ElastiCache có thể thay thế hoặc nâng cấp nhiều phần trong kiến trúc truyền thống.
+- DevOps là phần nền tảng giúp dự án ổn định khi triển khai thật.
+- Một hệ thống cloud tốt cần có logging, monitoring, CI/CD, bảo mật, backup và kiểm soát chi phí.
+- Nếu chỉ tập trung vào code mà bỏ qua vận hành, dự án có thể gặp “disaster” khi đi vào thực tế.
 
 ---
 
 ### Ứng Dụng Vào Học Tập Và Công Việc
 
-- Khi sử dụng AI để học tập, cần cung cấp context rõ ràng như mục tiêu học, trình độ hiện tại, yêu cầu đầu ra và ví dụ mong muốn.
-- Có thể áp dụng tư duy Second AI Brain để lưu trữ kiến thức, ghi chú và tài liệu học tập cá nhân.
-- Khi xây dựng project, nên bắt đầu từ problem statement trước khi chọn công nghệ.
-- Có thể sử dụng CloudFront cho các project web để tăng tốc độ tải trang và cải thiện trải nghiệm người dùng.
-- Có thể thử nghiệm AI assistant để phân tích dữ liệu, tạo báo cáo hoặc hỗ trợ quy trình làm việc.
-- Khi dùng LLM trong project, cần kiểm tra tính ổn định của kết quả và không nên giả định mô hình luôn deterministic.
-- Với các bài toán phức tạp, có thể nghiên cứu mô hình multi-agent để chia nhỏ nhiệm vụ và tăng khả năng kiểm soát.
+- Khi học AWS, tôi có thể bắt đầu bằng AWS Cloud Quest để hiểu dịch vụ và kiến trúc trước khi triển khai thật.
+- Khi làm project cá nhân, tôi có thể dùng Floci hoặc công cụ giả lập tương tự để kiểm thử logic tích hợp AWS ở local, tránh phát sinh chi phí không cần thiết.
+- Khi cần triển khai thật, tôi cần kiểm tra kỹ tài nguyên, thiết lập budget alert và xóa tài nguyên sau khi thực hành.
+- Khi tham gia hackathon hoặc làm đồ án, tôi nên tập trung vào vấn đề chính và xây MVP trước.
+- Khi thiết kế hệ thống, tôi cần nghĩ sớm đến các yếu tố DevOps như deploy, logging, monitoring, backup và chi phí.
+- Khi migration hệ thống lên AWS, tôi nên phân tách từng lớp như frontend, backend, database, cache, background job và AI service để lựa chọn dịch vụ phù hợp.
+- Tôi cũng cần rèn luyện sự tự tin thông qua việc đặt câu hỏi, thuyết trình, tham gia workshop và chủ động nhận nhiệm vụ trong dự án nhóm.
 
 ---
 
 ### Trải Nghiệm Trong Event
 
-Tham gia event về AI, CloudFront và multi-agent system là một trải nghiệm rất hữu ích, giúp tôi có thêm góc nhìn thực tế về cách AI và cloud đang được ứng dụng trong nhiều lĩnh vực khác nhau. Các phiên chia sẻ không chỉ tập trung vào lý thuyết mà còn đưa ra nhiều case study, ví dụ thực tế và kinh nghiệm triển khai.
+Tham gia event này giúp tôi có cái nhìn thực tế hơn về AWS, cloud architecture, hackathon và kỹ năng phát triển bản thân. Điểm tôi thấy hữu ích nhất là các nội dung không chỉ dừng ở lý thuyết, mà đều liên hệ với vấn đề thật của sinh viên và người mới học công nghệ.
 
-#### Học hỏi từ các chủ đề thực tế
+#### Học Hỏi Từ Các Chủ Đề Thực Tế
 
-- Phần chia sẻ về context giúp tôi hiểu rằng muốn AI hoạt động hiệu quả thì cần biết cách cung cấp thông tin đầu vào đầy đủ.
-- Phần LotusHacks cho thấy quá trình xây dựng sản phẩm không nhất thiết bắt đầu từ một ý tưởng hoàn hảo, mà có thể được hình thành qua brainstorming và thử nghiệm nhanh.
-- Phần CloudFront giúp tôi hiểu rõ hơn vai trò của CDN trong kiến trúc cloud hiện đại.
-- Phần LLM non-determinism giúp tôi nhận ra rằng AI vẫn có những giới hạn kỹ thuật cần được kiểm soát khi đưa vào sản phẩm thực tế.
+- Phần Cloud Quest và Floci giúp tôi hiểu rằng học cloud nên có lộ trình rõ ràng, không nên nhảy ngay vào môi trường production khi chưa hiểu kiến trúc.
+- Phần hackathon giúp tôi nhận ra rằng làm sản phẩm là quá trình vừa kỹ thuật, vừa quản lý thời gian, vừa làm việc nhóm.
+- Phần confidence nhắc tôi rằng kỹ năng mềm cũng ảnh hưởng lớn đến sự phát triển nghề nghiệp.
+- Phần AWS migration cho thấy cách một hệ thống web có thể được nâng cấp từ VPS truyền thống sang các dịch vụ cloud có khả năng mở rộng hơn.
+- Phần DevOps giúp tôi thấy rằng một dự án tốt không chỉ là chạy được, mà còn phải vận hành được, theo dõi được và xử lý sự cố được.
 
-#### Trải nghiệm về tư duy sản phẩm và kỹ thuật
+#### Bài Học Rút Ra
 
-- Tôi học được cách kết hợp giữa tư duy sản phẩm, tư duy kỹ thuật và tư duy triển khai thực tế.
-- Các nội dung về CloudFront và multi-agent system giúp tôi hiểu hơn về kiến trúc hệ thống có khả năng mở rộng.
-- Các ví dụ về AI assistant cho thấy cách AI có thể hỗ trợ người dùng không chuyên kỹ thuật làm việc với dữ liệu hiệu quả hơn.
-
-#### Bài học rút ra
-
-- Context là yếu tố rất quan trọng khi sử dụng AI.
-- Cloud không chỉ là nơi deploy ứng dụng, mà còn cung cấp nhiều dịch vụ giúp tối ưu hiệu năng, bảo mật và chi phí.
-- Khi xây dựng sản phẩm AI, cần quan tâm đến tính ổn định, khả năng kiểm soát và các giới hạn của mô hình.
-- Multi-agent system là một hướng tiếp cận tiềm năng cho các bài toán doanh nghiệp phức tạp.
-- Sinh viên có thể bắt đầu với các project nhỏ, hackathon hoặc demo sản phẩm để học cách áp dụng AI và cloud vào thực tế.
+- Học AWS cần kết hợp giữa tư duy kiến trúc, thực hành local và triển khai thật.
+- Không nên xem công cụ giả lập là bản thay thế hoàn toàn cho cloud thật.
+- Hackathon là môi trường tốt để rèn tư duy sản phẩm, kỹ năng làm việc nhóm và khả năng xử lý áp lực.
+- Sự tự tin có thể được cải thiện bằng hành động nhỏ và trải nghiệm lặp lại.
+- DevOps nên được chuẩn bị từ sớm để tránh rủi ro khi dự án phát triển lớn hơn.
 
 #### Một số hình ảnh khi tham gia sự kiện
 
-* Thêm các hình ảnh của các bạn tại đây
+![Ảnh minh chứng: tham gia event](</AWS-HUTECHintership-report/images/4-EventParticipated/Event3/event3(0).jpg>)
 
-> Tổng thể, sự kiện giúp tôi mở rộng kiến thức về AI, cloud infrastructure và cách xây dựng hệ thống thông minh trong thực tế. Đây là một buổi event có giá trị, đặc biệt với sinh viên hoặc người mới bắt đầu tìm hiểu về AI, cloud và kiến trúc hệ thống hiện đại.
+> Tổng thể, event giúp tôi hiểu rõ hơn cách tiếp cận AWS theo hướng thực tế, an toàn và có lộ trình. Bên cạnh kiến thức cloud, tôi cũng học được thêm về hackathon, sự tự tin và tầm quan trọng của DevOps trong quá trình xây dựng sản phẩm công nghệ.
