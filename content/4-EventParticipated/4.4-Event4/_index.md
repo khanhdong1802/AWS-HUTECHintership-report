@@ -1,9 +1,9 @@
 ---
-title: "Event 3"
+title: "Event 4"
 date: 2026-06-13
-weight: 3
+weight: 4
 chapter: false
-pre: " <b> 4.3. </b> "
+pre: " <b> 4.4. </b> "
 ---
 
 # "FCAJ Community Day - June 2026 Edition" Workshop Report
