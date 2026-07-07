@@ -1,216 +1,121 @@
 ---
-title: "Worklog Tuần 2: AWS Networking - VPC & Secure Connectivity"
-date: 2026-05-06
-description: "Hành trình xây dựng VPC từ con số 0, từ subnet cơ bản đến các giải pháp truy cập Zero Trust như EIC Endpoint và SSM Session Manager."
-tags: ["AWS", "VPC", "EC2", "Networking", "Security", "First Cloud Journey"]
+title: "Worklog Tuần 2"
+date: 2026-04-27
+weight: 2
+chapter: false
+pre: " <b> 1.2. </b> "
 ---
 
-## Tổng quan tuần này
+### Mục tiêu tuần 2:
 
-Tuần 2 của First Cloud Journey đưa mình bước vào một trong những chủ đề "khó nhằn" nhất nhưng cũng quan trọng nhất của AWS: **Networking**. Sau tuần đầu làm quen với những thứ "thấy được" như EC2 và S3, lần này mình phải làm việc với những khái niệm trừu tượng hơn — VPC, Subnet, Route Table, Gateway — những thứ vận hành âm thầm phía sau nhưng quyết định toàn bộ tính bảo mật và kết nối của hệ thống.
-
-Workshop chính tuần này là [Bắt đầu với Amazon VPC và AWS VPN Site-to-Site](https://000003.awsstudygroup.com/vi/), và mình đã hoàn thành phần lớn các module liên quan đến VPC nội bộ. Phần VPN Site-to-Site sẽ để dành cho cuối tuần.
-
----
-
-## 1. Bối cảnh và mục tiêu
-
-Hình dung VPC như một "khu chung cư riêng" của bạn trong thành phố AWS — bạn có rào, có cổng, có sơ đồ đường nội bộ, và bạn quyết định ai được vào, đi đâu, ra ngoài bằng đường nào. Mục tiêu tuần này là tự tay xây dựng "khu chung cư" đó, rồi thử nghiệm 3 cách khác nhau để đi vào "căn hộ Private" bên trong:
-
-1. Cách truyền thống: SSH qua "căn hộ Public" làm trạm trung chuyển (Bastion pattern)
-2. Cách hiện đại: dùng EIC Endpoint — kết nối thẳng qua hạ tầng AWS không cần qua public internet
-3. Cách Zero Trust: SSM Session Manager — truy cập terminal qua trình duyệt, không cần SSH key, không cần mở port nào cả
-
-**Môi trường làm việc:**
-- Region: `us-east-1` (N. Virginia)
-- VPC: `vpc-0e3935c27e676dc1a` (CIDR `10.10.0.0/16`)
-- 4 Subnets phân bổ trên 2 AZ (1a, 1b) — Public và Private mỗi AZ một cái
-- EC2 Public: `10.10.1.131` (Amazon Linux 2023, t3.micro)
-- EC2 Private: `10.10.3.142` (Amazon Linux 2023, t3.micro)
-- Key pair: `aws-keypair-v2`
+- Tìm hiểu tổng quan về Amazon VPC và các thành phần cốt lõi trong hạ tầng mạng AWS (Subnet, Route Table, Internet Gateway, NAT Gateway).
+- Thiết lập hệ thống mạng VPC phân bổ trên 2 Availability Zones (AZs) đáp ứng tiêu chuẩn Public và Private Subnets.
+- Thực hành và so sánh 3 phương thức xác thực và kết nối an toàn vào EC2 Instance Private: SSH qua Bastion Host, EC2 Instance Connect (EIC) Endpoint, và AWS Systems Manager (SSM) Session Manager.
+- Làm quen với công cụ VPC Reachability Analyzer để kiểm tra và debug logic đường đi của network traffic.
+- Nâng cao tư duy quản trị chi phí (Cost Optimization) thông qua việc quản lý và dọn dẹp các tài nguyên mạng có phát sinh phí sau khi hoàn thành lab.
 
 ---
 
-## 2. Dựng "bộ xương" hạ tầng VPC
+### Các công việc cần triển khai trong tuần này:
 
-Phần đầu tiên là dựng những thành phần cơ bản — và đây cũng là phần dễ "đi sai một li, đi một dặm" nhất nếu không hiểu rõ vai trò của từng thứ.
-
-### Internet Gateway và NAT Gateway — hai cánh cổng khác nhau
-
-Một trong những "aha moment" của mình tuần này là khi hiểu được tại sao AWS lại cần đến **hai loại gateway** khác nhau:
-
-- **Internet Gateway (IGW)**: Cánh cổng hai chiều cho Public Subnet. Cho phép EC2 Public ra Internet và Internet vào EC2 Public.
-- **NAT Gateway**: Cánh cổng một chiều cho Private Subnet. Cho phép EC2 Private *ra* Internet (để `yum update`, pull Docker image, gọi API), nhưng *chặn hoàn toàn* chiều từ Internet vào.
-
-Mình đã triển khai NAT Gateway (`nat-0b5c655f80ecc910`) tại Public Subnet 1 với một Elastic IP riêng. Có một chi tiết AWS Console mới mà workshop chưa cập nhật: lúc tạo NAT GW giờ có lựa chọn **Availability mode (Regional vs Zonal)** — cái mới ra năm 2025. Mình chọn **Zonal** vì khớp với nội dung workshop và giúp hiểu rõ hơn về khái niệm "NAT GW gắn với 1 AZ duy nhất" — production thật sẽ cần 2 NAT GW (một cho mỗi AZ) để đạt HA.
-
-> 💡 **Ghi nhớ về chi phí:** NAT Gateway là một trong những "kẻ ngốn tiền" thầm lặng của AWS — $0.045/giờ (khoảng $32/tháng) tính 24/7 ngay cả khi không có traffic, cộng thêm $0.045/GB data đi qua. Đây là lý do nhiều startup chọn dùng NAT Instance (EC2 tự cấu hình) thay vì NAT Gateway managed cho môi trường dev.
-
-### Route Tables — "biển chỉ đường" của VPC
-
-Nếu Subnet là khu phố thì Route Table là biển chỉ đường — nó quyết định khi có một packet đi vào subnet, packet đó sẽ được đẩy đi đâu tiếp theo.
-
-Cấu hình của mình:
-
-| Route Table | Đích `0.0.0.0/0` | Subnet associate |
-|---|---|---|
-| `Route table-Public` | Internet Gateway | Public Subnet 1, 2 |
-| `Route table-Private` | NAT Gateway | Private Subnet 1, 2 |
-
-Cả hai Route Table đều có route mặc định `10.10.0.0/16` → `local`, đảm bảo mọi traffic nội bộ trong VPC luôn đi qua AWS backbone, không bao giờ ra Internet.
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --- | --- | --- | --- |
+| 2 | - Chuẩn bị tài khoản AWS, chọn Region `us-east-1` <br> - Đọc tài liệu tổng quan mạng Amazon VPC và AWS VPN Site-to-Site <br> - Chuẩn bị Key Pair và môi trường kết nối | 27/04/2026 | 27/04/2026 | https://000003.awsstudygroup.com/vi/ |
+| 3 | - Thiết lập hạ tầng VPC core (CIDR `10.10.0.0/16`) <br> - Tạo 4 Subnets phân bổ trên 2 Availability Zones (AZ 1a, 1b) <br> - Khởi tạo và attach Internet Gateway (IGW) vào VPC | 28/04/2026 | 28/04/2026 | https://000003.awsstudygroup.com/vi/ |
+| 4 | - Triển khai NAT Gateway tại Public Subnet 1 ở chế độ Zonal mode <br> - Cấp phát và gắn Elastic IP cho NAT Gateway <br> - Cấu hình Route Table cho Public Subnet và Private Subnet | 29/04/2026 | 29/04/2026 | https://000003.awsstudygroup.com/vi/ |
+| 5 | - Khởi tạo EC2 Public và EC2 Private (t3.micro, Amazon Linux 2023) <br> - Thao tác kết nối truyền thống qua phương thức SSH Jump qua Bastion Host <br> - Kiểm tra hoạt động mạng của Private Subnet qua NAT Gateway bằng lệnh ping internet | 30/04/2026 | 30/04/2026 | https://000003.awsstudygroup.com/vi/ |
+| 6 | - Sử dụng công cụ VPC Reachability Analyzer để kiểm tra liên thông mạng <br> - Phân tích logic đường đi của các packet dữ liệu giữa EC2 Public và EC2 Private | 01/05/2026 | 01/05/2026 | https://000003.awsstudygroup.com/vi/ |
+| 7 | - Khởi tạo và cấu hình dịch vụ EC2 Instance Connect (EIC) Endpoint trong Private Subnet <br> - Cấu hình Security Group và kiểm tra kết nối trực tiếp vào EC2 Private không qua internet công cộng | 02/05/2026 | 02/05/2026 | https://000003.awsstudygroup.com/vi/ |
+| CN | - Cấu hình IAM Role và thiết lập 3 VPC Interface Endpoints để chạy SSM Session Manager <br> - Thực hành kết nối quản trị Shell trực tiếp qua trình duyệt web <br> - Tiến hành dọn dẹp tài nguyên (Clean up) để tối ưu hóa chi phí hệ thống | 03/05/2026 | 03/05/2026 | https://000003.awsstudygroup.com/vi/ |
 
 ---
 
-## 3. Xác thực kết nối — khi lý thuyết gặp thực tế
+### Kết quả đạt được tuần 2:
 
-Dựng xong hạ tầng thì phải kiểm tra. Đây là phần mình thấy thú vị nhất tuần này.
+#### Kiến thức
 
-### SSH Jump qua Bastion (pattern truyền thống)
+**Amazon VPC và Hạ tầng mạng Core**
+- Hiểu VPC là mạng riêng ảo giúp cô lập hoàn toàn tài nguyên của bạn trên hạ tầng điện toán đám mây AWS.
+- Phân biệt rõ ràng tính chất của Public Subnet (gắn liền với Internet Gateway) và Private Subnet (chỉ kết nối nội bộ hoặc ra ngoài internet thông qua cơ chế NAT).
+- Hiểu Route Table hoạt động đóng vai trò như hệ thống "biển chỉ đường" điều hướng packet. Route mặc định `10.10.0.0/16 -> local` đảm bảo mọi traffic nội bộ luôn đi qua hạ tầng backbone an toàn của AWS.
 
-Vì EC2 Private không có Public IP, cách kinh điển để truy cập là dùng EC2 Public làm "trạm trung chuyển":
+**Internet Gateway và NAT Gateway**
+- Internet Gateway (IGW) đóng vai trò là cánh cổng hai chiều (Inbound và Outbound) cho phép Public Subnet kết nối trực tiếp với Internet công cộng.
+- NAT Gateway là cánh cổng một chiều (Outbound-only) giúp các máy chủ trong Private Subnet đi ra ngoài Internet (để cập nhật phần mềm, tải thư viện, gọi API) nhưng ngăn chặn hoàn toàn chiều ngược lại xâm nhập từ bên ngoài.
+- Nắm vững tính năng cấu hình Availability mode (Regional vs Zonal) mới cập nhật của NAT Gateway và hiểu rõ bản chất chịu lỗi (HA) trong môi trường Production thực tế.
 
-```bash
-# Bước 1: SSH vào EC2 Public (qua VS Code Remote SSH cho tiện)
-ssh -i aws-keypair-v2.pem ec2-user@<PUBLIC_IP>
+**VPC Reachability Analyzer**
+- Biết cách sử dụng công cụ VPC Reachability Analyzer để phân tích tính liên thông mạng "logic" giữa các tài nguyên đám mây mà không cần thực tế gửi gói tin đi.
+- Giúp cô lập và debug nhanh chóng các rào cản do thiết lập sai sót tại Route Table, Security Group hay Network ACL (NACL).
 
-# Bước 2: Copy key vào Public, rồi từ Public SSH tiếp sang Private
-scp -i aws-keypair-v2.pem aws-keypair-v2.pem ec2-user@<PUBLIC_IP>:~/
-ssh -i ~/aws-keypair-v2.pem ec2-user@10.10.3.142
+**3 Giải pháp kết nối và quản trị EC2 Private**
+- **SSH Jump qua Bastion Host (Truyền thống):** Sử dụng một máy chủ EC2 Public làm trạm trung chuyển để kết nối. Giải pháp này yêu cầu người dùng phải tự quản lý file key pair thủ công, mở cổng port 22 ra ngoài internet và phải tuân thủ phân quyền tệp tin chặt chẽ (`chmod 400`).
+- **EC2 Instance Connect (EIC) Endpoint (Hiện đại):** Một endpoint ảo do AWS quản lý trực tiếp trong VPC, giúp thiết lập phiên SSH qua đường mạng nội bộ backbone của AWS. Hoàn toàn miễn phí, không yêu cầu IP Public, NAT Gateway hay Bastion host, đồng thời tích hợp sẵn audit logging qua CloudTrail.
+- **SSM Session Manager (Zero Trust):** Cho phép truy cập và mở terminal quản lý EC2 trực tiếp ngay trên trình duyệt web qua cơ chế SSM Agent và IAM Role (`AmazonSSMManagedInstanceCore`). Phương pháp này đạt độ an toàn tối đa khi không cần mở bất kỳ cổng inbound nào ra Internet công cộng, tuy nhiên cần đầu tư chi phí cố định cho các Interface Endpoints (`ssm`, `ssmmessages`, `ec2messages`).
+
+**Quản lý chi phí (Cost Optimization)**
+- Hiểu được tầm quan trọng của tư duy tối ưu hóa chi phí trên Cloud. Nhận diện các tài nguyên ngốn ngân sách chạy ngầm như NAT Gateway (~$32/tháng), các Interface Endpoints hay các Elastic IP bị treo không gắn với resource nào để thực hiện dọn dẹp kịp thời.
+
+---
+
+#### Thực hành
+
+**Module 1 — Dựng hạ tầng mạng VPC Core**
+- Thiết lập hệ thống mạng VPC mang dải CIDR `10.10.0.0/16` tại khu vực `us-east-1` (N. Virginia).
+- Phân bổ thành công 4 Subnets chia đều trên 2 Availability Zones (1a, 1b) đáp ứng cấu hình Public và Private Subnets.
+- Tạo và attach Internet Gateway (IGW) trực tiếp vào VPC.
+- Khởi tạo thành công một NAT Gateway nằm tại Public Subnet 1 theo chế độ Zonal mode và liên kết với một Elastic IP.
+- Cấu hình chính xác `Route table-Public` trỏ route mặc định `0.0.0.0/0` về IGW và `Route table-Private` trỏ route `0.0.0.0/0` về hệ thống NAT Gateway.
+- 📸 _Ảnh minh chứng: Danh sách VPC, Subnets và các Route Tables định tuyến thành công._
+- 📸 _Ảnh minh chứng: NAT Gateway ở trạng thái Available đi kèm với Elastic IP._
+
+**Module 2 — Kiểm tra xác thực kết nối truyền thống qua Bastion Host**
+- Khởi chạy thành công 2 EC2 Instance (`t3.micro`, Amazon Linux 2023) bao gồm một máy Public (`10.10.1.131`) và một máy Private (`10.10.3.142`) sử dụng chung key pair `aws-keypair-v2`.
+- Thực hiện cấu hình SSH trung chuyển từ máy cá nhân thông qua Bastion Host để truy cập terminal vào EC2 Private. Thực hiện lệnh an toàn `chmod 400` cho file tệp tin key `.pem`.
+- Chạy lệnh kiểm tra `ping -c 4 google.com` tại máy Private để xác nhận gói tin mạng đi qua NAT Gateway và nhận phản hồi thành công.
+- 📸 _Ảnh minh chứng: Thông tin trạng thái running của 2 EC2 Instance trên bảng điều khiển._
+- 📸 _Ảnh minh chứng: Terminal truy cập thành công vào EC2 Private qua Bastion Host và kết quả lệnh ping._
+
+**Module 3 — Debug liên thông mạng với VPC Reachability Analyzer**
+- Khởi tạo một phân tích kiểm tra luồng đi của dữ liệu từ máy EC2 Public tới máy EC2 Private.
+- Kiểm tra các quy tắc của Security Group và nhận kết quả phân tích hệ thống báo trạng thái `Reachable`.
+- 📸 _Ảnh minh chứng: Giao diện hiển thị kết quả Reachable trên VPC Reachability Analyzer._
+
+**Module 4 — Triển khai giải pháp kết nối bằng EC2 Instance Connect (EIC) Endpoint**
+- Tạo một EIC Endpoint (`eice-0f7c...`) đặt tại dải mạng Private Subnet.
+- Tiến hành cập nhật Inbound rule trên Security Group của EC2 Private, chỉ chấp nhận truy cập cổng port 22 đi từ Security Group của chính EIC Endpoint.
+- Thực hiện kết nối SSH trực tiếp vào hệ điều hành của EC2 Private từ Console AWS mà không cần thông qua môi trường internet công cộng hay Bastion Host.
+- 📸 _Ảnh minh chứng: Thông tin EIC Endpoint đã tạo thành công ở trạng thái Available._
+- 📸 _Ảnh minh chứng: Cửa sổ terminal SSH kết nối vào Private Instance qua giải pháp EIC Endpoint._
+
+**Module 5 — Thiết lập giải pháp Zero Trust với SSM Session Manager**
+- Tạo một IAM Role cấp quyền quản lý hệ thống đám mây chứa managed policy `AmazonSSMManagedInstanceCore` và attach trực tiếp vào cả hai máy chủ EC2.
+- Tạo lập 3 VPC Interface Endpoints (`ssm`, `ssmmessages`, `ec2messages`) sử dụng AWS PrivateLink đặt tại Private Subnet, kích hoạt tùy chọn Enable DNS name và mở port 443 inbound cho toàn dải mạng `10.10.0.0/16`.
+- Đăng nhập điều khiển máy chủ EC2 Private thông qua tính năng Session Manager trực tiếp ngay trên giao diện trình duyệt web mà không cần key pair hay mở cổng SSH.
+- 📸 _Ảnh minh chứng: Trạng thái Available của 3 VPC Interface Endpoints._
+- 📸 _Ảnh minh chứng: Giao diện terminal Session Manager chạy trực tiếp trên Web Browser._
+
+**Module 6 — Thực hiện dọn dẹp tài nguyên (Clean up)**
+- Thực hiện xóa bỏ (Delete) NAT Gateway để dừng tính phí giờ chạy hệ thống.
+- Thực hiện giải phóng hoàn toàn (Release) Elastic IP trống để tránh phát sinh chi phí IP treo tài nguyên.
+- Xóa bỏ hoàn toàn 3 SSM VPC Interface Endpoints đã thiết lập cho lab.
+- Giữ lại hệ thống core VPC và EIC Endpoint (hoàn toàn miễn phí) nhằm tái sử dụng cho các bài lab tuần tiếp theo.
+- 📸 _Ảnh minh chứng: Các tài nguyên NAT Gateway và VPC Endpoints đã được xóa sạch trên hệ thống._
+
+---
+
+#### Khó khăn và cách giải quyết
+
+**Khó khăn:**
+- Dễ bị nhầm lẫn về bản chất hoạt động và cách cấu hình bảng định tuyến giữa Internet Gateway (hai chiều) và NAT Gateway (một chiều).
+- Gặp lỗi từ chối SSH kết nối `WARNING: UNPROTECTED PRIVATE KEY FILE!` khi copy file key pair `.pem` lên máy trung chuyển Bastion Host mà quên cấu hình lại quyền hạn tệp tin.
+- Hệ thống SSM Agent trên máy EC2 Private không thể đăng ký thành công lên dịch vụ Systems Manager do người dùng quên tích chọn mục "Enable DNS name" khi tạo lập các Interface Endpoints.
+- Nguy cơ cao bị phát sinh hóa đơn chi phí (Billing) lớn chạy ngầm từ các tài nguyên tính phí theo giờ như NAT Gateway (~$32/tháng) và Interface Endpoints nếu sơ suất quên tắt/xóa sau khi hoàn thành lab.
+
+**Cách giải quyết:**
+- Hệ thống hóa lại kiến thức bằng cách tự vẽ sơ đồ tư duy luồng đi của traffic từ môi trường internet qua từng gateway và subnet để nắm sâu sắc cấu trúc hạ tầng.
+- Thực hiện tuân thủ quy chuẩn bảo mật an toàn hệ thống Linux, chạy ngay lệnh `chmod 400 aws-keypair-v2.pem` ngay sau khi tải tệp tin key pair lên server.
+- Đọc kỹ hướng dẫn thực hành lab, kiểm tra chi tiết các thuộc tính phân giải DNS của VPC và cấu hình chính xác inbound port 443 cho Security Group của các endpoint.
+- Thiết lập danh sách checklist dọn dẹp tài nguyên bài bản sau mỗi buổi học, kiểm tra kỹ lường Billing Dashboard định kỳ để phát hiện và ngăn chặn sớm các tài nguyên chưa tắt.
+
 ```
-
-Một bài học nhỏ nhưng "đau thương": nếu không `chmod 400` cho file `.pem` sau khi copy, SSH sẽ từ chối với lỗi `WARNING: UNPROTECTED PRIVATE KEY FILE!`. AWS bắt buộc key phải được bảo vệ chặt — chuyện hiển nhiên nhưng dễ quên.
-
-### Test NAT Gateway hoạt động
-
-Sau khi SSH vào Private, lệnh kiểm tra "kinh điển":
-
-```bash
-ping -c 4 google.com
-```
-
-Nếu thấy reply về thì NAT Gateway đang làm việc. Trước khi tạo NAT GW thì lệnh này sẽ timeout — đây là cách hay để cảm nhận sự khác biệt rõ ràng giữa "có" và "không có" NAT.
-
-### Reachability Analyzer — debug network không cần ssh
-
-Một công cụ AWS rất ngầu mà mình mới biết: **VPC Reachability Analyzer**. Nó cho phép phân tích "logic" đường đi của packet giữa hai resource (ví dụ EC2-A → EC2-B) mà không cần thực sự gửi packet nào. Nó kiểm tra Route Table, Security Group, NACL, ENI... và báo lỗi cụ thể nếu có rào cản nào.
-
-Mình đã thử phân tích đường đi giữa EC2 Public (SG `sg-0851...`) và EC2 Private (SG `sg-04ca...`) — kết quả `Reachable` ✅. Nếu sai cấu hình SG, công cụ này sẽ chỉ chính xác rule nào đang chặn — cực kỳ hữu ích khi debug những hệ thống lớn.
-
-> 💰 Lưu ý: $0.10/lần phân tích — không phải miễn phí, nên đừng bấm bừa.
-
----
-
-## 4. EC2 Instance Connect Endpoint — "cánh cửa bí mật" của AWS
-
-Đây là phần làm mình bất ngờ nhất tuần này. **EIC Endpoint** là một feature tương đối mới (ra mắt 2023) cho phép truy cập SSH vào EC2 Private **không cần** Public IP, **không cần** NAT Gateway, **không cần** Bastion Host. Và quan trọng nhất: **miễn phí**.
-
-### Cách nó hoạt động
-
-EIC Endpoint là một "endpoint ảo" trong VPC mà AWS quản lý. Khi bạn gửi yêu cầu SSH qua nó (từ AWS Console hoặc CLI), traffic sẽ đi qua hạ tầng nội bộ của AWS thay vì qua Internet. Nó như một "cánh cửa bí mật" mà chỉ những người có quyền IAM mới biết tới.
-
-### Triển khai
-
-1. Tạo EIC Endpoint (`eice-0f7c...`) trong Private Subnet
-2. Cấu hình Security Group cho EC2 Private: cho phép port 22 inbound từ Security Group của EIC Endpoint (chứ không phải mở từ `0.0.0.0/0`)
-3. Vào EC2 Console → chọn EC2 Private → **Connect** → tab **EC2 Instance Connect Endpoint** → **Connect using a Private IP**
-
-Boom, terminal mở ra, SSH thành công. Không cần copy key, không cần biết Public IP, không cần Bastion.
-
-### So với Bastion truyền thống
-
-| | Bastion truyền thống | EIC Endpoint |
-|---|---|---|
-| Cần EC2 Public chạy 24/7 | ✅ Có (tốn tiền) | ❌ Không |
-| Cần quản lý key pair | ✅ Có | ❌ Không (key tạm) |
-| Cần expose Port 22 ra Internet | ✅ Có (rủi ro) | ❌ Không |
-| Audit logging | Phải tự config | ✅ Built-in (CloudTrail) |
-| Chi phí | EC2 + EBS | ✅ **Miễn phí** |
-
-Đây có lẽ là một trong những feature ít được biết nhưng đáng dùng nhất của AWS. Mình quyết định **giữ EIC Endpoint** sau khi cleanup workshop, để dùng cho các lab tiếp theo.
-
----
-
-## 5. SSM Session Manager — đỉnh cao của Zero Trust
-
-Nếu EIC Endpoint đã ngầu thì **SSM Session Manager** còn ngầu hơn. Nó cho phép mở terminal vào EC2 **qua trình duyệt**, không cần SSH key, không cần port 22, không cần network reachability từ máy bạn tới EC2.
-
-### Cơ chế hoạt động
-
-Thay vì máy bạn "kết nối tới" EC2, ở đây EC2 sẽ chủ động "phone home" lên dịch vụ SSM của AWS thông qua **SSM Agent** (đã pre-installed trên Amazon Linux 2023). Khi bạn mở session từ Console, AWS sẽ ghép kết nối browser của bạn với agent đang chờ trên EC2 — toàn bộ traffic qua AWS backbone, được mã hoá end-to-end.
-
-Điều này có nghĩa: kể cả EC2 Private không có Internet (chưa có NAT), vẫn có thể truy cập được nếu cấu hình VPC Endpoints đúng cách.
-
-### Bước 1: IAM Role cho EC2
-
-EC2 cần "danh tính" để giao tiếp với dịch vụ SSM:
-
-- Tạo role `EC2-SessionManager-Role`
-- Attach managed policy: `AmazonSSMManagedInstanceCore`
-- Gán role cho cả 2 EC2 (Actions → Security → Modify IAM role)
-
-### Bước 2: VPC Interface Endpoints
-
-Đây là phần "đắt giá" — cả về chi phí lẫn kiến thức. Để EC2 Private giao tiếp với SSM mà không cần Internet, cần tạo 3 **Interface Endpoints** (kết nối qua AWS PrivateLink):
-
-| Endpoint | Vai trò |
-|---|---|
-| `com.amazonaws.us-east-1.ssm` | Endpoint chính của dịch vụ SSM |
-| `com.amazonaws.us-east-1.ssmmessages` | Kênh truyền tin nhắn 2 chiều giữa agent và service |
-| `com.amazonaws.us-east-1.ec2messages` | Hỗ trợ SSM Agent gửi metadata về |
-
-Mỗi endpoint cần:
-- Đặt trong Private Subnet
-- Gắn Security Group cho phép HTTPS (port 443) inbound từ VPC CIDR `10.10.0.0/16`
-- Bật **Enable DNS name** để EC2 resolve được tên dịch vụ về IP private
-
-> 💸 **Cảnh báo chi phí:** Mỗi Interface Endpoint là $0.01/giờ × 24 × 30 ≈ **$7.2/tháng**, nhân với 3 endpoint thành **$21.6/tháng** chỉ để bật được Session Manager mà không dùng NAT. Đây là trade-off: chấp nhận tốn một khoản cố định để đổi lấy security tối đa và không phụ thuộc Internet.
-
-### Bước 3: Kết quả
-
-Sau khi gắn IAM role và đợi khoảng 2-5 phút để SSM Agent đăng ký lên dịch vụ, cả 2 EC2 hiện ra trong danh sách **Target Instances** của Session Manager. Click **Start session** → terminal hiện ra ngay trong tab trình duyệt. Cảm giác lần đầu thấy được điều này khá là "wow" — hoàn toàn không có một port nào mở ra Internet, không có key pair, mà vẫn shell vào được EC2.
-
-### So sánh tổng quát 3 phương thức
-
-| | SSH qua Bastion | EIC Endpoint | SSM Session Manager |
-|---|---|---|---|
-| Cần Key Pair | ✅ | ⚠️ Tạm | ❌ |
-| Cần mở Port 22 | ✅ | ⚠️ Trong VPC | ❌ |
-| Cần IAM Role trên EC2 | ❌ | ❌ | ✅ |
-| Cần Internet/NAT cho Private | ❌ | ❌ | ❌ (nếu có VPC Endpoints) |
-| Chi phí | EC2 Bastion | Free | $21.6/tháng (3 endpoints) |
-| Audit logging | Tự config | CloudTrail | CloudTrail + CloudWatch |
-| Phù hợp với | Lab, dev | Mọi môi trường | Production, compliance |
-
----
-
-## 6. Cost Optimization — kỷ luật của người làm Cloud
-
-Mỗi resource trong AWS đều có thể là một "đồng hồ tính tiền" chạy 24/7. Sau khi hoàn thành các phần Lab và đã chụp đủ minh chứng, mình sẽ thực hiện cleanup theo thứ tự:
-
-- [ ] **Delete NAT Gateway** — Tiết kiệm ~$1.08/ngày
-- [ ] **Release Elastic IP** — Để tránh phí $0.005/giờ cho IP "treo" không gắn với resource nào
-- [ ] **Delete 3 SSM VPC Endpoints** — Tiết kiệm ~$1.44/ngày
-- [ ] **Giữ lại EIC Endpoint** vì miễn phí và hữu ích cho các tuần sau
-- [ ] **Giữ lại VPC, Subnet, Route Table, IGW** — không tốn phí
-
-Bài học lớn nhất tuần này: **chi phí không đến từ những thứ to mà từ những thứ "quên tắt"**. Một NAT Gateway dev quên xoá có thể ngốn $32/tháng cho không. Một Elastic IP allocate xong không gắn cũng tự âm thầm tính tiền. Cloud is cheap *if you know what you're doing* — nếu không, hoá đơn cuối tháng sẽ là một bài học rất "đắt".
-
----
-
-## 7. Những gì mình rút ra được
-
-1. **VPC không phức tạp như mình nghĩ** — chỉ cần hiểu vai trò từng thành phần (CIDR, Subnet, Route Table, Gateway) và cách chúng liên kết, mọi thứ trở nên rất logic.
-
-2. **Có nhiều cách hơn 1 để làm cùng một việc**, và cách "truyền thống" (SSH + Bastion) thường không phải là cách tốt nhất nữa. AWS đang đẩy mạnh các giải pháp Zero Trust như EIC Endpoint và SSM Session Manager — chúng an toàn hơn, dễ audit hơn, và đôi khi còn rẻ hơn.
-
-3. **Chi phí phải được suy nghĩ ngay từ khi thiết kế**, không phải sau khi nhận hoá đơn. NAT Gateway tiện lợi nhưng đắt; VPC Endpoints an toàn nhưng tốn cố định. Kiến trúc tốt là kiến trúc đặt cả security và cost vào bàn cân ngay từ đầu.
-
-4. **Reachability Analyzer là người bạn tốt** khi debug network — luôn dùng nó trước khi nghi ngờ Security Group hay NACL.
-
----
-
-## Tiến độ tuần tới
-
-Phần còn lại của workshop tuần này sẽ là **VPN Site-to-Site** — kết nối một mạng giả lập "On-premise" (sẽ dùng một VPC khác đóng vai trò datacenter công ty) với VPC chính qua VPN. Đây là kịch bản rất phổ biến trong doanh nghiệp khi migrate workload từ on-prem lên cloud từ từ. Hứa hẹn sẽ có nhiều thứ thú vị để khám phá về Customer Gateway, Virtual Private Gateway, và BGP routing.
-
-*Stay tuned cho Tuần 3!* 🚀
