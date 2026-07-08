@@ -1,57 +1,63 @@
 ---
 title: "Week 11 Worklog"
-date: 2024-01-01
-weight: 2
+date: 2026-06-29
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+### Key Objectives for Week 11:
 
-### Week 11 Objectives:
+- Transition from the design phase to the **System Build Project** phase.
+- Deploy the entire Storage & Config Layer.
+- Set up the asynchronous message queue with Amazon SQS.
+- Program and deploy AWS Lambda functions (Node.js) acting as Producer and Worker.
+- Configure the API Gateway network (REST and WebSocket) to communicate with the Client.
+- Integrate Amazon Cognito security and strict IAM authorization.
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+---
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Detailed Action Plan:
 
+| Day | Task Details | Start Date | Completion Date | Reference Materials |
+| --- | --- | --- | --- | --- |
+| Monday | - Initialize Amazon Cognito User Pool <br> - Configure 6 Amazon DynamoDB tables as designed <br> - Save API Keys to SSM Parameter Store | 06/29/2026 | 06/29/2026 | AWS Console |
+| Tuesday | - Initialize Amazon SQS (`inboxiq-main` and `inboxiq-dlq`) <br> - Set up IAM Roles (Least Privilege) for Lambda functions | 06/30/2026 | 06/30/2026 | AWS IAM & SQS Docs |
+| Wednesday | - Write source code (Node.js) for Lambda Authorizer <br> - Write source code for Lambda Producer (receives request, throws into SQS) | 07/01/2026 | 07/01/2026 | AWS SDK for JavaScript v3 |
+| Thursday | - Write source code for Lambda Worker (handles core logic) <br> - Configure SQS trigger to invoke the Lambda Worker | 07/02/2026 | 07/02/2026 | Node.js / AWS SDK |
+| Friday | - Configure Amazon API Gateway (REST) integrated with Lambda Producer <br> - Configure API Gateway (WebSocket) integrated with the result return flow | 07/03/2026 | 07/03/2026 | AWS API Gateway Docs |
+| Saturday | - Perform internal connection test (Unit test) between API Gateway -> SQS -> Lambda <br> - Apply Global Caching mechanism in Lambda | 07/04/2026 | 07/04/2026 | Postman / wscat |
+| Sunday | - Review logs on CloudWatch to check for errors <br> - Optimize Lambda timeout duration <br> - Write the week 11 report | 07/05/2026 | 07/05/2026 | AWS CloudWatch |
 
-### Week 11 Achievements:
+---
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### Summary of Achieved Results:
 
-* Successfully created and configured an AWS Free Tier account.
+#### Knowledge & Operations
+- Mastered the process of connecting AWS services together through the Event-Driven mechanism (Event triggers Event).
+- Understood the importance of assigning accurate IAM Roles: Lambda Producer is only granted `sqs:SendMessage`, while Lambda Worker requires `sqs:ReceiveMessage` and `dynamodb:PutItem`.
+- Grasped Lambda optimization techniques: Caching parameters from SSM into global variables outside the `handler()` function to leverage the execution context reuse feature (Warm start), helping reduce throttling caused by excessive SSM API calls.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+#### Practical Implementation
+- Successfully created the Cognito User Pool cluster for authentication.
+- Successfully deployed 6 DynamoDB tables with the TTL (Time to Live) data self-destruction mechanism to automatically delete old logs after 30 days, saving storage capacity.
+- Successfully coded and deployed the Lambda cluster using Node.js.
+- Successfully configured the SQS `ReportBatchItemFailures` mechanism, allowing the Lambda Worker to reprocess only the specific failed emails instead of re-running the entire message batch.
+- Used the `wscat` tool (on terminal) to successfully test establishing a WebSocket connection channel via API Gateway.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+---
 
-* Used AWS CLI to perform basic operations such as:
+### Challenges and Obstacles Faced:
+- CORS (Cross-Origin Resource Sharing) errors continuously appeared when testing the REST API Gateway via a browser.
+- Forgot to grant the `execute-api:ManageConnections` permission to the Lambda Worker, resulting in this function being unable to push data back to the API Gateway WebSocket, causing a 403 Forbidden error.
+- Lambda Worker experienced Timeouts because the AWS default is only 3 seconds, whereas calling the OpenAI and Gmail APIs takes much longer.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+### Solutions and Lessons Learned:
+- Activated the Enable CORS feature on API Gateway and fine-tuned the response headers from the Lambda Producer (`Access-Control-Allow-Origin: '*'`).
+- Immediately added the IAM permission `execute-api:ManageConnections` to the Lambda Worker's Role.
+- Increased the Lambda Worker's Timeout configuration to 5 minutes (300 seconds) to ensure sufficient waiting time for OpenAI to generate email summary data.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+### Plan and Roadmap for Next Week:
+- Integrate the Mobile app (Flutter) with the AWS Backend.
+- Handle connection flows with External APIs: Gmail API (OAuth) and OpenAI API (GPT-4o-mini).
+- Perform End-to-End Testing of the entire system, fix bugs, and prepare data for the FCAJ internship acceptance report.

@@ -1,126 +1,114 @@
 ---
 title: "Blog 3"
-date: 2024-01-01
-weight: 1
+date: 2026-07-07
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Modernizing Applications and Databases with GenAI on AWS
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+In the software development process, many businesses are still operating legacy systems based on a monolithic model. Initially, this architecture might be easy to deploy and manage. However, as the system grows, user numbers increase, and business requirements constantly change, monolithic applications often reveal significant limitations: slow release times, difficulty in scaling independently, high operational costs, and the risk of cascading failures. Application modernization is not just about changing the technology, but also a transformation in system design thinking.
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+This blog post (compiled by the Otokoshi team) will focus on GenAI-powered App & Database Modernization solutions. Instead of simply "upgrading code," this process is a seamless combination of Domain-Driven Design (DDD), microservices, event-driven architecture, serverless computing, and AI tools (such as Amazon Q Developer, AWS Transform) to assist in analyzing, transforming, and optimizing the system from its roots.
 
 ---
 
-## Architecture Guidance
+## Architectural Guidance
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+The core change in the modernization process is the shift from a massive monolithic block to an ecosystem of small services (microservices), loosely coupled through event streams (event-driven). Not attempting to rewrite the entire system from scratch significantly reduces business risks. By defining business boundaries, we can decouple individual parts and safely transition them to serverless models.
+**The modernization solution architecture can be visualized as follows:**
+**The modernization solution architecture can be visualized as follows:**
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+![Figure 1. Architectural shift from Monolithic to Microservices combined with Event-driven and Serverless](/images/Blog3/blog3(0).jpg)
 
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
-
----
-
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+> *Figure 1. Architectural shift from Monolithic to Microservices combined with Event-driven and Serverless.*
 
 ---
 
-## Technology Choices and Communication Scope
+When establishing boundaries for components in the new system, the system will share the following common characteristics:
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+* Starting with the business domain before discussing technology.
+* Each critical function becomes an independent, autonomous service.
+* Flexible, asynchronous communication via events instead of direct API calls.
+* Running code without managing underlying physical servers or virtual machines.
 
----
+When determining the monolithic decoupling strategy, consider:
 
-## The Pub/Sub Hub
-
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+* **Business**: Identify the core domains (order management, billing, customer, inventory).
+* **Architecture**: Use Bounded Contexts to break things down, deciding what to keep and what to convert into a microservice.
+* **Roadmap**: Modernize incrementally (part by part) rather than making a comprehensive change all at once.
 
 ---
 
-## Core Microservice
+## Technology Selection and Compute Models
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+| System Aspect / Level of Control | Suitable AWS Services / Compute Models |
+| --- | --- |
+| Requires strict control over OS, runtime, and configuration | Amazon Elastic Compute Cloud (Amazon EC2) |
+| Containerized applications, microservices, and orchestration needs | Amazon Elastic Container Service (ECS), Amazon EKS |
+| Running containers without managing underlying servers | AWS Fargate |
+| Event-driven, short-lived tasks, small APIs, automation | AWS Lambda |
 
 ---
 
-## Front Door Microservice
+## Domain-Driven Design (DDD)
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+![5-step application modernization workflow](/images/Blog3/blog3(1).jpg)
 
----
+A common mistake is starting with the question: "Should we use Lambda, ECS, or Kubernetes?". In reality, the first question must be: "What business operations is the system serving?". DDD helps technical and business teams use a ubiquitous language. Through *event storming* sessions, you can identify: - Important business events and participating actors.
 
-## Staging ER7 Microservice
+* The timeline of key processing steps.
+* The bounded contexts that need to be decoupled.
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+Drawbacks/Challenges: Requires continuous involvement and communication between *domain experts* and *software experts* to explore complexity before diving into code.
 
 ---
 
-## New Features in the Solution
+## Event-Driven Architecture
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Solves the problem of communication between components. If microservices call each other using synchronous APIs, the system quickly becomes cross-dependent. When one service goes down, the entire system can be paralyzed.
+
+* A service (e.g., Order) only needs to emit an event (OrderCreated).
+* Other services (Payment, Inventory, Notification) independently listen to that event through routers like **Amazon EventBridge** or **Amazon SNS/SQS** to process their respective tasks.
+
+> The system becomes more flexible, easier to scale, and eliminates direct dependencies between components, making the architecture "loosely-coupled".
+
+---
+
+## Compute Evolution: Transitioning to Serverless
+
+* Offloading infrastructure burden: Maintenance, scaling, patching, and capacity management tasks are handed over to AWS.
+* Harnessing the power of **AWS Lambda**:
+1. Highly suitable for event-driven workloads.
+2. Cost optimization through automatic scaling and pay-as-you-go pricing based on actual usage.
+3. Developers only need to focus on writing business logic.
+
+---
+
+## The Role of GenAI in the Solution
+
+### 1. Amazon Q Developer and AWS Transform
+
+Although it cannot completely replace Software Architects, GenAI acts as a high-speed assistant to help solve complex data and source code migration problems.
+
+![GenAI assistance through Amazon Q Developer and AWS Transform](/images/Blog3/blog3(2).jpg)
+
+* **Amazon Q Developer**: Analyzes legacy codebases, suggests module decoupling, generates technical documentation, proposes test cases, and assists with refactoring (e.g., upgrading Java versions, explaining dependencies).
+* **AWS Transform**: An agentic AI service supporting large-scale modernization for heavy workloads such as Windows, mainframes, or VMware.
+
+Example of an AI-proposed transformation plan (diff) to replace a synchronous API call with an event-emitting model:
+
+```diff
+- // Legacy Monolithic Synchronous Call
+- paymentService.processPayment(order.getId(), order.getTotal());
+- inventoryService.deductItems(order.getItems());
+
++ // Modern Event-Driven Architecture with EventBridge
++ PutEventsRequestEntry eventEntry = PutEventsRequestEntry.builder()
++    .source("com.ecommerce.orders")
++    .detailType("OrderCreated")
++    .detail(orderJson)
++    .eventBusName("EcommerceEventBus")
++    .build();
++ eventBridgeClient.putEvents(PutEventsRequest.builder().entries(eventEntry).build());

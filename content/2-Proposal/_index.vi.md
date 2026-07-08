@@ -1,108 +1,101 @@
 ---
 title: "Bản đề xuất"
-date: 2024-01-01
+date: 2026-07-04
 weight: 2
 chapter: false
-pre: " <b> 2. </b> "
+pre: "  2.  "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
+# InboxIQ
 
-# IoT Weather Platform for Lab Research  
-## Giải pháp AWS Serverless hợp nhất cho giám sát thời tiết thời gian thực  
+## AI-powered email triage on Serverless AWS
 
-### 1. Tóm tắt điều hành  
-IoT Weather Platform được thiết kế dành cho nhóm *ITea Lab* tại TP. Hồ Chí Minh nhằm nâng cao khả năng thu thập và phân tích dữ liệu thời tiết. Nền tảng hỗ trợ tối đa 5 trạm thời tiết, có khả năng mở rộng lên 10–15 trạm, sử dụng thiết bị biên Raspberry Pi kết hợp cảm biến ESP32 để truyền dữ liệu qua MQTT. Nền tảng tận dụng các dịch vụ AWS Serverless để cung cấp giám sát thời gian thực, phân tích dự đoán và tiết kiệm chi phí, với quyền truy cập giới hạn cho 5 thành viên phòng lab thông qua Amazon Cognito.  
+### 1. Tóm tắt điều hành
 
-### 2. Tuyên bố vấn đề  
-*Vấn đề hiện tại*  
-Các trạm thời tiết hiện tại yêu cầu thu thập dữ liệu thủ công, khó quản lý khi có nhiều trạm. Không có hệ thống tập trung cho dữ liệu hoặc phân tích thời gian thực, và các nền tảng bên thứ ba thường tốn kém và quá phức tạp.  
+InboxIQ là một trợ lý ảo thông minh được thiết kế nhằm giải quyết tình trạng quá tải email cho người dùng (sinh viên, nhân viên văn phòng). Ứng dụng di động (Flutter) tự động kết nối với Gmail API, sử dụng mô hình trí tuệ nhân tạo OpenAI (GPT-4o-mini) để tóm tắt nội dung, tự động phân loại danh mục và đánh giá mức độ ưu tiên của email theo thời gian thực. Hệ thống tận dụng hoàn toàn kiến trúc Serverless và Event-Driven trên nền tảng AWS (vận hành tại Region us-east-1) nhằm tối ưu hiệu năng xử lý bất đồng bộ, đảm bảo tính bảo mật nghiêm ngặt và tiết kiệm chi phí vận hành ở mức tối đa trong khuôn khổ chương trình thực tập First Cloud AI Journey (FCAJ) 2026.
 
-*Giải pháp*  
-Nền tảng sử dụng AWS IoT Core để tiếp nhận dữ liệu MQTT, AWS Lambda và API Gateway để xử lý, Amazon S3 để lưu trữ (bao gồm data lake), và AWS Glue Crawlers cùng các tác vụ ETL để trích xuất, chuyển đổi, tải dữ liệu từ S3 data lake sang một S3 bucket khác để phân tích. AWS Amplify với Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như Thingsboard và CoreIoT, người dùng có thể đăng ký thiết bị mới và quản lý kết nối, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích sử dụng nội bộ. Các tính năng chính bao gồm bảng điều khiển thời gian thực, phân tích xu hướng và chi phí vận hành thấp.  
+### 2. Tuyên bố vấn đề
 
-*Lợi ích và hoàn vốn đầu tư (ROI)*  
-Giải pháp tạo nền tảng cơ bản để các thành viên phòng lab phát triển một nền tảng IoT lớn hơn, đồng thời cung cấp nguồn dữ liệu cho những người nghiên cứu AI phục vụ huấn luyện mô hình hoặc phân tích. Nền tảng giảm bớt báo cáo thủ công cho từng trạm thông qua hệ thống tập trung, đơn giản hóa quản lý và bảo trì, đồng thời cải thiện độ tin cậy dữ liệu. Chi phí hàng tháng ước tính 0,66 USD (theo AWS Pricing Calculator), tổng cộng 7,92 USD cho 12 tháng. Tất cả thiết bị IoT đã được trang bị từ hệ thống trạm thời tiết hiện tại, không phát sinh chi phí phát triển thêm. Thời gian hoàn vốn 6–12 tháng nhờ tiết kiệm đáng kể thời gian thao tác thủ công.  
+*Vấn đề hiện tại* Người dùng hiện đại thường xuyên đối mặt với việc nhận từ 50–100 email mỗi ngày, dẫn đến tiêu tốn nhiều thời gian lọc thông tin và dễ bỏ lỡ các email quan trọng. Các giải pháp quản lý email hiện tại thường mang tính thủ công, thiếu khả năng phân tích ngữ nghĩa sâu, hoặc các hệ thống tích hợp AI bên thứ ba có chi phí bản quyền quá cao và không đảm bảo quyền riêng tư dữ liệu khi xử lý tập trung.
 
-### 3. Kiến trúc giải pháp  
-Nền tảng áp dụng kiến trúc AWS Serverless để quản lý dữ liệu từ 5 trạm dựa trên Raspberry Pi, có thể mở rộng lên 15 trạm. Dữ liệu được tiếp nhận qua AWS IoT Core, lưu trữ trong S3 data lake và xử lý bởi AWS Glue Crawlers và ETL jobs để chuyển đổi và tải vào một S3 bucket khác cho mục đích phân tích. Lambda và API Gateway xử lý bổ sung, trong khi Amplify với Next.js cung cấp bảng điều khiển được bảo mật bởi Cognito.  
+*Giải pháp* InboxIQ xây dựng một hệ thống xử lý email tự động phân tán bằng kiến trúc Serverless Event-Driven. Khi người dùng yêu cầu, ứng dụng Flutter tương tác an toàn qua API Gateway (REST & WebSocket) được bảo mật bởi Amazon Cognito. Yêu cầu được đẩy vào hàng đợi Amazon SQS để kích hoạt AWS Lambda Worker xử lý bất đồng bộ (giảm tải cho client và tối ưu tài nguyên backend). Lambda Worker sẽ truy vấn Gmail OAuth token lưu tại DynamoDB, lấy dữ liệu email chưa đọc từ Gmail API, gửi tới OpenAI API để xử lý sinh dữ liệu (tóm tắt, phân loại), sau đó lưu kết quả vào DynamoDB (với cơ chế tự hủy TTL) và push kết quả trực tiếp về ứng dụng thời gian thực qua WebSocket. Do tài khoản AWS Free Tier bị giới hạn quyền truy cập Amazon Bedrock, giải pháp lựa chọn OpenAI API nhưng được thiết kế theo mô hình AI Provider Abstraction để dễ dàng chuyển đổi sang Bedrock trong tương lai.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+*Lợi ích và hoàn vốn đầu tư (ROI)* Hệ thống giúp tiết kiệm tới 80% thời gian đọc và phân loại email hàng ngày cho người dùng nhờ vào các bản tóm tắt súc tích và cơ chế gắn nhãn ưu tiên thông minh. Việc áp dụng 100% AWS Serverless giúp loại bỏ hoàn toàn chi phí duy trì hạ tầng phần cứng cố định. Chi phí vận hành ước tính cực kỳ thấp (nằm trọn trong Free Tier của AWS cho các tài nguyên tính toán và lưu trữ), chỉ phát sinh chi phí token rất nhỏ từ OpenAI API. Thời gian hoàn vốn đầu tư (ROI) về mặt thời gian và hiệu suất làm việc của người dùng đạt được ngay trong tháng đầu tiên đưa vào sử dụng.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+### 3. Kiến trúc giải pháp
 
-*Dịch vụ AWS sử dụng*  
-- *AWS IoT Core*: Tiếp nhận dữ liệu MQTT từ 5 trạm, mở rộng lên 15.  
-- *AWS Lambda*: Xử lý dữ liệu và kích hoạt Glue jobs (2 hàm).  
-- *Amazon API Gateway*: Giao tiếp với ứng dụng web.  
-- *Amazon S3*: Lưu trữ dữ liệu thô (data lake) và dữ liệu đã xử lý (2 bucket).  
-- *AWS Glue*: Crawlers lập chỉ mục dữ liệu, ETL jobs chuyển đổi và tải dữ liệu.  
-- *AWS Amplify*: Lưu trữ giao diện web Next.js.  
-- *Amazon Cognito*: Quản lý quyền truy cập cho người dùng phòng lab.  
+Hệ thống được tổ chức thành 5 tầng (Layer) chức năng tách biệt theo mô hình Serverless Event-Driven, đảm bảo khả năng mở rộng cô lập và tính chịu lỗi cao:
 
-*Thiết kế thành phần*  
-- *Thiết bị biên*: Raspberry Pi thu thập và lọc dữ liệu cảm biến, gửi tới IoT Core.  
-- *Tiếp nhận dữ liệu*: AWS IoT Core nhận tin nhắn MQTT từ thiết bị biên.  
-- *Lưu trữ dữ liệu*: Dữ liệu thô lưu trong S3 data lake; dữ liệu đã xử lý lưu ở một S3 bucket khác.  
-- *Xử lý dữ liệu*: AWS Glue Crawlers lập chỉ mục dữ liệu; ETL jobs chuyển đổi để phân tích.  
-- *Giao diện web*: AWS Amplify lưu trữ ứng dụng Next.js cho bảng điều khiển và phân tích thời gian thực.  
-- *Quản lý người dùng*: Amazon Cognito giới hạn 5 tài khoản hoạt động.  
+```
+LAYER 1 · USER        → Users, Mobile App (Flutter)
+LAYER 2 · BACKEND     → Cognito, API Gateway (REST + WebSocket), Lambda (Producer + Worker)
+LAYER 3 · WORKFLOW     → SQS (Main Queue + Dead-Letter Queue), EventBridge Scheduler (optional)
+LAYER 4 · STORAGE      → DynamoDB (6 bảng), Systems Manager Parameter Store
+LAYER 5 · MONITORING   → CloudWatch, X-Ray, IAM Role
+EXTERNAL SERVICES      → Gmail API, OpenAI API (ngoài AWS Cloud)
 
-### 4. Triển khai kỹ thuật  
-*Các giai đoạn triển khai*  
-Dự án gồm 2 phần — thiết lập trạm thời tiết biên và xây dựng nền tảng thời tiết — mỗi phần trải qua 4 giai đoạn:  
-1. *Nghiên cứu và vẽ kiến trúc*: Nghiên cứu Raspberry Pi với cảm biến ESP32 và thiết kế kiến trúc AWS Serverless (1 tháng trước kỳ thực tập).  
-2. *Tính toán chi phí và kiểm tra tính khả thi*: Sử dụng AWS Pricing Calculator để ước tính và điều chỉnh (Tháng 1).  
-3. *Điều chỉnh kiến trúc để tối ưu chi phí/giải pháp*: Tinh chỉnh (ví dụ tối ưu Lambda với Next.js) để đảm bảo hiệu quả (Tháng 2).  
-4. *Phát triển, kiểm thử, triển khai*: Lập trình Raspberry Pi, AWS services với CDK/SDK và ứng dụng Next.js, sau đó kiểm thử và đưa vào vận hành (Tháng 2–3).  
+```
 
-*Yêu cầu kỹ thuật*  
-- *Trạm thời tiết biên*: Cảm biến (nhiệt độ, độ ẩm, lượng mưa, tốc độ gió), vi điều khiển ESP32, Raspberry Pi làm thiết bị biên. Raspberry Pi chạy Raspbian, sử dụng Docker để lọc dữ liệu và gửi 1 MB/ngày/trạm qua MQTT qua Wi-Fi.  
-- *Nền tảng thời tiết*: Kiến thức thực tế về AWS Amplify (lưu trữ Next.js), Lambda (giảm thiểu do Next.js xử lý), AWS Glue (ETL), S3 (2 bucket), IoT Core (gateway và rules), và Cognito (5 người dùng). Sử dụng AWS CDK/SDK để lập trình (ví dụ IoT Core rules tới S3). Next.js giúp giảm tải Lambda cho ứng dụng web fullstack.  
+*Dịch vụ AWS sử dụng* - *Amazon Cognito*: Quản lý định danh, xác thực người dùng và cấp phát mã thông báo JWT bảo mật.
 
-### 5. Lộ trình & Mốc triển khai  
-- *Trước thực tập (Tháng 0)*: 1 tháng lên kế hoạch và đánh giá trạm cũ.  
-- *Thực tập (Tháng 1–3)*:  
-    - Tháng 1: Học AWS và nâng cấp phần cứng.  
-    - Tháng 2: Thiết kế và điều chỉnh kiến trúc.  
-    - Tháng 3: Triển khai, kiểm thử, đưa vào sử dụng.  
-- *Sau triển khai*: Nghiên cứu thêm trong vòng 1 năm.  
+* *Amazon API Gateway*: Cung cấp HTTP REST Endpoint cho các tác vụ đồng bộ và WebSocket Endpoint để duy trì kết nối hai chiều thời gian thực.
+* *AWS Lambda*: Triển khai dưới dạng các hàm xử lý tính toán độc lập (Lambda Authorizer, Lambda Producer điều phối và Lambda Worker xử lý chính).
+* *Amazon SQS*: Quản lý hàng đợi tin nhắn bất đồng bộ bao gồm `inboxiq-main` (xử lý chính với tính năng Partial Batch Response) và `inboxiq-dlq` (cơ chế dọn dẹp và cô lập tin nhắn lỗi khi retry > 3 lần).
+* *Amazon DynamoDB*: Cơ sở dữ liệu NoSQL lưu trữ cấu hình người dùng, phiên kết nối WebSocket và lưu trữ bộ nhớ đệm dữ liệu tóm tắt email.
+* *AWS Systems Manager Parameter Store*: Lưu trữ bảo mật (SecureString) các khóa cấu hình hệ thống và API Key của OpenAI.
+* *Amazon EventBridge Scheduler*: Lên lịch tự động kích hoạt tiến trình kiểm tra email định kỳ sau mỗi 30 phút.
+* *AWS CloudWatch & AWS X-Ray*: Thu thập log, giám sát chỉ số vận hành và theo dõi (tracing) luồng xử lý end-to-end của các hàm Lambda.
 
-### 6. Ước tính ngân sách  
-Có thể xem chi phí trên [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01)  
-Hoặc tải [tệp ước tính ngân sách](../attachments/budget_estimation.pdf).  
+*Thiết kế thành phần* - *Ứng dụng Mobile (Flutter)*: Giao diện người dùng nhận diện và kết nối WebSocket, gửi yêu cầu phân tích và hiển thị kết quả real-time.
 
-*Chi phí hạ tầng*  
-- AWS Lambda: 0,00 USD/tháng (1.000 request, 512 MB lưu trữ).  
-- S3 Standard: 0,15 USD/tháng (6 GB, 2.100 request, 1 GB quét).  
-- Truyền dữ liệu: 0,02 USD/tháng (1 GB vào, 1 GB ra).  
-- AWS Amplify: 0,35 USD/tháng (256 MB, request 500 ms).  
-- Amazon API Gateway: 0,01 USD/tháng (2.000 request).  
-- AWS Glue ETL Jobs: 0,02 USD/tháng (2 DPU).  
-- AWS Glue Crawlers: 0,07 USD/tháng (1 crawler).  
-- MQTT (IoT Core): 0,08 USD/tháng (5 thiết bị, 45.000 tin nhắn).  
+* *Tầng điều phối (Producer)*: Nhận request từ API Gateway, kiểm tra tính hợp lệ và đóng gói dữ liệu kèm theo `connectionId` vào SQS, phản hồi ngay lập tức trạng thái `202 Accepted` cho Client.
+* *Tầng xử lý dữ liệu (Worker)*: Tiêu thụ tin nhắn từ SQS, thực hiện gọi API tích hợp ngoài (Gmail API & OpenAI API), lưu trữ dữ liệu vào database và đẩy trạng thái trực tiếp về client qua kênh kết nối WebSocket tương ứng.
+* *Tầng lưu trữ*: Phân rã dữ liệu thành 6 bảng DynamoDB chuyên biệt giúp tối ưu hóa cấu trúc truy vấn NoSQL và quản lý vòng đời dữ liệu.
 
-*Tổng*: 0,7 USD/tháng, 8,40 USD/12 tháng  
-- *Phần cứng*: 265 USD một lần (Raspberry Pi 5 và cảm biến).  
+### 4. Triển khai kỹ thuật
 
-### 7. Đánh giá rủi ro  
-*Ma trận rủi ro*  
-- Mất mạng: Ảnh hưởng trung bình, xác suất trung bình.  
-- Hỏng cảm biến: Ảnh hưởng cao, xác suất thấp.  
-- Vượt ngân sách: Ảnh hưởng trung bình, xác suất thấp.  
+*Các giai đoạn triển khai* Dự án được chia thành 4 giai đoạn chính, bám sát tiến độ báo cáo thực tập FCAJ 2026:
 
-*Chiến lược giảm thiểu*  
-- Mạng: Lưu trữ cục bộ trên Raspberry Pi với Docker.  
-- Cảm biến: Kiểm tra định kỳ, dự phòng linh kiện.  
-- Chi phí: Cảnh báo ngân sách AWS, tối ưu dịch vụ.  
+1. *Nghiên cứu bối cảnh & Phác thảo kiến trúc*: Đánh giá bài toán quá tải email, xây dựng tài liệu thiết kế hệ thống 5 tầng, lựa chọn giải pháp thay thế OpenAI và thực hiện các vòng review kiến trúc với Mentor hệ thống (Tháng 1).
+2. *Tính toán chi phí & Thiết lập rào cản ngân sách*: Khởi tạo tài khoản AWS, thiết lập AWS Budgets chống vượt chi phí Free Tier, đặt hạn mức cứng (Hard Limit) trên OpenAI Platform (Tháng 1).
+3. *Cấu hình hạ tầng & Phát triển Core Backend*: Tạo lập các tài nguyên lưu trữ (DynamoDB, SSM, SQS), cấu hình các endpoint API Gateway, thiết lập IAM Role theo nguyên tắc đặc quyền tối thiểu (Least Privilege), viết mã nguồn cho các hàm Lambda và xử lý bộ nhớ đệm (Global Scope caching) để tránh throttling (Tháng 2).
+4. *Tích hợp Flutter, Kiểm thử & Đưa vào vận hành*: Hiện thực hóa luồng OAuth callback lấy Gmail token, xây dựng giao diện Flutter, kiểm thử end-to-end luồng đi của dữ liệu qua X-Ray và hoàn thiện báo cáo thực tập (Tháng 3).
 
-*Kế hoạch dự phòng*  
-- Quay lại thu thập thủ công nếu AWS gặp sự cố.  
-- Sử dụng CloudFormation để khôi phục cấu hình liên quan đến chi phí.  
+*Yêu cầu kỹ thuật* - *Ứng dụng Client*: Phát triển bằng Flutter Mobile SDK, tích hợp Amplify/Cognito SDK phục vụ xác thực người dùng và sử dụng gói thư viện `web_socket_channel` để duy trì cổng giao tiếp thời gian thực.
 
-### 8. Kết quả kỳ vọng  
-*Cải tiến kỹ thuật*: Dữ liệu và phân tích thời gian thực thay thế quy trình thủ công. Có thể mở rộng tới 10–15 trạm.  
-*Giá trị dài hạn*: Nền tảng dữ liệu 1 năm cho nghiên cứu AI, có thể tái sử dụng cho các dự án tương lai.
+* *Hạ tầng Backend*: Toàn bộ mã nguồn Lambda được viết bằng Node.js. Hàm Worker yêu cầu cấu hình thời gian xử lý (Timeout) tối đa là 5 phút và bắt buộc kích hoạt tính năng `ReportBatchItemFailures` của SQS để xử lý lỗi cục bộ trong một mẻ dữ liệu (Batch). Mã hóa toàn bộ dữ liệu nhạy cảm lưu trữ bằng khóa KMS mặc định của AWS.
+
+### 5. Lộ trình & Mốc triển khai
+
+* *Tháng 1 (Khởi động)*: Thiết kế kiến trúc, hoàn thiện sơ đồ luồng dữ liệu (Dataflow Diagram), đăng ký tài khoản AWS/OpenAI và hoàn thành thiết lập cấu hình an toàn ngân sách (AWS Budgets).
+* *Tháng 2 (Xây dựng Core)*: Hoàn thành cấu hình 6 bảng DynamoDB, cấu hình API Gateway (REST & WebSocket kèm Authorizer). Triển khai mã nguồn Lambda Producer và Lambda Worker. Tích hợp thành công SQS và thiết lập cơ chế DLQ.
+* *Tháng 3 (Tích hợp & Hoàn thiện)*: Xây dựng luồng đăng ký OAuth kết nối Gmail từ ứng dụng Flutter. Triển khai kết nối gọi API OpenAI. Thực hiện kiểm thử toàn diện, chụp lại toàn bộ minh chứng cấu hình trên AWS Console và tổng hợp tài liệu báo cáo thực tập FCAJ.
+
+### 6. Ước tính ngân sách
+
+Hạ tầng được thiết kế tối ưu hóa theo mô hình On-Demand để tận dụng triệt để gói AWS Free Tier, giảm thiểu rủi ro phát sinh chi phí ngoài ý muốn trong quá trình thực tập.
+
+*Chi phí hạ tầng AWS (Ước tính hàng tháng)* - AWS Lambda: 0,00 USD (Nằm trong hạn mức miễn phí 1 triệu request/tháng).
+
+* Amazon SQS & API Gateway: ~0,00 USD (Lượng request thử nghiệm MVP nhỏ hơn rất nhiều so với hạn mức Free Tier).
+* Amazon DynamoDB: 0,00 USD (Lựa chọn chế độ On-Demand cấp phát tự động).
+* AWS Systems Manager & AWS X-Ray: 0,00 USD.
+
+*Chi phí dịch vụ tích hợp bên ngoài* - OpenAI API (GPT-4o-mini): ~1,00 - 2,00 USD/tháng (Dựa trên khối lượng dữ liệu test khoảng 50-100 email/ngày). Hạn mức chi tiêu tối đa (Hard Limit) được cấu hình khóa chặt ở mức **5,00 USD/tháng** để kiểm soát hoàn toàn rủi ro tài chính.
+
+### 7. Đánh giá rủi ro
+
+*Ma trận rủi ro* - Lỗi kết nối hoặc mất hiệu lực mã OAuth Token của Gmail: Ảnh hưởng Cao, Xác suất Trung bình.
+
+* Vượt ngưỡng hạn mức gọi API (Throttling) từ phía OpenAI hoặc AWS SSM: Ảnh hưởng Trung bình, Xác suất Thấp.
+* Phát sinh chi phí AWS ngoài tầm kiểm soát: Ảnh hưởng Cao, Xác suất Thấp.
+
+*Chiến lược giảm thiểu* - Khóa Token: Xây dựng bảng lưu trữ trạng thái token cụ thể, thực hiện kiểm tra hiệu lực trước khi gọi và viết luồng tự động làm mới mã (Refresh Token flow).
+
+* Throttling: Áp dụng cơ chế lưu trữ đệm (Caching) các khóa API bảo mật tại phạm vi biến toàn cục (Global Scope) của hàm Lambda để tránh việc truy vấn liên tục vào Parameter Store trên mỗi request. Sử dụng tính năng SQS Partial Batch Response để chỉ retry lại các email bị lỗi thay vì xử lý lại toàn bộ mẻ.
+* Chi phí: Đặt bộ cảnh báo AWS Budgets tự động gửi email thông báo khi chi phí chạm mốc $5, $10, $20 và cấu hình Budget Action tự động thu hồi quyền của IAM User nếu chi phí chạm ngưỡng $50.
+
+### 8. Kết quả kỳ vọng
+
+*Cải tiến kỹ thuật*: Xây dựng thành công một hệ thống xử lý bất đồng bộ hoàn chỉnh, xử lý mượt mà luồng dữ liệu lớn mà không gây nghẽn kết nối của ứng dụng di động nhờ mô hình WebSocket phản hồi thời gian thực.
+*Giá trị dài hạn*: Cung cấp một giải pháp nền tảng có thể tái sử dụng cho các bài toán xử lý ngôn ngữ tự nhiên (NLP) dựa trên kiến trúc Serverless, đồng thời phục vụ làm minh chứng thực tế, trực quan bằng hình ảnh (Console Screenshots) cho tập báo cáo thực tập FCAJ đạt chất lượng xuất sắc.

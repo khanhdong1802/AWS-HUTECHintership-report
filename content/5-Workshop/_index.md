@@ -1,31 +1,28 @@
 ---
 title: "Workshop"
-date: 2024-01-01
+date: 2026-07-07
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Secure Hybrid Access to S3 using VPC Endpoints
+# Building the InboxIQ Application on the AWS Serverless Platform
 
 #### Overview
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+**InboxIQ** is a smart email management application developed on the **AWS Serverless** platform, integrated with artificial intelligence services to help users read, analyze, and summarize email content quickly. Instead of using a traditional server model, the system leverages fully managed AWS services to reduce operational costs, increase scalability, and simplify the deployment process.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+In this workshop, we will step-by-step build and deploy a Serverless Backend using the **AWS Serverless Application Model (AWS SAM)**. At the same time, we will configure and integrate key AWS services such as **Amazon API Gateway**, **AWS Lambda**, **Amazon Cognito**, **Amazon DynamoDB**, **Amazon SQS**, **AWS Secrets Manager**, and **Amazon CloudWatch** to create a complete system capable of authenticating users, processing data, storing information, and monitoring application activities.
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+Besides AWS services, the workshop also provides instructions on how to integrate **Gmail OAuth 2.0** so users can securely grant access to their Gmail inbox. Once authorized, the system will use the **Gmail API** to retrieve email content, combined with the **OpenAI API** to summarize, categorize, and analyze information, thereby helping users easily keep track of important emails without having to read the entire content.
 
-#### Content
+Through this workshop, learners will understand the process of deploying a real-world Serverless application on AWS, from preparing the development environment, deploying infrastructure using Infrastructure as Code, and building business processing APIs, to integrating third-party services, testing, and operating the system. This is also an opportunity to get familiar with Event-Driven architecture and modern application development methods on the AWS cloud computing platform.
 
-1. [Workshop overview](5.1-Workshop-overview)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
+#### Table of Contents
+
+1. [Workshop Overview](5.1-Workshop-overview/)
+2. [Prerequisites](5.2-Prerequiste/)
+3. [Deploying Serverless Backend on AWS](5.3-Backend/)
+4. [Integrating Gmail OAuth](5.4-Gmail-OAuth/)
+5. [VPC Endpoint Policies](5.5-Flutter-app/)
 6. [Clean up](5.6-Cleanup/)

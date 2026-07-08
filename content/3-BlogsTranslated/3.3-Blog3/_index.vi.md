@@ -1,127 +1,116 @@
 ---
 title: "Blog 3"
-date: 2024-01-01
-weight: 1
+date: 2026-07-07
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Hiện đại hóa ứng dụng và cơ sở dữ liệu với GenAI trên AWS
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Trong quá trình phát triển phần mềm, nhiều doanh nghiệp vẫn đang vận hành các hệ thống cũ theo mô hình monolithic. Ban đầu, kiến trúc này có thể dễ triển khai và quản lý. Tuy nhiên, khi hệ thống ngày càng lớn, số lượng người dùng tăng lên và yêu cầu kinh doanh thay đổi liên tục, các ứng dụng monolithic thường bộc lộ những hạn chế lớn: thời gian phát hành (release) chậm, khó mở rộng độc lập, chi phí vận hành cao và rủi ro ảnh hưởng dây chuyền. Hiện đại hóa ứng dụng không chỉ đơn thuần là thay đổi công nghệ, mà còn là sự lột xác trong cách tư duy thiết kế hệ thống.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
-
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Bài đăng trên blog này (được tổng hợp từ nhóm Otokoshi) sẽ tập trung vào giải pháp GenAI-powered App & Database Modernization. Thay vì chỉ “nâng cấp code”, quá trình này là sự kết hợp nhuần nhuyễn giữa Domain-Driven Design (DDD), microservices, event-driven architecture, serverless computing và các công cụ AI (như Amazon Q Developer, AWS Transform) nhằm hỗ trợ phân tích, chuyển đổi và tối ưu hóa hệ thống từ gốc rễ.
 
 ---
 
 ## Hướng dẫn kiến trúc
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+Thay đổi cốt lõi trong tiến trình hiện đại hóa là việc dịch chuyển khỏi một khối monolithic khổng lồ sang một hệ sinh thái các dịch vụ nhỏ (microservices), được kết nối lỏng lẻo thông qua các luồng sự kiện (event-driven). Việc không cố gắng viết lại toàn bộ hệ thống từ đầu giúp giảm thiểu rủi ro kinh doanh đáng kể. Bằng cách định hình các ranh giới nghiệp vụ, chúng ta có thể bóc tách từng phần, chuyển dịch sang các mô hình serverless một cách an toàn.
+**Kiến trúc giải pháp hiện đại hóa có thể được hình dung như sau:**
+**Kiến trúc giải pháp hiện đại hóa có thể được hình dung như sau:**
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+![Hình 1. Sự dịch chuyển kiến trúc từ Monolithic sang Microservices kết hợp Event-driven và Serverless](/images/Blog3/blog3(0).jpg)
 
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
-
----
-
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
-
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+> *Hình 1. Sự dịch chuyển kiến trúc từ Monolithic sang Microservices kết hợp Event-driven và Serverless.*
 
 ---
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+Khi thiết lập ranh giới cho các thành phần trong hệ thống mới, hệ thống sẽ mang các đặc điểm chung:
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+* Bắt đầu từ business domain (nghiệp vụ kinh doanh) trước khi bàn về công nghệ.
+* Mỗi chức năng quan trọng trở thành một service độc lập, tự chủ.
+* Giao tiếp linh hoạt, bất đồng bộ qua các event thay vì gọi API trực tiếp.
+* Chạy mã (code) mà không cần quản lý máy chủ vật lý hay máy ảo bên dưới.
 
----
+Khi xác định chiến lược bóc tách monolithic, cần cân nhắc:
 
-## The pub/sub hub
-
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
-
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+* **Nghiệp vụ**: Nhận diện các domain chính yếu (quản lý đơn hàng, thanh toán, khách hàng, kho hàng).
+* **Kiến trúc**: Sử dụng Bounded Context để chia nhỏ, quyết định phần nào giữ lại, phần nào biến thành microservice.
+* **Lộ trình**: Nâng cấp từng phần (modernize từng phần) thay vì thay đổi toàn diện trong một lần.
 
 ---
 
-## Core microservice
+## Lựa chọn công nghệ và mô hình tính toán
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+| Khía cạnh hệ thống / Mức độ kiểm soát | Các dịch vụ AWS phù hợp / Mô hình tính toán |
+| --- | --- |
+| Cần kiểm soát chặt chẽ hệ điều hành, runtime và cấu hình | Amazon Elastic Compute Cloud (Amazon EC2) |
+| Ứng dụng container, microservices và cần orchestration | Amazon Elastic Container Service (ECS), Amazon EKS |
+| Chạy container nhưng không muốn quản lý máy chủ bên dưới | AWS Fargate |
+| Event-driven, xử lý tác vụ ngắn, API nhỏ, automation | AWS Lambda |
 
 ---
 
-## Front door microservice
+## Domain-Driven Design (DDD)
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+![Quy trình hiện đại hóa ứng dụng 5 bước](/images/Blog3/blog3(1).jpg)
 
----
+Một sai lầm phổ biến là bắt đầu bằng câu hỏi: “Nên dùng Lambda, ECS hay Kubernetes?”. Thực tế, câu hỏi đầu tiên phải là: “Hệ thống đang phục vụ nghiệp vụ gì?”. DDD giúp nhóm kỹ thuật và nghiệp vụ sử dụng một ngôn ngữ chung. Thông qua các buổi *event storming*, bạn có thể xác định: - Những sự kiện nghiệp vụ quan trọng và các actor tham gia.
 
-## Staging ER7 microservice
+* Timeline các bước xử lý chính.
+* Những bounded context (giới hạn ngữ cảnh) cần được bóc tách.
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+Nhược điểm/Thách thức: Đòi hỏi sự tham gia và trao đổi liên tục giữa *domain expert* (chuyên gia nghiệp vụ) và *software expert* (chuyên gia phần mềm) để khám phá sự phức tạp trước khi bắt tay vào code.
 
 ---
 
-## Tính năng mới trong giải pháp
+## Event-Driven Architecture
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Giải quyết bài toán giao tiếp giữa các thành phần. Nếu các microservices gọi nhau bằng API đồng bộ, hệ thống sẽ nhanh chóng bị phụ thuộc chéo. Khi một dịch vụ sập, toàn bộ hệ thống có thể tê liệt.
+
+* Một service (ví dụ: Order) chỉ cần phát ra sự kiện (OrderCreated).
+* Các service khác (Payment, Inventory, Notification) độc lập lắng nghe sự kiện đó thông qua các router như **Amazon EventBridge** hoặc **Amazon SNS/SQS** để xử lý phần việc của mình.
+
+> Hệ thống linh hoạt hơn, dễ dàng scale hơn và loại bỏ được sự phụ thuộc trực tiếp giữa các thành phần, giúp kiến trúc trở nên "loosely-coupled".
+
+---
+
+## Compute Evolution: Chuyển dịch sang Serverless
+
+* Trút bỏ gánh nặng hạ tầng: Công việc duy trì, scaling, patching và quản lý capacity được giao lại cho AWS.
+* Khai thác sức mạnh của **AWS Lambda**:
+1. Rất phù hợp với các workload event-driven.
+2. Tối ưu chi phí nhờ cơ chế tự động mở rộng và tính phí theo mức độ sử dụng thực tế (pay-as-you-go).
+3. Lập trình viên chỉ cần tập trung vào viết logic nghiệp vụ.
+
+---
+
+## Vai trò của GenAI trong giải pháp
+
+### 1. Amazon Q Developer và AWS Transform
+
+Dù không thể thay thế hoàn toàn Kiến trúc sư phần mềm, GenAI đóng vai trò như một trợ lý siêu tốc giúp giải quyết các bài toán di chuyển dữ liệu và mã nguồn phức tạp.
+
+![Sự hỗ trợ của GenAI thông qua Amazon Q Developer và AWS Transform](/images/Blog3/blog3(2).jpg)
+
+* **Amazon Q Developer**: Phân tích codebase cũ, gợi ý cách bóc tách module, tạo tài liệu kỹ thuật, đề xuất test case và hỗ trợ refactor (ví dụ: nâng cấp phiên bản Java, giải thích dependency).
+* **AWS Transform**: Dịch vụ agentic AI hỗ trợ hiện đại hóa ở quy mô lớn đối với các workload nặng như Windows, mainframe hay VMware.
+
+Ví dụ về một bản kế hoạch chuyển đổi (diff) do AI đề xuất để thay thế lời gọi API đồng bộ sang mô hình phát sự kiện:
+
+```diff
+- // Legacy Monolithic Synchronous Call
+- paymentService.processPayment(order.getId(), order.getTotal());
+- inventoryService.deductItems(order.getItems());
+
++ // Modern Event-Driven Architecture with EventBridge
++ PutEventsRequestEntry eventEntry = PutEventsRequestEntry.builder()
++    .source("com.ecommerce.orders")
++    .detailType("OrderCreated")
++    .detail(orderJson)
++    .eventBusName("EcommerceEventBus")
++    .build();
++ eventBridgeClient.putEvents(PutEventsRequest.builder().entries(eventEntry).build());
+
+```
