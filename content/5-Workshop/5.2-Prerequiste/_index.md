@@ -19,7 +19,7 @@ Create a $20/month budget with 4 alert thresholds at 10%, 25%, 50%, and 100%.
 
 Set a project spend limit of $5/month, along with an alert at $2.50.
 
-![OpenAI limit](/images/5-Workshop/5.2-Prerequisite/openai-limit.jpg)
+![OpenAI limit](/AWS-HUTECHintership-report/images/5-Workshop/5.2-Prerequisite/openai-limit.jpg)
 
 ## 3. Local Tool Installation
 
@@ -34,7 +34,7 @@ Set a project spend limit of $5/month, along with an alert at $2.50.
 
 AWS recommends against creating access keys for the root account because its permissions are unlimited and cannot be restricted. Create a dedicated IAM user named `inboxiq-dev` and attach the following policies: `AWSLambda_FullAccess`, `AmazonSQSFullAccess`, `AmazonDynamoDBFullAccess`, `AmazonAPIGatewayAdministrator`, `SecretsManagerReadWrite`, `CloudWatchFullAccess`, and `IAMFullAccess`.
 
-![IAM user](/images/5-Workshop/5.2-Prerequisite/iam-user-created.jpg)
+![IAM user](/AWS-HUTECHintership-report/images/5-Workshop/5.2-Prerequisite/iam-user-created.jpg)
 
 ## 5. Configure AWS CLI
 

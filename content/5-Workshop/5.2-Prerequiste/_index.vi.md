@@ -21,7 +21,7 @@ Tạo 1 budget $20/tháng kèm 4 mức cảnh báo tại 10%, 25%, 50%, 100%.
 
 Đặt project spend limit $5/tháng, kèm alert ở $2.50.
 
-![OpenAI limit](/images/5-Workshop/5.2-Prerequisite/openai-limit.jpg)
+![OpenAI limit](/AWS-HUTECHintership-report/images/5-Workshop/5.2-Prerequisite/openai-limit.jpg)
 
 ## 3. Cài đặt công cụ local
 
@@ -40,7 +40,7 @@ và không thể thu hẹp phạm vi. Tạo IAM user riêng `inboxiq-dev`, gắn
 `AmazonAPIGatewayAdministrator`, `SecretsManagerReadWrite`, `CloudWatchFullAccess`,
 `IAMFullAccess`.
 
-![IAM user](/images/5-Workshop/5.2-Prerequisite/iam-user-created.jpg)
+![IAM user](/AWS-HUTECHintership-report/images/5-Workshop/5.2-Prerequisite/iam-user-created.jpg)
 
 ## 5. Cấu hình AWS CLI
 
@@ -52,4 +52,4 @@ aws sts get-caller-identity
 Xác nhận `Arn` trả về đúng `user/inboxiq-dev`, không phải root — đảm bảo
 terminal đang thao tác bằng IAM user vừa tạo.
 
-![CLI configured](/images/5-Workshop/5.2-Prerequisite/cli-verify.jpg)
+![CLI configured](/AWS-HUTECHintership-report/images/5-Workshop/5.2-Prerequisite/cli-verify.jpg)

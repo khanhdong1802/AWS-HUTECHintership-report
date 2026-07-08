@@ -33,13 +33,13 @@ WebSocketEndpoint: wss://xmz4gyqica.execute-api.us-east-1.amazonaws.com/prod
 Successfully created/updated stack - inboxiq-backend in us-east-1
 ```
 
-![Deployment succeeded](/images/5-Workshop/5.3-Backend-serverless/deploy-success-outputs.jpg)
+![Deployment succeeded](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/deploy-success-outputs.jpg)
 
 ## CloudWatch Alarms
 
 3 monitoring alarms: Worker error rate, messages landing in the DLQ, and estimated cost exceeding $5.
 
-![CloudWatch Alarms](/images/5-Workshop/5.3-Backend-serverless/cloudwatch-alarms.jpg)
+![CloudWatch Alarms](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/cloudwatch-alarms.jpg)
 
 ## End-to-end test
 
@@ -54,6 +54,6 @@ ERROR: No Gmail token for user d4480488-c031-7014-0d67-6eed60f23063
     at getGmailToken (file:///var/task/index.mjs:43:27)
 ```
 
-![Worker log stopping at the expected point](/images/5-Workshop/5.3-Backend-serverless/worker-log-no-gmail-token.jpg)
+![Worker log stopping at the expected point](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/worker-log-no-gmail-token.jpg)
 
 > This error is **not a bug** — it confirms the entire Producer → SQS → Worker → Secrets Manager → DynamoDB flow works as designed, stopping exactly at the one missing piece (the Gmail OAuth token), which will be completed in the next section — **5.4 Gmail OAuth Setup**.

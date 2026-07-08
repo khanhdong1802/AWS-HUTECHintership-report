@@ -33,13 +33,13 @@ WebSocketEndpoint: wss://xmz4gyqica.execute-api.us-east-1.amazonaws.com/prod
 Successfully created/updated stack - inboxiq-backend in us-east-1
 ```
 
-![Deploy thành công](/images/5-Workshop/5.3-Backend-serverless/deploy-success-outputs.jpg)
+![Deploy thành công](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/deploy-success-outputs.jpg)
 
 ## CloudWatch Alarms
 
 3 alarm giám sát: error rate của Worker, message rơi vào DLQ, và chi phí ước tính vượt $5.
 
-![CloudWatch Alarms](/images/5-Workshop/5.3-Backend-serverless/cloudwatch-alarms.jpg)
+![CloudWatch Alarms](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/cloudwatch-alarms.jpg)
 
 ## Test end-to-end
 
@@ -54,6 +54,6 @@ ERROR: No Gmail token for user d4480488-c031-7014-0d67-6eed60f23063
     at getGmailToken (file:///var/task/index.mjs:43:27)
 ```
 
-![Log Worker dừng đúng chỗ dự kiến](/images/5-Workshop/5.3-Backend-serverless/worker-log-no-gmail-token.jpg)
+![Log Worker dừng đúng chỗ dự kiến](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/worker-log-no-gmail-token.jpg)
 
 > Lỗi này **không phải bug** — xác nhận toàn bộ luồng Producer → SQS → Worker → Secrets Manager → DynamoDB chạy đúng thiết kế, chỉ dừng lại đúng điểm còn thiếu (Gmail OAuth token), sẽ hoàn thiện ở mục tiếp theo — **5.4 Gmail OAuth Setup**.
