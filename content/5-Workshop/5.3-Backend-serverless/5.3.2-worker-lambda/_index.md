@@ -29,7 +29,7 @@ The `cachedOpenAIKey` variable is declared outside the `handler`, at global scop
 
 > **Issue encountered:** On the first test run, the Worker crashed with `SyntaxError: Expected property name or '}' in JSON at position 1` — the `inboxiq/openai-api-key` secret was stored in invalid JSON format (double quotes were swallowed by PowerShell when the secret was created). Fixed by writing the secret to a JSON file (`Out-File -Encoding ascii`) and pointing `--secret-string file://...` at it instead of typing JSON directly on the command line.
 
-![SyntaxError parsing the OpenAI key](/images/5-Workshop/5.3-Backend-serverless/worker-syntax-error.jpg)
+![SyntaxError parsing the OpenAI key](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/worker-syntax-error.jpg)
 
 ## Partial Batch Response — fixing "retrying the whole batch when one email fails"
 
@@ -86,4 +86,4 @@ WorkerFunction:
 
 All 5 Lambdas (Producer, Worker, Authorizer, ws-connect, ws-disconnect) share a single `inboxiq-lambda-role` granting only what's needed: DynamoDB (Get/Put/Update/Delete/Query on exactly the 6 tables), SQS (Send/Receive/Delete on exactly the 2 queues), Secrets Manager (GetSecretValue on the exact secret path), KMS Decrypt, WebSocket ManageConnections, CloudWatch Logs, X-Ray — no excess permissions.
 
-![IAM Role Permissions](/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)
+![IAM Role Permissions](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)

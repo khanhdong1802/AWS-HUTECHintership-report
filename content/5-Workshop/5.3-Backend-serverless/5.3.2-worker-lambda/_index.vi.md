@@ -29,7 +29,7 @@ Biến `cachedOpenAIKey` khai báo ngoài `handler`, ở global scope — Lambda
 
 > **Sự cố gặp phải:** Lần đầu test, Worker crash với `SyntaxError: Expected property name or '}' in JSON at position 1` — do secret `inboxiq/openai-api-key` bị lưu sai định dạng JSON (mất dấu ngoặc kép do PowerShell nuốt mất lúc tạo secret). Đã khắc phục bằng cách ghi lại secret qua file JSON (`Out-File -Encoding ascii`) rồi trỏ `--secret-string file://...` thay vì gõ JSON trực tiếp trên dòng lệnh.
 
-![Lỗi SyntaxError khi parse OpenAI key](/images/5-Workshop/5.3-Backend-serverless/worker-syntax-error.jpg)
+![Lỗi SyntaxError khi parse OpenAI key](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/worker-syntax-error.jpg)
 
 ## Partial Batch Response — fix vấn đề "retry cả batch khi 1 email lỗi"
 
@@ -86,4 +86,4 @@ WorkerFunction:
 
 Cả 5 Lambda (Producer, Worker, Authorizer, ws-connect, ws-disconnect) dùng chung 1 role `inboxiq-lambda-role`, chỉ cấp đúng quyền cần thiết: DynamoDB (Get/Put/Update/Delete/Query trên đúng 6 bảng), SQS (Send/Receive/Delete trên đúng 2 queue), Secrets Manager (GetSecretValue trên đúng path secret), KMS Decrypt, WebSocket ManageConnections, CloudWatch Logs, X-Ray — không cấp quyền thừa.
 
-![IAM Role Permissions](/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)
+![IAM Role Permissions](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)

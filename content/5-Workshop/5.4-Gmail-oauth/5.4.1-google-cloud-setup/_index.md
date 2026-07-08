@@ -17,13 +17,13 @@ Access [Google Cloud Console](https://console.cloud.google.com/), click **Select
 Google limits the number of projects per free account (default is 12). The warning "You have N projects remaining in your quota" is for informational purposes only and does not prevent project creation.
 {{% /notice %}}
 
-![Create InboxIQ project](/images/5-Workshop/5.4-Gmail-oauth/create-project.jpg)
+![Create InboxIQ project](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/create-project.jpg)
 
 After the project is created, click **Select Project** in the notification to switch the console to the correct project — if the account has multiple projects, it is very easy for the console to mistakenly stay on the old project, causing the subsequent steps (enabling APIs, creating credentials) to be applied to the wrong place.
 
 Next, go to **APIs & Services → Library**, search for **Gmail API** and click **Enable**. A new project does not have any APIs enabled by default; if you skip this step, all future Gmail API calls will return a `403 accessNotConfigured` error, which is very hard to trace.
 
-![Gmail API enabled](/images/5-Workshop/5.4-Gmail-oauth/Gmail-api-enabled.jpg)
+![Gmail API enabled](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/Gmail-api-enabled.jpg)
 
 #### 2. Configure OAuth Consent Screen (Google Auth Platform)
 
@@ -49,7 +49,7 @@ After creation, continue configuring two sections on the sidebar:
 
 Principle of least-privilege: only request read access, not send/delete/modify access. The fewer scopes you request, the less intimidating the consent screen is for users, and the easier it is for the app to pass Google's verification process later.
 
-![Configured scopes](/images/5-Workshop/5.4-Gmail-oauth/oauth-scopes.jpg)
+![Configured scopes](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/oauth-scopes.jpg)
 
 **Audience** → **Test users** → **Add users** → add the Google email that will be used for testing.
 
@@ -74,7 +74,7 @@ Two practical notes: (1) Do not confuse this with the **Authorized JavaScript or
 
 After clicking **Create**, Google displays the **Client ID** (format `xxxxx.apps.googleusercontent.com`) and **Client Secret** (format `GOCSPX-xxxxx`). Save these two values immediately — the Client Secret cannot be viewed again after closing the dialog.
 
-![OAuth Client created](/images/5-Workshop/5.4-Gmail-oauth/oauth-client-created.jpg)
+![OAuth Client created](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/oauth-client-created.jpg)
 
 #### 4. Save credentials to Secrets Manager
 
@@ -104,4 +104,4 @@ Use `-Encoding ascii` instead of `utf8` because PowerShell automatically inserts
 
 Result: Secrets Manager has 2 secrets — `inboxiq/openai-api-key` and `inboxiq/google-oauth`.
 
-![Two secret in Secrets Manager](/images/5-Workshop/5.4-Gmail-oauth/secrets-manager.jpg)
+![Two secret in Secrets Manager](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/secrets-manager.jpg)

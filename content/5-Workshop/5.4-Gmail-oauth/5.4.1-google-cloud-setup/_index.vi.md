@@ -17,13 +17,13 @@ Truy cập [Google Cloud Console](https://console.cloud.google.com/), bấm **Se
 Google giới hạn số project trên mỗi tài khoản miễn phí (mặc định 12). Cảnh báo "You have N projects remaining in your quota" chỉ mang tính thông tin, không chặn việc tạo project.
 {{% /notice %}}
 
-![Tạo project InboxIQ](/images/5-Workshop/5.4-Gmail-oauth/create-project.jpg)
+![Tạo project InboxIQ](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/create-project.jpg)
 
 Sau khi project được tạo, bấm **Select Project** trong thông báo để chuyển console sang đúng project — nếu tài khoản có nhiều project, console rất dễ đứng nhầm ở project cũ khiến các bước sau (enable API, tạo credentials) rơi nhầm chỗ.
 
 Tiếp theo vào **APIs & Services → Library**, tìm **Gmail API** và bấm **Enable**. Project mới mặc định không bật API nào; nếu bỏ qua bước này, mọi lời gọi Gmail API sau này sẽ trả lỗi `403 accessNotConfigured` rất khó truy vết.
 
-![Gmail API đã enable](/images/5-Workshop/5.4-Gmail-oauth/Gmail-api-enabled.jpg)
+![Gmail API đã enable](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/Gmail-api-enabled.jpg)
 
 #### 2. Cấu hình OAuth Consent Screen (Google Auth Platform)
 
@@ -49,7 +49,7 @@ Sau khi tạo xong, cấu hình tiếp hai mục ở sidebar:
 
 Nguyên tắc least-privilege: chỉ xin quyền đọc, không xin quyền gửi/xóa/sửa. Càng ít scope, màn hình consent càng ít gây e ngại cho người dùng, và app càng dễ qua vòng verify của Google sau này.
 
-![Scopes đã cấu hình](/images/5-Workshop/5.4-Gmail-oauth/oauth-scopes.jpg)
+![Scopes đã cấu hình](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/oauth-scopes.jpg)
 
 **Audience** → **Test users** → **Add users** → thêm email Google sẽ dùng để test.
 
@@ -75,7 +75,7 @@ Hai lưu ý từ thực tế: (1) đừng nhầm ô **Authorized JavaScript orig
 
 Sau khi bấm **Create**, Google hiển thị **Client ID** (dạng `xxxxx.apps.googleusercontent.com`) và **Client Secret** (dạng `GOCSPX-xxxxx`). Lưu ngay hai giá trị này — Client Secret không thể xem lại sau khi đóng hộp thoại.
 
-![OAuth Client đã tạo](/images/5-Workshop/5.4-Gmail-oauth/oauth-client-created.jpg)
+![OAuth Client đã tạo](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/oauth-client-created.jpg)
 
 #### 4. Lưu credentials vào Secrets Manager
 
@@ -104,4 +104,4 @@ Dùng `-Encoding ascii` thay vì `utf8` vì PowerShell mặc định chèn BOM v
 
 Kết quả: Secrets Manager có 2 secret — `inboxiq/openai-api-key` và `inboxiq/google-oauth`.
 
-![Hai secret trong Secrets Manager](/images/5-Workshop/5.4-Gmail-oauth/secrets-manager.jpg)
+![Hai secret trong Secrets Manager](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/secrets-manager.jpg)

@@ -74,4 +74,4 @@ Tested using `curl.exe` with a real JWT token (retrieved via `aws cognito-idp in
 ```json
 {"message":"Processing started","jobId":"job-1783438359558-mq2qy4"}
 ```
-![Test Producer Complete](/images/5-Workshop/5.3-Backend-serverless/producer-test-202.jpg)
+![Test Producer Complete](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/producer-test-202.jpg)

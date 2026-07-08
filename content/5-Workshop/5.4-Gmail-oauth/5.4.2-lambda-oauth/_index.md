@@ -203,4 +203,4 @@ sam deploy
 
 The changeset adds 3 new resources (`GmailSharedLayer`, the two OAuth functions) and modifies `WorkerFunction` (attaching the Layer) and `RestApi` (two new routes). SAM deleting the old `RestApiDeployment` and creating a new deployment is normal behavior whenever routes change.
 
-![Deploy success](/images/5-Workshop/5.4-Gmail-oauth/deploy-success.jpg)
+![Deploy success](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/deploy-success.jpg)

@@ -13,7 +13,7 @@ Before writing any line of Lambda code, it is essential to set up a cost "safety
 
 Create a $20/month budget with 4 alert thresholds at 10%, 25%, 50%, and 100%.
 
-![Budget alert](/images/5-Workshop/5.2-Prerequisite/budget-created.jpg)
+![Budget alert](/AWS-HUTECHintership-report/images/5-Workshop/5.2-Prerequisite/budget-created.jpg)
 
 ## 2. OpenAI Spend Limit
 

@@ -73,4 +73,4 @@ Test bằng `curl.exe` kèm JWT token thật (lấy qua `aws cognito-idp initiat
 {"message":"Processing started","jobId":"job-1783438359558-mq2qy4"}
 ```
 
-![Test Producer thành công](/images/5-Workshop/5.3-Backend-serverless/producer-test-202.jpg)
+![Test Producer thành công](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/producer-test-202.jpg)

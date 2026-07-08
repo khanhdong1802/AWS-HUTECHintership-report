@@ -33,7 +33,7 @@ The response returns `{"authUrl": "https://accounts.google.com/o/oauth2/v2/auth?
 2. Consent screen listing the requested permissions
 3. After allowing, Google redirects to the callback and the page displays "✓ Gmail connection successful"
 
-![Connect Gmail success](/images/5-Workshop/5.4-Gmail-oauth/gmail-connected.jpg)
+![Connect Gmail success](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/gmail-connected.jpg)
 
 Verify the saved token in DynamoDB (write the JSON key to a file to avoid quote escaping issues on PowerShell):
 
@@ -51,7 +51,7 @@ aws dynamodb get-item `
 
 A valid record must have `accessToken`, `refreshToken`, `gmailAddress`, `expiresAt`, and most importantly — the `scope` field must contain `gmail.readonly`.
 
-![Record trong DynamoDB](/images/5-Workshop/5.4-Gmail-oauth/gmail-connection-item.jpg)
+![Record trong DynamoDB](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/gmail-connection-item.jpg)
 
 #### 2. Real-World Incident: Google Granular Permissions and 403 Error
 
@@ -61,7 +61,7 @@ This is the most notable incident in this section, as it demonstrates a new Goog
 
 **Cause:** Google applies a **granular permissions** mechanism — the consent screen allows users to check individual permissions. The user clicked "Continue" without checking the Gmail permission box, so Google still granted a token but only with the `userinfo.email openid` scope. The proof is right in the DynamoDB record: the `scope` field is missing `gmail.readonly`.
 
-![Record missing gmail.readonly scope](/images/5-Workshop/5.4-Gmail-oauth/scope-missing-gmail.jpg)
+![Record missing gmail.readonly scope](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/scope-missing-gmail.jpg)
 
 **Resolution:** re-run the OAuth flow. Google recognizes the app already has partial permissions and displays an **incremental consent** screen ("wants additional access") asking only for the missing permission. After agreeing, the new record has the full scope and the Worker calls the Gmail API successfully.
 
@@ -92,7 +92,7 @@ aws dynamodb query `
 
 Result: real emails in the mailbox are analyzed by GPT-4o-mini with a full `summary` (Vietnamese summary), `category`, `priority`, `action` (suggested action), and `expireAt` (TTL for DynamoDB to auto-cleanup old records).
 
-![Email summary in DynamoDB](/images/5-Workshop/5.4-Gmail-oauth/email-summary-result.jpg)
+![Email summary in DynamoDB](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/email-summary-result.jpg)
 
 {{% notice note %}}
 Note regarding WebSocket push: the Worker log will show a "connection not found" warning because the `connectionId` in the test command is a dummy value — this is expected behavior; the real WebSocket connection will be established from the Flutter app in the next section.

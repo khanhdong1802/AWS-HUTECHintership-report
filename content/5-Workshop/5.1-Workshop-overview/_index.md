@@ -18,7 +18,7 @@ pre : " <b> 5.1. </b> "
 
 ## Overall Architecture (5 layers)
 
-![InboxIQ Architecture](/images/5-Workshop/5.1-Workshop-overview/architecture.png)
+![InboxIQ Architecture](/AWS-HUTECHintership-report/images/5-Workshop/5.1-Workshop-overview/architecture.png)
 
 | Layer | Component |
 |---|---|

@@ -22,7 +22,7 @@ Backend InboxIQ được dựng hoàn toàn bằng AWS CLI + AWS SAM, không tha
 
 Tạo qua giao diện Quick Setup mới của Cognito, application type **Mobile app**, sign-in bằng **Email**, không generate client secret (vì Flutter mobile không giữ được secret an toàn).
 
-![Cognito User Pool](/images/5-Workshop/5.3-Backend-serverless/cognito-overview.jpg)
+![Cognito User Pool](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/cognito-overview.jpg)
 
 | Giá trị | Kết quả |
 |---|---|
@@ -34,7 +34,7 @@ Tạo qua giao diện Quick Setup mới của Cognito, application type **Mobile
 
 Tạo bằng AWS CLI (`aws dynamodb create-table`), chế độ `PAY_PER_REQUEST` (tính phí theo lượt đọc/ghi thực tế, phù hợp traffic thấp và không đều của MVP).
 
-![6 bảng DynamoDB](/images/5-Workshop/5.3-Backend-serverless/dynamodb-tables.jpg)
+![6 bảng DynamoDB](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/dynamodb-tables.jpg)
 
 | Bảng | Partition Key | Sort Key | TTL |
 |---|---|---|---|
@@ -51,7 +51,7 @@ Tạo bằng AWS CLI (`aws dynamodb create-table`), chế độ `PAY_PER_REQUEST
 
 Lưu OpenAI API key thay vì dùng SSM Parameter Store — vì Secrets Manager có audit log chi tiết và hỗ trợ auto-rotation.
 
-![Secrets Manager](/images/5-Workshop/5.3-Backend-serverless/secrets-manager.jpg)
+![Secrets Manager](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/secrets-manager.jpg)
 
 > **Sự cố gặp phải:** Lần đầu tạo secret trên PowerShell, dấu ngoặc kép trong JSON `{"apiKey":"..."}` bị nuốt mất, secret lưu sai thành `{apiKey:sk-proj-...}` không phải JSON hợp lệ — khiến Worker Lambda crash với `SyntaxError`. Khắc phục bằng cách ghi JSON ra file (`Out-File -Encoding ascii`) rồi trỏ `--secret-string file://...` thay vì gõ JSON trực tiếp trên dòng lệnh.
 
@@ -59,7 +59,7 @@ Lưu OpenAI API key thay vì dùng SSM Parameter Store — vì Secrets Manager c
 
 DLQ tạo trước, Main Queue trỏ redrive policy về DLQ (`maxReceiveCount: 3`).
 
-![SQS Dead-letter queue](/images/5-Workshop/5.3-backend-serverless/sqs-dlq-config.jpg)
+![SQS Dead-letter queue](/AWS-HUTECHintership-report/images/5-Workshop/5.3-backend-serverless/sqs-dlq-config.jpg)
 
 `VisibilityTimeout = 330s` = Lambda Worker timeout (300s) + buffer 30s — bắt buộc lớn hơn thời gian Lambda xử lý để tránh SQS trả message về queue giữa lúc Lambda đang chạy dở.
 
@@ -67,4 +67,4 @@ DLQ tạo trước, Main Queue trỏ redrive policy về DLQ (`maxReceiveCount: 
 
 Role `inboxiq-lambda-role` chỉ cấp đúng quyền cần dùng: DynamoDB (Get/Put/Update/Delete/Query trên đúng 6 bảng), SQS (Send/Receive/Delete trên đúng 2 queue), Secrets Manager (GetSecretValue trên đúng path secret), KMS Decrypt, WebSocket ManageConnections, CloudWatch Logs, X-Ray — không cấp quyền thừa.
 
-![IAM Role permissions](/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)
+![IAM Role permissions](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)

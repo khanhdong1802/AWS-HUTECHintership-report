@@ -195,4 +195,4 @@ sam deploy
 
 Changeset thêm 3 resource mới (`GmailSharedLayer`, hai function OAuth) và modify `WorkerFunction` (gắn Layer), `RestApi` (hai route mới). Việc SAM xóa `RestApiDeployment` cũ và tạo deployment mới là hành vi bình thường mỗi khi route thay đổi.
 
-![Deploy thành công](/images/5-Workshop/5.4-Gmail-oauth/deploy-success.jpg)
+![Deploy thành công](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/deploy-success.jpg)

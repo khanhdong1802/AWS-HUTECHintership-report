@@ -25,7 +25,7 @@ tiên, và gợi ý hành động cho từng email.
 
 ## Kiến trúc tổng quan (5 layer)
 
-![Kiến trúc InboxIQ](/images/5-Workshop/5.1-Workshop-overview/architecture.png)
+![Kiến trúc InboxIQ](/AWS-HUTECHintership-report/images/5-Workshop/5.1-Workshop-overview/architecture.png)
 
 | Layer | Thành phần |
 |---|---|

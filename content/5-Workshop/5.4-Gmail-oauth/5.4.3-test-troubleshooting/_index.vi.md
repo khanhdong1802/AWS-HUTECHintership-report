@@ -31,7 +31,7 @@ Response trả về `{"authUrl": "https://accounts.google.com/o/oauth2/v2/auth?.
 2. Màn hình consent liệt kê các quyền được yêu cầu
 3. Sau khi cho phép, Google redirect về callback và trang hiển thị "✓ Kết nối Gmail thành công"
 
-![Kết nối Gmail thành công](/images/5-Workshop/5.4-Gmail-oauth/gmail-connected.jpg)
+![Kết nối Gmail thành công](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/gmail-connected.jpg)
 
 Xác minh token đã lưu trong DynamoDB (JSON key ghi ra file để tránh lỗi escape dấu ngoặc kép trên PowerShell):
 
@@ -48,7 +48,7 @@ aws dynamodb get-item `
 
 Record hợp lệ phải có `accessToken`, `refreshToken`, `gmailAddress`, `expiresAt`, và quan trọng nhất — field `scope` phải chứa `gmail.readonly`.
 
-![Record trong DynamoDB](/images/5-Workshop/5.4-Gmail-oauth/gmail-connection-item.jpg)
+![Record trong DynamoDB](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/gmail-connection-item.jpg)
 
 #### 2. Sự cố thực tế: Google granular permissions và lỗi 403
 
@@ -58,7 +58,7 @@ Record hợp lệ phải có `accessToken`, `refreshToken`, `gmailAddress`, `exp
 
 **Nguyên nhân:** Google áp dụng cơ chế **granular permissions** — màn hình consent cho phép user tick chọn từng quyền riêng lẻ. Người dùng bấm "Tiếp tục" mà không tick ô quyền Gmail, nên Google vẫn cấp token nhưng chỉ với scope `userinfo.email openid`. Bằng chứng nằm ngay trong record DynamoDB: field `scope` thiếu `gmail.readonly`.
 
-![Record thiếu scope gmail.readonly](/images/5-Workshop/5.4-Gmail-oauth/scope-missing-gmail.jpg)
+![Record thiếu scope gmail.readonly](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/scope-missing-gmail.jpg)
 
 **Cách xử lý:** chạy lại luồng OAuth. Google nhận ra app đã có một phần quyền và hiển thị màn hình **incremental consent** ("muốn có thêm quyền truy cập") chỉ hỏi đúng quyền còn thiếu. Sau khi đồng ý, record mới có đủ scope và Worker gọi Gmail API thành công.
 
@@ -87,7 +87,7 @@ aws dynamodb query `
 
 Kết quả: email thật trong hộp thư được GPT-4o-mini phân tích với đầy đủ `summary` (tóm tắt tiếng Việt), `category`, `priority`, `action` (gợi ý hành động), và `expireAt` (TTL để DynamoDB tự dọn record cũ).
 
-![Email summary trong DynamoDB](/images/5-Workshop/5.4-Gmail-oauth/email-summary-result.jpg)
+![Email summary trong DynamoDB](/AWS-HUTECHintership-report/images/5-Workshop/5.4-Gmail-oauth/email-summary-result.jpg)
 
 {{% notice note %}}
 Lưu ý khi push WebSocket: log Worker sẽ có cảnh báo "connection not found" vì `connectionId` trong lệnh test là giá trị giả — đây là hành vi mong đợi, kết nối WebSocket thật sẽ được thiết lập từ app Flutter ở phần sau.

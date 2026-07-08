@@ -22,7 +22,7 @@ The InboxIQ backend is built entirely with AWS CLI + AWS SAM, with no manual Con
 
 Created through Cognito's new Quick Setup UI, application type **Mobile app**, sign-in with **Email**, no client secret generated (a Flutter mobile app cannot safely store a secret).
 
-![Cognito User Pool](/images/5-Workshop/5.3-Backend-serverless/cognito-overview.jpg)
+![Cognito User Pool](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/cognito-overview.jpg)
 
 | Value | Result |
 |---|---|
@@ -34,7 +34,7 @@ Created through Cognito's new Quick Setup UI, application type **Mobile app**, s
 
 Created via AWS CLI (`aws dynamodb create-table`) in `PAY_PER_REQUEST` mode (billed per actual read/write, suited to the MVP's low, uneven traffic).
 
-![6 DynamoDB tables](/images/5-Workshop/5.3-Backend-serverless/dynamodb-tables.jpg)
+![6 DynamoDB tables](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/dynamodb-tables.jpg)
 
 | Table | Partition Key | Sort Key | TTL |
 |---|---|---|---|
@@ -51,7 +51,7 @@ TTL is enabled separately on 3 tables via `aws dynamodb update-time-to-live`, au
 
 Stores the OpenAI API key instead of SSM Parameter Store — Secrets Manager provides detailed audit logging and supports auto-rotation.
 
-![Secrets Manager](/images/5-Workshop/5.3-Backend-serverless/secrets-manager.jpg)
+![Secrets Manager](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/secrets-manager.jpg)
 
 > **Issue encountered:** The first time the secret was created from PowerShell, the double quotes in the JSON `{"apiKey":"..."}` were swallowed, storing the secret incorrectly as `{apiKey:sk-proj-...}` — not valid JSON — which crashed the Worker Lambda with a `SyntaxError`. Fixed by writing the JSON to a file (`Out-File -Encoding ascii`) and pointing `--secret-string file://...` at it instead of typing JSON directly on the command line.
 
@@ -59,7 +59,7 @@ Stores the OpenAI API key instead of SSM Parameter Store — Secrets Manager pro
 
 The DLQ is created first, then the Main Queue's redrive policy points to it (`maxReceiveCount: 3`).
 
-![SQS Dead-letter queue](/images/5-Workshop/5.3-Backend-serverless/sqs-dlq-config.jpg)
+![SQS Dead-letter queue](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/sqs-dlq-config.jpg)
 
 `VisibilityTimeout = 330s` = Worker Lambda timeout (300s) + 30s buffer — it must exceed the Lambda's processing time so SQS doesn't return the message to the queue while the Lambda is still running.
 
@@ -67,4 +67,4 @@ The DLQ is created first, then the Main Queue's redrive policy points to it (`ma
 
 The `inboxiq-lambda-role` grants only what's needed: DynamoDB (Get/Put/Update/Delete/Query on exactly the 6 tables), SQS (Send/Receive/Delete on exactly the 2 queues), Secrets Manager (GetSecretValue on the exact secret path), KMS Decrypt, WebSocket ManageConnections, CloudWatch Logs, X-Ray — no excess permissions.
 
-![IAM Role permissions](/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)
+![IAM Role permissions](/AWS-HUTECHintership-report/images/5-Workshop/5.3-Backend-serverless/iam-role-permissions.jpg)
