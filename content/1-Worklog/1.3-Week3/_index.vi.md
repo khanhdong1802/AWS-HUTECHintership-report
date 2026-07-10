@@ -100,7 +100,7 @@ pre: " <b> 1.3. </b> "
 - Tạo Security Group cho Windows:
   - Cho phép RDP từ IP cá nhân.
   - Không mở `0.0.0.0/0` nếu không cần thiết.
-- 📸 _Ảnh minh chứng: VPC và Security Group đã tạo thành công._
+-  _Ảnh minh chứng: VPC và Security Group đã tạo thành công._
 
 **Module 3 — Launch Microsoft Windows Server 2022 Instance**
 
@@ -111,8 +111,8 @@ pre: " <b> 1.3. </b> "
 - Khởi tạo Windows EC2 Instance.
 - Decrypt password bằng file key pair.
 - Kết nối vào Windows Instance bằng Remote Desktop.
-- 📸 _Ảnh minh chứng: Windows EC2 ở trạng thái running._
-- 📸 _Ảnh minh chứng: Remote Desktop kết nối thành công._
+-  _Ảnh minh chứng: Windows EC2 ở trạng thái running._
+-  _Ảnh minh chứng: Remote Desktop kết nối thành công._
 
 **Module 4 — Launch Amazon Linux Instance**
 
@@ -122,8 +122,8 @@ pre: " <b> 1.3. </b> "
 - Cấu hình Security Group cho phép SSH.
 - Khởi tạo Linux EC2 Instance.
 - Kết nối SSH vào instance bằng terminal.
-- 📸 _Ảnh minh chứng: Amazon Linux EC2 running._
-- 📸 _Ảnh minh chứng: SSH thành công vào Linux Instance._
+-  _Ảnh minh chứng: Amazon Linux EC2 running._
+-  _Ảnh minh chứng: SSH thành công vào Linux Instance._
 
 **Module 5 — Amazon EC2 Basic**
 
@@ -134,9 +134,9 @@ pre: " <b> 1.3. </b> "
 - Tìm hiểu cách khôi phục truy cập Windows Instance.
 - Tìm hiểu cách khôi phục truy cập Linux Instance.
 - Thực hành Remote Desktop vào EC2 Ubuntu.
-- 📸 _Ảnh minh chứng: Snapshot đã tạo._
-- 📸 _Ảnh minh chứng: Custom AMI đã tạo._
-- 📸 _Ảnh minh chứng: Instance launch từ AMI thành công._
+-  _Ảnh minh chứng: Snapshot đã tạo._
+-  _Ảnh minh chứng: Custom AMI đã tạo._
+-  _Ảnh minh chứng: Instance launch từ AMI thành công._
 
 **Module 6 — Deploy AWS User Management Application on Amazon Linux**
 
@@ -147,9 +147,9 @@ pre: " <b> 1.3. </b> "
 - Cài Node.js trên Amazon Linux.
 - Deploy ứng dụng AWS User Management.
 - Kiểm tra chức năng CRUD cơ bản của ứng dụng.
-- 📸 _Ảnh minh chứng: Apache test page._
-- 📸 _Ảnh minh chứng: phpMyAdmin hoạt động._
-- 📸 _Ảnh minh chứng: ứng dụng AWS User Management chạy thành công._
+-  _Ảnh minh chứng: Apache test page._
+-  _Ảnh minh chứng: phpMyAdmin hoạt động._
+-  _Ảnh minh chứng: ứng dụng AWS User Management chạy thành công._
 
 **Module 7 — Deploy Node.js Application on EC2 Windows**
 
@@ -157,8 +157,8 @@ pre: " <b> 1.3. </b> "
 - Cài Node.js trên Windows Instance.
 - Deploy AWS User Management Application trên Windows Server.
 - Kiểm tra ứng dụng qua trình duyệt.
-- 📸 _Ảnh minh chứng: XAMPP chạy trên Windows._
-- 📸 _Ảnh minh chứng: Node.js application hoạt động._
+-  _Ảnh minh chứng: XAMPP chạy trên Windows._
+-  _Ảnh minh chứng: Node.js application hoạt động._
 
 **Module 8 — Cost & Usage Governance with IAM**
 
@@ -168,8 +168,8 @@ pre: " <b> 1.3. </b> "
 - Tạo Policy quản lý loại EBS Volume được phép dùng.
 - Tạo Policy giới hạn quyền xóa tài nguyên theo IP công ty.
 - Tạo Policy giới hạn quyền xóa tài nguyên theo thời gian.
-- 📸 _Ảnh minh chứng: IAM Policy đã tạo._
-- 📸 _Ảnh minh chứng: thao tác bị chặn khi không đúng điều kiện policy._
+-  _Ảnh minh chứng: IAM Policy đã tạo._
+-  _Ảnh minh chứng: thao tác bị chặn khi không đúng điều kiện policy._
 
 **Module 9 — Clean up resources**
 
@@ -179,8 +179,8 @@ pre: " <b> 1.3. </b> "
 - Xóa AMI đã tạo trong lab.
 - Xóa Security Group, VPC hoặc tài nguyên phụ nếu không còn cần.
 - Kiểm tra Billing Dashboard sau khi dọn dẹp.
-- 📸 _Ảnh minh chứng: không còn instance running._
-- 📸 _Ảnh minh chứng: Billing không phát sinh bất thường._
+-  _Ảnh minh chứng: không còn instance running._
+-  _Ảnh minh chứng: Billing không phát sinh bất thường._
 
 ---
 

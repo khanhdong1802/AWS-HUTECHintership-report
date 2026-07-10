@@ -80,7 +80,7 @@ pre: " <b> 1.7. </b> "
 - Reviewed CloudWatch architecture and core features.
 - Prepared the lab environment.
 
-📸 *Evidence: Amazon CloudWatch Overview.*
+ *Evidence: Amazon CloudWatch Overview.*
 
 ##### Module 2 — CloudWatch Metrics
 
@@ -89,7 +89,7 @@ pre: " <b> 1.7. </b> "
 - Practiced Math Expressions.
 - Configured Dynamic Labels.
 
-📸 *Evidence: CloudWatch Metrics.*
+ *Evidence: CloudWatch Metrics.*
 
 ##### Module 3 — CloudWatch Logs
 
@@ -97,7 +97,7 @@ pre: " <b> 1.7. </b> "
 - Queried Logs using Logs Insights.
 - Created Metric Filters.
 
-📸 *Evidence: CloudWatch Logs.*
+ *Evidence: CloudWatch Logs.*
 
 ##### Module 4 — CloudWatch Alarms
 
@@ -105,7 +105,7 @@ pre: " <b> 1.7. </b> "
 - Configured SNS Notifications.
 - Tested Alarm status changes.
 
-📸 *Evidence: CloudWatch Alarm.*
+ *Evidence: CloudWatch Alarm.*
 
 ##### Module 5 — CloudWatch Dashboards
 
@@ -113,7 +113,7 @@ pre: " <b> 1.7. </b> "
 - Added Metrics and Alarms.
 - Customized Dashboard widgets.
 
-📸 *Evidence: CloudWatch Dashboard.*
+ *Evidence: CloudWatch Dashboard.*
 
 ##### Module 6 — Cleanup Resources
 
@@ -121,7 +121,7 @@ pre: " <b> 1.7. </b> "
 - Removed unnecessary resources.
 - Verified successful cleanup.
 
-📸 *Evidence: Resource Cleanup.*
+ *Evidence: Resource Cleanup.*
 
 ---
 

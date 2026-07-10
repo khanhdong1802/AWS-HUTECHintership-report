@@ -66,41 +66,41 @@ pre: " <b> 1.2. </b> "
 - Created and directly attached an Internet Gateway (IGW) to the VPC.
 - Successfully launched a NAT Gateway located in Public Subnet 1 in Zonal mode and associated it with an Elastic IP.
 - Correctly configured `Route table-Public` to route default traffic `0.0.0.0/0` to the IGW and `Route table-Private` to route `0.0.0.0/0` to the NAT Gateway system.
-- 📸 _Proof Image: List of VPCs, Subnets, and successfully routed Route Tables._
-- 📸 _Proof Image: NAT Gateway in Available status accompanied by an Elastic IP._
+-  _Proof Image: List of VPCs, Subnets, and successfully routed Route Tables._
+-  _Proof Image: NAT Gateway in Available status accompanied by an Elastic IP._
 
 **Module 2 — Verify Traditional Connection via Bastion Host**
 - Successfully launched 2 EC2 Instances (`t3.micro`, Amazon Linux 2023) including a Public instance (`10.10.1.131`) and a Private instance (`10.10.3.142`) using the shared key pair `aws-keypair-v2`.
 - Configured transit SSH from the personal machine through the Bastion Host to access the Private EC2 terminal. Executed the secure command `chmod 400` for the `.pem` key file.
 - Ran the test command `ping -c 4 google.com` on the Private machine to confirm network packets passed through the NAT Gateway and received successful replies.
-- 📸 _Proof Image: Running status of the 2 EC2 Instances on the management console._
-- 📸 _Proof Image: Terminal successfully accessing the Private EC2 via Bastion Host and ping command results._
+-  _Proof Image: Running status of the 2 EC2 Instances on the management console._
+-  _Proof Image: Terminal successfully accessing the Private EC2 via Bastion Host and ping command results._
 
 **Module 3 — Debug Network Connectivity with VPC Reachability Analyzer**
 - Initiated a connectivity analysis to check the data flow from the Public EC2 machine to the Private EC2 machine.
 - Checked the Security Group rules and received a system analysis result showing a `Reachable` status.
-- 📸 _Proof Image: Interface showing the Reachable result on the VPC Reachability Analyzer._
+-  _Proof Image: Interface showing the Reachable result on the VPC Reachability Analyzer._
 
 **Module 4 — Deploy Connection Solution using EC2 Instance Connect (EIC) Endpoint**
 - Created an EIC Endpoint (`eice-0f7c...`) located in the Private Subnet network range.
 - Updated the Inbound rule on the Private EC2's Security Group, only accepting port 22 access originating from the EIC Endpoint's own Security Group.
 - Performed a direct SSH connection into the Private EC2's operating system from the AWS Console without going through the public internet or Bastion Host.
-- 📸 _Proof Image: EIC Endpoint information successfully created and in Available status._
-- 📸 _Proof Image: SSH terminal window connecting to the Private Instance via the EIC Endpoint solution._
+-  _Proof Image: EIC Endpoint information successfully created and in Available status._
+-  _Proof Image: SSH terminal window connecting to the Private Instance via the EIC Endpoint solution._
 
 **Module 5 — Set up Zero Trust Solution with SSM Session Manager**
 - Created an IAM Role granting cloud management permissions containing the managed policy `AmazonSSMManagedInstanceCore` and directly attached it to both EC2 servers.
 - Created 3 VPC Interface Endpoints (`ssm`, `ssmmessages`, `ec2messages`) using AWS PrivateLink located in the Private Subnet, enabled the DNS name option, and opened port 443 inbound for the entire `10.10.0.0/16` network range.
 - Logged in to control the Private EC2 server via the Session Manager feature directly on the web browser interface without needing a key pair or opening the SSH port.
-- 📸 _Proof Image: Available status of the 3 VPC Interface Endpoints._
-- 📸 _Proof Image: Session Manager terminal interface running directly on the Web Browser._
+-  _Proof Image: Available status of the 3 VPC Interface Endpoints._
+-  _Proof Image: Session Manager terminal interface running directly on the Web Browser._
 
 **Module 6 — Clean up Resources**
 - Deleted the NAT Gateway to stop hourly system billing.
 - Completely Released the empty Elastic IP to prevent unassociated IP resource charges.
 - Completely deleted the 3 SSM VPC Interface Endpoints set up for the lab.
 - Kept the core VPC system and EIC Endpoint (completely free) to reuse for the upcoming weekly labs.
-- 📸 _Proof Image: NAT Gateway and VPC Endpoints resources completely cleared from the system._
+-  _Proof Image: NAT Gateway and VPC Endpoints resources completely cleared from the system._
 
 ---
 

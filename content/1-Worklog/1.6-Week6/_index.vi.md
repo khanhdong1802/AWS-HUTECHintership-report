@@ -150,10 +150,10 @@ pre: " <b> 1.6. </b> "
 - Kiểm tra Budget đã được tạo thành công.
 - Mở Budget history để xem lịch sử ngân sách.
 - Kiểm tra các loại alert có sẵn trong template.
-- 📸 _Ảnh minh chứng: Giao diện AWS Billing and Cost Management._
-- 📸 _Ảnh minh chứng: Chọn Budgets và Create a budget._
-- 📸 _Ảnh minh chứng: Chọn Monthly cost budget template._
-- 📸 _Ảnh minh chứng: Budget được tạo thành công._
+-  _Ảnh minh chứng: Giao diện AWS Billing and Cost Management._
+-  _Ảnh minh chứng: Chọn Budgets và Create a budget._
+-  _Ảnh minh chứng: Chọn Monthly cost budget template._
+-  _Ảnh minh chứng: Budget được tạo thành công._
 
 **Module 2 — Create Cost Budget**
 
@@ -181,10 +181,10 @@ pre: " <b> 1.6. </b> "
 - Kiểm tra lại toàn bộ cấu hình.
 - Nhấn Create budget để hoàn tất.
 - Xác nhận Budget đã xuất hiện trong danh sách Budgets.
-- 📸 _Ảnh minh chứng: Chọn Customize và Cost budget._
-- 📸 _Ảnh minh chứng: Cấu hình Period, Budget amount và Budget scope._
-- 📸 _Ảnh minh chứng: Cấu hình alert threshold._
-- 📸 _Ảnh minh chứng: Cost Budget tạo thành công._
+-  _Ảnh minh chứng: Chọn Customize và Cost budget._
+-  _Ảnh minh chứng: Cấu hình Period, Budget amount và Budget scope._
+-  _Ảnh minh chứng: Cấu hình alert threshold._
+-  _Ảnh minh chứng: Cost Budget tạo thành công._
 
 **Module 3 — Create Usage Budget**
 
@@ -210,10 +210,10 @@ pre: " <b> 1.6. </b> "
 - Nhấn Create budget để hoàn tất.
 - Kiểm tra Budget health để xem mức sử dụng hiện tại so với giới hạn.
 - Mở Budget history để theo dõi xu hướng sử dụng.
-- 📸 _Ảnh minh chứng: Chọn Usage budget._
-- 📸 _Ảnh minh chứng: Chọn Usage type groups._
-- 📸 _Ảnh minh chứng: Cấu hình usage hours và alert._
-- 📸 _Ảnh minh chứng: Usage Budget hiển thị trong danh sách._
+-  _Ảnh minh chứng: Chọn Usage budget._
+-  _Ảnh minh chứng: Chọn Usage type groups._
+-  _Ảnh minh chứng: Cấu hình usage hours và alert._
+-  _Ảnh minh chứng: Usage Budget hiển thị trong danh sách._
 
 **Module 4 — Create RI Budget**
 
@@ -231,9 +231,9 @@ pre: " <b> 1.6. </b> "
 - Nhấn Create budget.
 - Kiểm tra Reservation Budget đã được tạo.
 - Ghi nhận rằng trong phạm vi lab không bắt buộc phải mua Reserved Instances vì có thể phát sinh chi phí hoặc yêu cầu cam kết thanh toán.
-- 📸 _Ảnh minh chứng: Chọn Reservation budget._
-- 📸 _Ảnh minh chứng: Cấu hình Coverage threshold._
-- 📸 _Ảnh minh chứng: Reservation Budget được tạo hoặc xem ở chế độ demo._
+-  _Ảnh minh chứng: Chọn Reservation budget._
+-  _Ảnh minh chứng: Cấu hình Coverage threshold._
+-  _Ảnh minh chứng: Reservation Budget được tạo hoặc xem ở chế độ demo._
 
 **Module 5 — Create Savings Plans Budget**
 
@@ -251,9 +251,9 @@ pre: " <b> 1.6. </b> "
 - Nhấn Create budget để hoàn tất.
 - Kiểm tra Budget vừa tạo trong danh sách.
 - Ghi nhận rằng Savings Plans thường liên quan đến cam kết sử dụng dài hạn nên trong môi trường học tập chỉ nên thao tác theo hướng dẫn hoặc xem demo.
-- 📸 _Ảnh minh chứng: Chọn Savings Plans budget._
-- 📸 _Ảnh minh chứng: Cấu hình Utilization threshold._
-- 📸 _Ảnh minh chứng: Savings Plans Budget được tạo hoặc xem ở chế độ demo._
+-  _Ảnh minh chứng: Chọn Savings Plans budget._
+-  _Ảnh minh chứng: Cấu hình Utilization threshold._
+-  _Ảnh minh chứng: Savings Plans Budget được tạo hoặc xem ở chế độ demo._
 
 **Module 6 — Clean Up Resources**
 
@@ -267,9 +267,9 @@ pre: " <b> 1.6. </b> "
 - Lặp lại thao tác với các Budget còn lại đã tạo trong quá trình thực hành.
 - Kiểm tra lại danh sách Budgets sau khi xóa.
 - Ghi nhận rằng việc xóa Budget chỉ xóa cấu hình theo dõi và cảnh báo, không ảnh hưởng đến các tài nguyên AWS đang chạy.
-- 📸 _Ảnh minh chứng: Danh sách Budget trước khi xóa._
-- 📸 _Ảnh minh chứng: Thao tác Delete Budget._
-- 📸 _Ảnh minh chứng: Danh sách Budget sau khi cleanup._
+-  _Ảnh minh chứng: Danh sách Budget trước khi xóa._
+-  _Ảnh minh chứng: Thao tác Delete Budget._
+-  _Ảnh minh chứng: Danh sách Budget sau khi cleanup._
 
 ---
 

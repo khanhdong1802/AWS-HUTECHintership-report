@@ -126,7 +126,7 @@ pre: " <b> 1.4. </b> "
   - Snapshot
   - Multi-AZ
   - Read Replica
-- 📸 _Ảnh minh chứng: Trang Introduction của workshop Amazon RDS._
+-  _Ảnh minh chứng: Trang Introduction của workshop Amazon RDS._
 
 **Module 2.1 — Create a VPC**
 
@@ -136,8 +136,8 @@ pre: " <b> 1.4. </b> "
 - Tạo private subnet cho RDS.
 - Chọn ít nhất hai Availability Zone để tăng tính sẵn sàng.
 - Kiểm tra auto-assign public IPv4 cho subnet phù hợp.
-- 📸 _Ảnh minh chứng: VPC đã tạo thành công._
-- 📸 _Ảnh minh chứng: Public subnet và private subnet._
+-  _Ảnh minh chứng: VPC đã tạo thành công._
+-  _Ảnh minh chứng: Public subnet và private subnet._
 
 **Module 2.2 — Create EC2 Security Group**
 
@@ -149,8 +149,8 @@ pre: " <b> 1.4. </b> "
   - Custom TCP port `5000`
 - Giới hạn SSH theo IP cá nhân để tăng bảo mật.
 - Ghi lại Security Group ID để dùng khi tạo EC2 và cấu hình RDS.
-- 📸 _Ảnh minh chứng: EC2 Security Group đã tạo._
-- 📸 _Ảnh minh chứng: Inbound rules của EC2 Security Group._
+-  _Ảnh minh chứng: EC2 Security Group đã tạo._
+-  _Ảnh minh chứng: Inbound rules của EC2 Security Group._
 
 **Module 2.3 — Create RDS Security Group**
 
@@ -158,8 +158,8 @@ pre: " <b> 1.4. </b> "
 - Cấu hình inbound rule cho MySQL/Aurora port `3306`.
 - Chọn source là EC2 Security Group thay vì mở public Internet.
 - Kiểm tra RDS Security Group đã nằm trong đúng VPC.
-- 📸 _Ảnh minh chứng: RDS Security Group đã tạo._
-- 📸 _Ảnh minh chứng: Rule cho phép EC2 kết nối đến RDS._
+-  _Ảnh minh chứng: RDS Security Group đã tạo._
+-  _Ảnh minh chứng: Rule cho phép EC2 kết nối đến RDS._
 
 **Module 2.4 — Create DB Subnet Group**
 
@@ -169,8 +169,8 @@ pre: " <b> 1.4. </b> "
 - Chọn subnet ở ít nhất hai Availability Zone.
 - Ưu tiên chọn private subnet cho database.
 - Kiểm tra DB Subnet Group sau khi tạo thành công.
-- 📸 _Ảnh minh chứng: DB Subnet Group đã tạo._
-- 📸 _Ảnh minh chứng: Các subnet được thêm vào DB Subnet Group._
+-  _Ảnh minh chứng: DB Subnet Group đã tạo._
+-  _Ảnh minh chứng: Các subnet được thêm vào DB Subnet Group._
 
 **Module 3 — Create EC2 Instance**
 
@@ -182,8 +182,8 @@ pre: " <b> 1.4. </b> "
 - Launch instance và chờ trạng thái `running`.
 - Kết nối EC2 bằng MobaXterm.
 - Kiểm tra terminal sau khi SSH thành công.
-- 📸 _Ảnh minh chứng: EC2 Instance ở trạng thái running._
-- 📸 _Ảnh minh chứng: SSH thành công vào EC2._
+-  _Ảnh minh chứng: EC2 Instance ở trạng thái running._
+-  _Ảnh minh chứng: SSH thành công vào EC2._
 
 **Module 4 — Create RDS Database Instance**
 
@@ -197,9 +197,9 @@ pre: " <b> 1.4. </b> "
 - Tạo database instance.
 - Chờ trạng thái RDS chuyển sang `Available`.
 - Kiểm tra Endpoint, Port và Username.
-- 📸 _Ảnh minh chứng: RDS Database Instance đang tạo._
-- 📸 _Ảnh minh chứng: RDS ở trạng thái Available._
-- 📸 _Ảnh minh chứng: Endpoint và Port của RDS._
+-  _Ảnh minh chứng: RDS Database Instance đang tạo._
+-  _Ảnh minh chứng: RDS ở trạng thái Available._
+-  _Ảnh minh chứng: Endpoint và Port của RDS._
 
 **Module 5 — Application Deployment**
 

@@ -126,7 +126,7 @@ pre: " <b> 1.4. </b> "
   - Snapshot
   - Multi-AZ
   - Read Replica
-- 📸 _Evidence image: Amazon RDS workshop Introduction page._
+-  _Evidence image: Amazon RDS workshop Introduction page._
 
 **Module 2.1 — Create a VPC**
 
@@ -136,8 +136,8 @@ pre: " <b> 1.4. </b> "
 - Create a private subnet for RDS.
 - Select at least two Availability Zones to improve availability.
 - Check auto-assign public IPv4 for the appropriate subnet.
-- 📸 _Evidence image: VPC created successfully._
-- 📸 _Evidence image: Public subnet and private subnet._
+-  _Evidence image: VPC created successfully._
+-  _Evidence image: Public subnet and private subnet._
 
 **Module 2.2 — Create EC2 Security Group**
 
@@ -149,8 +149,8 @@ pre: " <b> 1.4. </b> "
   - Custom TCP port `5000`
 - Restrict SSH access to personal IP for better security.
 - Record the Security Group ID for EC2 creation and RDS configuration.
-- 📸 _Evidence image: EC2 Security Group created._
-- 📸 _Evidence image: Inbound rules of EC2 Security Group._
+-  _Evidence image: EC2 Security Group created._
+-  _Evidence image: Inbound rules of EC2 Security Group._
 
 **Module 2.3 — Create RDS Security Group**
 
@@ -158,8 +158,8 @@ pre: " <b> 1.4. </b> "
 - Configure inbound rule for MySQL/Aurora port `3306`.
 - Set the source as EC2 Security Group instead of opening access to the public Internet.
 - Check that the RDS Security Group is in the correct VPC.
-- 📸 _Evidence image: RDS Security Group created._
-- 📸 _Evidence image: Rule allowing EC2 to connect to RDS._
+-  _Evidence image: RDS Security Group created._
+-  _Evidence image: Rule allowing EC2 to connect to RDS._
 
 **Module 2.4 — Create DB Subnet Group**
 
@@ -169,8 +169,8 @@ pre: " <b> 1.4. </b> "
 - Select subnets in at least two Availability Zones.
 - Prioritize private subnets for the database.
 - Check the DB Subnet Group after it is created successfully.
-- 📸 _Evidence image: DB Subnet Group created._
-- 📸 _Evidence image: Subnets added to DB Subnet Group._
+-  _Evidence image: DB Subnet Group created._
+-  _Evidence image: Subnets added to DB Subnet Group._
 
 **Module 3 — Create EC2 Instance**
 
@@ -182,8 +182,8 @@ pre: " <b> 1.4. </b> "
 - Launch the instance and wait until its status becomes `running`.
 - Connect to EC2 using MobaXterm.
 - Check the terminal after successful SSH connection.
-- 📸 _Evidence image: EC2 Instance in running state._
-- 📸 _Evidence image: SSH connection to EC2 successful._
+-  _Evidence image: EC2 Instance in running state._
+-  _Evidence image: SSH connection to EC2 successful._
 
 **Module 4 — Create RDS Database Instance**
 
@@ -197,9 +197,9 @@ pre: " <b> 1.4. </b> "
 - Create the database instance.
 - Wait until the RDS status changes to `Available`.
 - Check Endpoint, Port, and Username.
-- 📸 _Evidence image: RDS Database Instance being created._
-- 📸 _Evidence image: RDS status is Available._
-- 📸 _Evidence image: RDS Endpoint and Port._
+-  _Evidence image: RDS Database Instance being created._
+-  _Evidence image: RDS status is Available._
+-  _Evidence image: RDS Endpoint and Port._
 
 **Module 5 — Application Deployment**
 
@@ -231,10 +231,10 @@ http://<EC2-Public-IP>:5000
 ```
 
 - Check that the application displays data from RDS.
-- 📸 _Evidence image: Source code cloned successfully._
-- 📸 _Evidence image: Node.js and npm installed._
-- 📸 _Evidence image: MySQL connection to RDS successful._
-- 📸 _Evidence image: Application running on port 5000._
+-  _Evidence image: Source code cloned successfully._
+-  _Evidence image: Node.js and npm installed._
+-  _Evidence image: MySQL connection to RDS successful._
+-  _Evidence image: Application running on port 5000._
 
 **Module 6 — Backup and Restore**
 
@@ -247,10 +247,10 @@ http://<EC2-Public-IP>:5000
 - Wait until the restored DB Instance status becomes `Available`.
 - Check the new Endpoint of the restored database.
 - Check the connection and data in the restored database.
-- 📸 _Evidence image: RDS Monitoring._
-- 📸 _Evidence image: Backup information._
-- 📸 _Evidence image: Snapshot._
-- 📸 _Evidence image: DB Instance restored successfully._
+-  _Evidence image: RDS Monitoring._
+-  _Evidence image: Backup information._
+-  _Evidence image: Snapshot._
+-  _Evidence image: DB Instance restored successfully._
 
 **Module 7 — Clean up resources**
 
@@ -263,9 +263,9 @@ http://<EC2-Public-IP>:5000
 - Release Elastic IP if used.
 - Delete VPC and related network resources.
 - Check Billing Dashboard or Cost Explorer.
-- 📸 _Evidence image: EC2 Instance terminated._
-- 📸 _Evidence image: RDS Database Instance deleted._
-- 📸 _Evidence image: No remaining resources causing charges._
+-  _Evidence image: EC2 Instance terminated._
+-  _Evidence image: RDS Database Instance deleted._
+-  _Evidence image: No remaining resources causing charges._
 
 ---
 

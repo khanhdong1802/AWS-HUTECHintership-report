@@ -154,7 +154,7 @@ pre: " <b> 1.5. </b> "
 - Nắm mục tiêu chính là triển khai ứng dụng có khả năng mở rộng tự động.
 - Hiểu kiến trúc gồm EC2, RDS, Application Load Balancer, Launch Template, Auto Scaling Group và CloudWatch.
 - Xác định luồng hoạt động: người dùng truy cập Load Balancer, Load Balancer chuyển request đến EC2, EC2 kết nối RDS để xử lý dữ liệu.
-- 📸 _Ảnh minh chứng: Trang Introduction của workshop 000006._
+-  _Ảnh minh chứng: Trang Introduction của workshop 000006._
 
 **Module 2.1 — Setup Network Infrastructure**
 
@@ -173,8 +173,8 @@ pre: " <b> 1.5. </b> "
   - Custom TCP port `5000` từ Anywhere-IPv4.
 - Tạo Database Security Group `FCJ-Management-DB-SG`.
 - Cấu hình inbound rule MySQL/Aurora port `3306`, source là `FCJ-Management-SG`.
-- 📸 _Ảnh minh chứng: VPC AutoScaling-Lab đã tạo._
-- 📸 _Ảnh minh chứng: Public subnet, private subnet và Security Group._
+-  _Ảnh minh chứng: VPC AutoScaling-Lab đã tạo._
+-  _Ảnh minh chứng: Public subnet, private subnet và Security Group._
 
 **Module 2.2 — Launch EC2 Instance**
 
@@ -187,7 +187,7 @@ pre: " <b> 1.5. </b> "
 - Bật Auto-assign public IP.
 - Gán Security Group `FCJ-Management-SG`.
 - Launch instance và chờ trạng thái `running`.
-- 📸 _Ảnh minh chứng: EC2 Instance FCJ-Management ở trạng thái running._
+-  _Ảnh minh chứng: EC2 Instance FCJ-Management ở trạng thái running._
 
 **Module 2.3 — Launch a Database Instance with RDS**
 
@@ -206,9 +206,9 @@ pre: " <b> 1.5. </b> "
 - Chọn VPC, DB Subnet Group và Security Group `FCJ-Management-DB-SG`.
 - Đặt initial database name là `awsfcjuser`.
 - Tạo database và ghi lại Endpoint, Port.
-- 📸 _Ảnh minh chứng: DB Subnet Group đã tạo._
-- 📸 _Ảnh minh chứng: RDS MySQL Instance ở trạng thái Available._
-- 📸 _Ảnh minh chứng: Endpoint và Port của RDS._
+-  _Ảnh minh chứng: DB Subnet Group đã tạo._
+-  _Ảnh minh chứng: RDS MySQL Instance ở trạng thái Available._
+-  _Ảnh minh chứng: Endpoint và Port của RDS._
 
 **Module 2.4 — Setup data for Database**
 
@@ -256,9 +256,9 @@ SELECT * FROM user;
 ```
 
 - Thoát khỏi MySQL client sau khi hoàn thành.
-- 📸 _Ảnh minh chứng: SSH thành công vào EC2._
-- 📸 _Ảnh minh chứng: Kết nối thành công đến RDS._
-- 📸 _Ảnh minh chứng: Bảng user đã có dữ liệu mẫu._
+-  _Ảnh minh chứng: SSH thành công vào EC2._
+-  _Ảnh minh chứng: Kết nối thành công đến RDS._
+-  _Ảnh minh chứng: Bảng user đã có dữ liệu mẫu._
 
 **Module 2.5 — Deploy Web Server**
 
@@ -320,9 +320,9 @@ pm2 startup
 pm2 save
 ```
 
-- 📸 _Ảnh minh chứng: Node.js đã cài đặt._
-- 📸 _Ảnh minh chứng: Source code đã clone thành công._
-- 📸 _Ảnh minh chứng: Ứng dụng chạy ổn định qua PM2._
+-  _Ảnh minh chứng: Node.js đã cài đặt._
+-  _Ảnh minh chứng: Source code đã clone thành công._
+-  _Ảnh minh chứng: Ứng dụng chạy ổn định qua PM2._
 
 **Module 2.6 — Prepare metric for Predictive Scaling**
 
@@ -356,7 +356,7 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 
 - Truy cập CloudWatch Console để kiểm tra namespace `FCJ Management Custom Metrics`.
 - Chọn dimension `AutoScalingGroupName` và kiểm tra các metric đã upload.
-- 📸 _Ảnh minh chứng: Custom metrics đã xuất hiện trên CloudWatch._
+-  _Ảnh minh chứng: Custom metrics đã xuất hiện trên CloudWatch._
 
 **Module 3 — Create Launch Template**
 
@@ -372,8 +372,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Chọn Key Pair `fcj-key`.
 - Chọn public subnet và Security Group `FCJ-Management-SG`.
 - Tạo Launch Template và kiểm tra thông tin cấu hình.
-- 📸 _Ảnh minh chứng: AMI FCJ-Management-AMI đã Available._
-- 📸 _Ảnh minh chứng: Launch Template đã tạo thành công._
+-  _Ảnh minh chứng: AMI FCJ-Management-AMI đã Available._
+-  _Ảnh minh chứng: Launch Template đã tạo thành công._
 
 **Module 4.1 — Create Target Group**
 
@@ -388,8 +388,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Register EC2 Instance hiện có vào Target Group.
 - Kiểm tra target đã được thêm vào danh sách pending.
 - Tạo Target Group và kiểm tra trạng thái health check.
-- 📸 _Ảnh minh chứng: Target Group FCJ-Management-TG đã tạo._
-- 📸 _Ảnh minh chứng: EC2 Instance đã được register vào Target Group._
+-  _Ảnh minh chứng: Target Group FCJ-Management-TG đã tạo._
+-  _Ảnh minh chứng: EC2 Instance đã được register vào Target Group._
 
 **Module 4.2 — Create Load Balancer**
 
@@ -404,8 +404,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Cấu hình listener chuyển tiếp request đến Target Group `FCJ-Management-TG`.
 - Tạo Load Balancer và chờ trạng thái active.
 - Sao chép DNS name của Load Balancer.
-- 📸 _Ảnh minh chứng: Application Load Balancer đã tạo._
-- 📸 _Ảnh minh chứng: Listener đã forward đến Target Group._
+-  _Ảnh minh chứng: Application Load Balancer đã tạo._
+-  _Ảnh minh chứng: Listener đã forward đến Target Group._
 
 **Module 5 — Test**
 
@@ -416,8 +416,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Kiểm tra thông báo cập nhật thành công.
 - Quay lại trang chủ để xác nhận dữ liệu đã thay đổi.
 - Nếu lỗi xảy ra, kiểm tra lại Security Group, Target Group health check, port `5000` và kết nối RDS.
-- 📸 _Ảnh minh chứng: Truy cập ứng dụng qua Load Balancer DNS._
-- 📸 _Ảnh minh chứng: CRUD hoạt động thành công._
+-  _Ảnh minh chứng: Truy cập ứng dụng qua Load Balancer DNS._
+-  _Ảnh minh chứng: CRUD hoạt động thành công._
 
 **Module 6 — Create Auto Scaling Group**
 
@@ -438,8 +438,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Cấu hình SNS notification để nhận thông báo khi ASG có sự kiện scale.
 - Tạo ASG và xác nhận email subscription nếu có.
 - Kiểm tra Activity tab để xem instance được ASG khởi tạo.
-- 📸 _Ảnh minh chứng: Auto Scaling Group đã tạo._
-- 📸 _Ảnh minh chứng: Instance mới được ASG launch._
+-  _Ảnh minh chứng: Auto Scaling Group đã tạo._
+-  _Ảnh minh chứng: Instance mới được ASG launch._
 
 **Module 7.1 — Test Manual Scaling Solution**
 
@@ -456,8 +456,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Thử scale down bằng cách chỉnh Desired Capacity và Min Desired Capacity về `0`.
 - Quan sát ASG terminate instance trong Activity tab.
 - Kiểm tra hiệu năng khi chỉ còn một target xử lý traffic.
-- 📸 _Ảnh minh chứng: Manual Scaling trước và sau khi scale down._
-- 📸 _Ảnh minh chứng: CloudWatch metrics thay đổi khi số lượng instance giảm._
+-  _Ảnh minh chứng: Manual Scaling trước và sau khi scale down._
+-  _Ảnh minh chứng: CloudWatch metrics thay đổi khi số lượng instance giảm._
 
 **Module 7.2 — Test Scheduled Scaling Solution**
 
@@ -471,8 +471,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Bắt đầu load test trước thời điểm scheduled action chạy khoảng 5 phút.
 - Quan sát Activity tab để kiểm tra sự kiện `Executing scheduled action Rush hour`.
 - Kiểm tra CPU metrics trước và sau khi instance mới được tạo.
-- 📸 _Ảnh minh chứng: Scheduled Action đã tạo._
-- 📸 _Ảnh minh chứng: ASG tự scale theo lịch._
+-  _Ảnh minh chứng: Scheduled Action đã tạo._
+-  _Ảnh minh chứng: ASG tự scale theo lịch._
 
 **Module 7.3 — Test Dynamic Scaling Solution**
 
@@ -490,9 +490,9 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Khi request tăng, ASG có thể tạo thêm instance đến giới hạn Max Capacity.
 - Dừng load test để quan sát scale in.
 - Ghi nhận rằng scale in có cooldown nên instance không bị xóa ngay lập tức.
-- 📸 _Ảnh minh chứng: Dynamic Scaling Policy đã tạo._
-- 📸 _Ảnh minh chứng: ASG scale out khi request tăng._
-- 📸 _Ảnh minh chứng: ASG scale in khi tải giảm._
+-  _Ảnh minh chứng: Dynamic Scaling Policy đã tạo._
+-  _Ảnh minh chứng: ASG scale out khi request tăng._
+-  _Ảnh minh chứng: ASG scale in khi tải giảm._
 
 **Module 7.4 — Read Metrics of Predictive Scaling Solution**
 
@@ -511,9 +511,9 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Đọc biểu đồ theo UTC+0 và cộng thêm 7 giờ để quy đổi sang giờ Việt Nam.
 - Phân tích thời điểm hệ thống dự đoán tải tăng và số lượng instance cần launch.
 - Ghi nhận Predictive Scaling có thể kết hợp với Dynamic Scaling để tăng độ linh hoạt và độ tin cậy.
-- 📸 _Ảnh minh chứng: Predictive Scaling Policy đã tạo._
-- 📸 _Ảnh minh chứng: Biểu đồ Load và Capacity._
-- 📸 _Ảnh minh chứng: ASG launch instance trước thời điểm dự đoán tải tăng._
+-  _Ảnh minh chứng: Predictive Scaling Policy đã tạo._
+-  _Ảnh minh chứng: Biểu đồ Load và Capacity._
+-  _Ảnh minh chứng: ASG launch instance trước thời điểm dự đoán tải tăng._
 
 **Module 8 — Cleanup Resources**
 
@@ -528,8 +528,8 @@ aws cloudwatch put-metric-data --namespace 'FCJ Management Custom Metrics' --met
 - Xóa RDS Database Instance `fcj-management-db-instance`.
 - Xóa DB Subnet Group.
 - Kiểm tra lại Billing Dashboard để tránh phát sinh chi phí.
-- 📸 _Ảnh minh chứng: Các tài nguyên đã được xóa._
-- 📸 _Ảnh minh chứng: Billing Dashboard không phát sinh chi phí bất thường._
+-  _Ảnh minh chứng: Các tài nguyên đã được xóa._
+-  _Ảnh minh chứng: Billing Dashboard không phát sinh chi phí bất thường._
 
 ---
 

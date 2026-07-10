@@ -150,10 +150,10 @@ pre: " <b> 1.6. </b> "
 - Checked that the Budget was created successfully.
 - Opened Budget history to view the budget status.
 - Reviewed the available alert types in the template.
-- 📸 _Evidence: AWS Billing and Cost Management interface._
-- 📸 _Evidence: Budgets page and Create a budget button._
-- 📸 _Evidence: Monthly cost budget template selected._
-- 📸 _Evidence: Budget created successfully._
+-  _Evidence: AWS Billing and Cost Management interface._
+-  _Evidence: Budgets page and Create a budget button._
+-  _Evidence: Monthly cost budget template selected._
+-  _Evidence: Budget created successfully._
 
 **Module 2 — Create Cost Budget**
 
@@ -181,10 +181,10 @@ pre: " <b> 1.6. </b> "
 - Reviewed all configurations.
 - Clicked Create budget.
 - Confirmed that the Budget appeared in the Budgets list.
-- 📸 _Evidence: Customize and Cost budget selected._
-- 📸 _Evidence: Period, Budget amount, and Budget scope configured._
-- 📸 _Evidence: Alert threshold configured._
-- 📸 _Evidence: Cost Budget created successfully._
+-  _Evidence: Customize and Cost budget selected._
+-  _Evidence: Period, Budget amount, and Budget scope configured._
+-  _Evidence: Alert threshold configured._
+-  _Evidence: Cost Budget created successfully._
 
 **Module 3 — Create Usage Budget**
 
@@ -210,10 +210,10 @@ pre: " <b> 1.6. </b> "
 - Clicked Create budget.
 - Checked Budget health to view current usage compared with the limit.
 - Opened Budget history to track usage trends.
-- 📸 _Evidence: Usage budget selected._
-- 📸 _Evidence: Usage type groups selected._
-- 📸 _Evidence: Usage hours and alert configured._
-- 📸 _Evidence: Usage Budget displayed in the Budgets list._
+-  _Evidence: Usage budget selected._
+-  _Evidence: Usage type groups selected._
+-  _Evidence: Usage hours and alert configured._
+-  _Evidence: Usage Budget displayed in the Budgets list._
 
 **Module 4 — Create RI Budget**
 
@@ -231,9 +231,9 @@ pre: " <b> 1.6. </b> "
 - Clicked Create budget.
 - Checked that the Reservation Budget was created.
 - Noted that in the lab environment, purchasing Reserved Instances is not required because it may generate costs or long-term commitments.
-- 📸 _Evidence: Reservation budget selected._
-- 📸 _Evidence: Coverage threshold configured._
-- 📸 _Evidence: Reservation Budget created or reviewed in demo mode._
+-  _Evidence: Reservation budget selected._
+-  _Evidence: Coverage threshold configured._
+-  _Evidence: Reservation Budget created or reviewed in demo mode._
 
 **Module 5 — Create Savings Plans Budget**
 
@@ -251,9 +251,9 @@ pre: " <b> 1.6. </b> "
 - Clicked Create budget.
 - Checked the created Budget in the Budgets list.
 - Noted that Savings Plans usually involve long-term usage commitments, so they should only be reviewed or practiced carefully in a learning account.
-- 📸 _Evidence: Savings Plans budget selected._
-- 📸 _Evidence: Utilization threshold configured._
-- 📸 _Evidence: Savings Plans Budget created or reviewed in demo mode._
+-  _Evidence: Savings Plans budget selected._
+-  _Evidence: Utilization threshold configured._
+-  _Evidence: Savings Plans Budget created or reviewed in demo mode._
 
 **Module 6 — Clean Up Resources**
 
@@ -267,9 +267,9 @@ pre: " <b> 1.6. </b> "
 - Repeated the same steps for the remaining Budgets created during the lab.
 - Checked the Budgets list again after cleanup.
 - Noted that deleting a Budget only removes the monitoring and alert configuration. It does not affect any running AWS resources.
-- 📸 _Evidence: Budget list before deletion._
-- 📸 _Evidence: Delete Budget action._
-- 📸 _Evidence: Budget list after cleanup._
+-  _Evidence: Budget list before deletion._
+-  _Evidence: Delete Budget action._
+-  _Evidence: Budget list after cleanup._
 
 ---
 

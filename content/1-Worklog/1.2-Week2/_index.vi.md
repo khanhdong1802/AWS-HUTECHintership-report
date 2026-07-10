@@ -66,41 +66,41 @@ pre: " <b> 1.2. </b> "
 - Tạo và attach Internet Gateway (IGW) trực tiếp vào VPC.
 - Khởi tạo thành công một NAT Gateway nằm tại Public Subnet 1 theo chế độ Zonal mode và liên kết với một Elastic IP.
 - Cấu hình chính xác `Route table-Public` trỏ route mặc định `0.0.0.0/0` về IGW và `Route table-Private` trỏ route `0.0.0.0/0` về hệ thống NAT Gateway.
-- 📸 _Ảnh minh chứng: Danh sách VPC, Subnets và các Route Tables định tuyến thành công._
-- 📸 _Ảnh minh chứng: NAT Gateway ở trạng thái Available đi kèm với Elastic IP._
+-  _Ảnh minh chứng: Danh sách VPC, Subnets và các Route Tables định tuyến thành công._
+-  _Ảnh minh chứng: NAT Gateway ở trạng thái Available đi kèm với Elastic IP._
 
 **Module 2 — Kiểm tra xác thực kết nối truyền thống qua Bastion Host**
 - Khởi chạy thành công 2 EC2 Instance (`t3.micro`, Amazon Linux 2023) bao gồm một máy Public (`10.10.1.131`) và một máy Private (`10.10.3.142`) sử dụng chung key pair `aws-keypair-v2`.
 - Thực hiện cấu hình SSH trung chuyển từ máy cá nhân thông qua Bastion Host để truy cập terminal vào EC2 Private. Thực hiện lệnh an toàn `chmod 400` cho file tệp tin key `.pem`.
 - Chạy lệnh kiểm tra `ping -c 4 google.com` tại máy Private để xác nhận gói tin mạng đi qua NAT Gateway và nhận phản hồi thành công.
-- 📸 _Ảnh minh chứng: Thông tin trạng thái running của 2 EC2 Instance trên bảng điều khiển._
-- 📸 _Ảnh minh chứng: Terminal truy cập thành công vào EC2 Private qua Bastion Host và kết quả lệnh ping._
+-  _Ảnh minh chứng: Thông tin trạng thái running của 2 EC2 Instance trên bảng điều khiển._
+-  _Ảnh minh chứng: Terminal truy cập thành công vào EC2 Private qua Bastion Host và kết quả lệnh ping._
 
 **Module 3 — Debug liên thông mạng với VPC Reachability Analyzer**
 - Khởi tạo một phân tích kiểm tra luồng đi của dữ liệu từ máy EC2 Public tới máy EC2 Private.
 - Kiểm tra các quy tắc của Security Group và nhận kết quả phân tích hệ thống báo trạng thái `Reachable`.
-- 📸 _Ảnh minh chứng: Giao diện hiển thị kết quả Reachable trên VPC Reachability Analyzer._
+-  _Ảnh minh chứng: Giao diện hiển thị kết quả Reachable trên VPC Reachability Analyzer._
 
 **Module 4 — Triển khai giải pháp kết nối bằng EC2 Instance Connect (EIC) Endpoint**
 - Tạo một EIC Endpoint (`eice-0f7c...`) đặt tại dải mạng Private Subnet.
 - Tiến hành cập nhật Inbound rule trên Security Group của EC2 Private, chỉ chấp nhận truy cập cổng port 22 đi từ Security Group của chính EIC Endpoint.
 - Thực hiện kết nối SSH trực tiếp vào hệ điều hành của EC2 Private từ Console AWS mà không cần thông qua môi trường internet công cộng hay Bastion Host.
-- 📸 _Ảnh minh chứng: Thông tin EIC Endpoint đã tạo thành công ở trạng thái Available._
-- 📸 _Ảnh minh chứng: Cửa sổ terminal SSH kết nối vào Private Instance qua giải pháp EIC Endpoint._
+-  _Ảnh minh chứng: Thông tin EIC Endpoint đã tạo thành công ở trạng thái Available._
+-  _Ảnh minh chứng: Cửa sổ terminal SSH kết nối vào Private Instance qua giải pháp EIC Endpoint._
 
 **Module 5 — Thiết lập giải pháp Zero Trust với SSM Session Manager**
 - Tạo một IAM Role cấp quyền quản lý hệ thống đám mây chứa managed policy `AmazonSSMManagedInstanceCore` và attach trực tiếp vào cả hai máy chủ EC2.
 - Tạo lập 3 VPC Interface Endpoints (`ssm`, `ssmmessages`, `ec2messages`) sử dụng AWS PrivateLink đặt tại Private Subnet, kích hoạt tùy chọn Enable DNS name và mở port 443 inbound cho toàn dải mạng `10.10.0.0/16`.
 - Đăng nhập điều khiển máy chủ EC2 Private thông qua tính năng Session Manager trực tiếp ngay trên giao diện trình duyệt web mà không cần key pair hay mở cổng SSH.
-- 📸 _Ảnh minh chứng: Trạng thái Available của 3 VPC Interface Endpoints._
-- 📸 _Ảnh minh chứng: Giao diện terminal Session Manager chạy trực tiếp trên Web Browser._
+-  _Ảnh minh chứng: Trạng thái Available của 3 VPC Interface Endpoints._
+-  _Ảnh minh chứng: Giao diện terminal Session Manager chạy trực tiếp trên Web Browser._
 
 **Module 6 — Thực hiện dọn dẹp tài nguyên (Clean up)**
 - Thực hiện xóa bỏ (Delete) NAT Gateway để dừng tính phí giờ chạy hệ thống.
 - Thực hiện giải phóng hoàn toàn (Release) Elastic IP trống để tránh phát sinh chi phí IP treo tài nguyên.
 - Xóa bỏ hoàn toàn 3 SSM VPC Interface Endpoints đã thiết lập cho lab.
 - Giữ lại hệ thống core VPC và EIC Endpoint (hoàn toàn miễn phí) nhằm tái sử dụng cho các bài lab tuần tiếp theo.
-- 📸 _Ảnh minh chứng: Các tài nguyên NAT Gateway và VPC Endpoints đã được xóa sạch trên hệ thống._
+-  _Ảnh minh chứng: Các tài nguyên NAT Gateway và VPC Endpoints đã được xóa sạch trên hệ thống._
 
 ---
 

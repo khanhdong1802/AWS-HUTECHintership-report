@@ -94,23 +94,23 @@ pre: " <b> 1.3. </b> "
 - Configured Security Groups for:
   - Linux EC2 (SSH, HTTP)
   - Windows EC2 (RDP)
-- 📸 _Evidence: Successfully configured VPCs and Security Groups._
+-  _Evidence: Successfully configured VPCs and Security Groups._
 
 **Windows EC2 Deployment**
 
 - Launched Microsoft Windows Server 2022 EC2 Instance.
 - Configured key pair authentication.
 - Connected successfully using Remote Desktop.
-- 📸 _Evidence: Windows EC2 instance in running state._
-- 📸 _Evidence: Successful RDP connection._
+-  _Evidence: Windows EC2 instance in running state._
+-  _Evidence: Successful RDP connection._
 
 **Amazon Linux EC2 Deployment**
 
 - Launched Amazon Linux EC2 Instance.
 - Connected successfully through SSH terminal.
 - Configured Linux environment for deployment.
-- 📸 _Evidence: Amazon Linux EC2 running successfully._
-- 📸 _Evidence: SSH connection established._
+-  _Evidence: Amazon Linux EC2 running successfully._
+-  _Evidence: SSH connection established._
 
 **EC2 Basic Operations**
 
@@ -118,9 +118,9 @@ pre: " <b> 1.3. </b> "
 - Created EBS Snapshots.
 - Created Custom AMI.
 - Launched EC2 from Custom AMI.
-- 📸 _Evidence: Snapshot successfully created._
-- 📸 _Evidence: Custom AMI available._
-- 📸 _Evidence: EC2 launched from AMI._
+-  _Evidence: Snapshot successfully created._
+-  _Evidence: Custom AMI available._
+-  _Evidence: EC2 launched from AMI._
 
 **Deploy Application on Amazon Linux**
 
@@ -129,9 +129,9 @@ pre: " <b> 1.3. </b> "
 - Installed phpMyAdmin.
 - Installed Node.js runtime.
 - Deployed AWS User Management Application.
-- 📸 _Evidence: Apache test page working._
-- 📸 _Evidence: phpMyAdmin accessible._
-- 📸 _Evidence: Application running successfully._
+-  _Evidence: Apache test page working._
+-  _Evidence: phpMyAdmin accessible._
+-  _Evidence: Application running successfully._
 
 **Deploy Application on Windows EC2**
 
@@ -139,14 +139,14 @@ pre: " <b> 1.3. </b> "
 - Installed Node.js environment.
 - Deployed sample Node.js application.
 - Tested application through browser.
-- 📸 _Evidence: Node.js application running on Windows Server._
+-  _Evidence: Node.js application running on Windows Server._
 
 **IAM Governance Practice**
 
 - Created IAM Policies to restrict EC2 usage.
 - Restricted actions based on Region and Instance Type.
 - Tested governance restrictions successfully.
-- 📸 _Evidence: IAM Policy restrictions functioning correctly._
+-  _Evidence: IAM Policy restrictions functioning correctly._
 
 **Resource Cleanup**
 
@@ -154,7 +154,7 @@ pre: " <b> 1.3. </b> "
 - Deleted Snapshots and unused AMIs.
 - Removed unnecessary Security Groups and networking resources.
 - Checked Billing Dashboard to verify no abnormal charges.
-- 📸 _Evidence: All resources cleaned up successfully._
+-  _Evidence: All resources cleaned up successfully._
 
 ---
 

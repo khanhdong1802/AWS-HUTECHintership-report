@@ -111,8 +111,8 @@ pre: " <b> 1.5. </b> "
 - Reviewed the high-level architecture using EC2, RDS, Application Load Balancer, and Auto Scaling Group.
 - Learned why scalable architecture is needed when traffic changes over time.
 - Understood that this workshop builds on the basic FCJ Management application deployment.
-- 📸 _Evidence image: Workshop introduction page._
-- 📸 _Evidence image: Overall architecture diagram._
+-  _Evidence image: Workshop introduction page._
+-  _Evidence image: Overall architecture diagram._
 
 **Module 2 — Preparation**
 
@@ -124,9 +124,9 @@ pre: " <b> 1.5. </b> "
 - Created Security Groups for the application server and RDS.
 - Allowed required inbound traffic for SSH, HTTP, and application port.
 - Limited RDS access to the application Security Group.
-- 📸 _Evidence image: VPC created successfully._
-- 📸 _Evidence image: Public and private subnets._
-- 📸 _Evidence image: Security Group inbound rules._
+-  _Evidence image: VPC created successfully._
+-  _Evidence image: Public and private subnets._
+-  _Evidence image: Security Group inbound rules._
 
 **Module 3 — Create Launch Template**
 
@@ -136,8 +136,8 @@ pre: " <b> 1.5. </b> "
 - Configured Instance Type, Key Pair, and Security Group.
 - Checked the Launch Template details after creation.
 - Understood that the Auto Scaling Group will use this template to launch new EC2 instances.
-- 📸 _Evidence image: AMI created successfully._
-- 📸 _Evidence image: Launch Template configuration._
+-  _Evidence image: AMI created successfully._
+-  _Evidence image: Launch Template configuration._
 
 **Module 4 — Setting Up Load Balancer**
 
@@ -151,9 +151,9 @@ pre: " <b> 1.5. </b> "
 - Attached public subnets from multiple Availability Zones.
 - Connected the Load Balancer listener to the Target Group.
 - Tested access to the FCJ Management application through the Load Balancer DNS name.
-- 📸 _Evidence image: Target Group created._
-- 📸 _Evidence image: Application Load Balancer created._
-- 📸 _Evidence image: Application accessed through Load Balancer._
+-  _Evidence image: Target Group created._
+-  _Evidence image: Application Load Balancer created._
+-  _Evidence image: Application accessed through Load Balancer._
 
 **Module 5 — Test**
 
@@ -162,7 +162,7 @@ pre: " <b> 1.5. </b> "
 - Verified that Create, Read, Update, and Delete operations worked correctly.
 - Confirmed that the application could connect to the RDS database.
 - Checked whether the registered targets remained healthy.
-- 📸 _Evidence image: CRUD function tested successfully._
+-  _Evidence image: CRUD function tested successfully._
 
 **Module 6 — Create Auto Scaling Group**
 
@@ -174,8 +174,8 @@ pre: " <b> 1.5. </b> "
 - Enabled CloudWatch group metrics collection.
 - Verified that EC2 instances were launched automatically by the Auto Scaling Group.
 - Checked whether new instances were registered to the Target Group.
-- 📸 _Evidence image: Auto Scaling Group created._
-- 📸 _Evidence image: EC2 instances launched by Auto Scaling Group._
+-  _Evidence image: Auto Scaling Group created._
+-  _Evidence image: EC2 instances launched by Auto Scaling Group._
 
 **Module 7 — Test Solutions**
 
@@ -185,10 +185,10 @@ pre: " <b> 1.5. </b> "
 - Reviewed Predictive Scaling metrics in CloudWatch.
 - Compared actual load with predicted load.
 - Observed how capacity changed according to scaling policies.
-- 📸 _Evidence image: Manual Scaling result._
-- 📸 _Evidence image: Scheduled Scaling action._
-- 📸 _Evidence image: Dynamic Scaling policy._
-- 📸 _Evidence image: Predictive Scaling chart._
+-  _Evidence image: Manual Scaling result._
+-  _Evidence image: Scheduled Scaling action._
+-  _Evidence image: Dynamic Scaling policy._
+-  _Evidence image: Predictive Scaling chart._
 
 **Module 8 — Cleanup Resources**
 
@@ -203,7 +203,7 @@ pre: " <b> 1.5. </b> "
 - Deleted Security Groups that were no longer used.
 - Deleted the VPC, subnets, route tables, and other networking resources if they were created only for the lab.
 - Checked the AWS Billing Dashboard after cleanup.
-- 📸 _Evidence image: Resources cleaned up successfully._
+-  _Evidence image: Resources cleaned up successfully._
 
 ---
 
