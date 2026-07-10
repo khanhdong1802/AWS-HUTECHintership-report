@@ -83,3 +83,8 @@ To get started and manually deploy CloudFront, you can follow these fundamental 
 **Amazon CloudFront** is an indispensable component in modern cloud architectures, especially for systems needing to serve a user base distributed across multiple geographical regions. This service not only accelerates content delivery but also helps protect the origin from overload, improves stability, and provides comprehensive security enhancements.
 
 The best part about CloudFront is that you can start from very simple use cases, such as delivering a few images from S3, and gradually scale up to serve static websites, APIs, video streams, or complex production systems. If your application needs to be faster, more stable, and highly optimized, CloudFront is definitely a puzzle piece you should implement right away!
+
+## Screenshot of blog post:
+![Screenshot](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog2/blog2(1).jpg)
+
+[Link blog](https://www.facebook.com/groups/awsstudygroupfcj/posts/2204079480357012/?notif_id=1783334265675874&notif_t=tagged_with_story&ref=notif)

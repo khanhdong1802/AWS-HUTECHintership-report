@@ -44,6 +44,7 @@ Mô hình MVP (Minimum Viable Product) bao gồm các thành phần cốt lõi s
 3. Amazon S3 tiếp nhận request và tiến hành xác thực đa lớp: kiểm tra IAM Role của EC2, Endpoint policy và Bucket policy.
 4. Nếu tất cả các lớp bảo mật hợp lệ, EC2 có thể tương tác với bucket mà không cần đi qua Internet Gateway hoặc NAT Gateway.
 
+   ![Ảnh minh họa](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1(0).jpg)
 ---
 
 ## Lựa chọn giải pháp: VPC Endpoint vs NAT Gateway
@@ -108,4 +109,9 @@ Qua quá trình thực hành triển khai mô hình truy cập Amazon S3 riêng 
 1. **Private Subnet không cô lập hoàn toàn tài nguyên**: Nếu được thiết kế network đúng cách với VPC Endpoint, các tài nguyên bên trong private subnet vẫn dễ dàng giao tiếp với các dịch vụ AWS cần thiết một cách an toàn.
 2. **Tuy duy bảo mật tích hợp**: VPC Endpoint không đơn thuần là một cấu hình network, nó giúp thu hẹp bề mặt tấn công (attack surface) bằng cách loại bỏ hoàn toàn nhu cầu mở kết nối public internet khi không cần thiết.
 3. **Sự phối hợp của nhiều dịch vụ**: Một hệ thống Cloud chuẩn chỉnh là sự giao thoa kiến thức giữa Network (Route table, Endpoint) và Security (IAM, Bucket Policy, Logging). Hiểu rõ request đi qua đâu và quyền được kiểm soát ở lớp nào chính là chìa khóa để vận hành hệ thống an toàn, tối ưu.
-   ![Ảnh minh họa](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1.jpg)
+
+## Ảnh chụp màn hình bài blog:
+![Ảnh chụp màn hình](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1(1).jpg)
+
+## LinkBlog: [Link blog](https://www.facebook.com/groups/awsstudygroupfcj/posts/2201893240575636/?notif_id=1782978457405305&notif_t=tagged_with_story&ref=notif)
+

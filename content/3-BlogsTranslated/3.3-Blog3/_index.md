@@ -20,7 +20,7 @@ The core change in the modernization process is the shift from a massive monolit
 **The modernization solution architecture can be visualized as follows:**
 **The modernization solution architecture can be visualized as follows:**
 
-![Figure 1. Architectural shift from Monolithic to Microservices combined with Event-driven and Serverless](/images/Blog3/blog3(0).jpg)
+![Figure 1. Architectural shift from Monolithic to Microservices combined with Event-driven and Serverless](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog3/blog3(0).jpg)
 
 > *Figure 1. Architectural shift from Monolithic to Microservices combined with Event-driven and Serverless.*
 
@@ -112,3 +112,10 @@ Example of an AI-proposed transformation plan (diff) to replace a synchronous AP
 +    .eventBusName("EcommerceEventBus")
 +    .build();
 + eventBridgeClient.putEvents(PutEventsRequest.builder().entries(eventEntry).build());
+
+```
+
+## Screenshot of blog post:
+![Screenshot](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog3/blog3(3).jpg)
+
+[Link blog](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2203947850370175/?rdid=7BOOKl3nPIX8iObk#)

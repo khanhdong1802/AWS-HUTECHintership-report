@@ -45,6 +45,7 @@ The MVP (Minimum Viable Product) model consists of the following core components
 3. Amazon S3 receives the request and undergoes multi-layer authentication: verifying the EC2 instance's IAM Role, the Endpoint policy, and the Bucket policy.
 4. If all security layers are valid, the EC2 instance interacts with the bucket without needing an Internet Gateway or a NAT Gateway.
 
+   ![Illustration image](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1(0).jpg)
 ---
 
 ## Choosing a Solution: VPC Endpoint vs. NAT Gateway
@@ -109,4 +110,8 @@ Through this hands-on implementation of private Amazon S3 access, our team gathe
 1. **Private Subnets do not mean complete isolation**: When network paths are properly designed with a VPC Endpoint, resources inside a private subnet can seamlessly and securely communicate with required AWS services.
 2. **Integrated Security Mindset**: A VPC Endpoint is more than just a network configuration; it reduces the attack surface by completely eliminating the need for public internet connections when they aren't necessary.
 3. **Synergy of Multiple Services**: A well-architected cloud system is the intersection of Network knowledge (Route tables, Endpoints) and Security practices (IAM, Bucket Policies, Logging). Understanding exactly where a request travels and at which layer permissions are enforced is the key to running a secure, optimized, and operational system.
-   ![Illustration image](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1.jpg)
+
+## Screenshot of blog post:
+![Screenshot](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog1/blog1(1).jpg)
+
+## LinkBlog:[Link blog](https://www.facebook.com/groups/awsstudygroupfcj/posts/2201893240575636/?notif_id=1782978457405305&notif_t=tagged_with_story&ref=notif)

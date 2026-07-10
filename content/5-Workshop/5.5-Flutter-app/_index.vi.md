@@ -1,95 +1,71 @@
 ---
-title : "VPC Endpoint Policies"
-date : 2024-01-01
+title : "Flutter App"
+date : 2026-07-09
 weight : 5
 chapter : false
 pre : " <b> 5.5 </b> "
 ---
 
-Khi bạn tạo một Interface Endpoint  hoặc cổng, bạn có thể đính kèm một chính sách điểm cuối để kiểm soát quyền truy cập vào dịch vụ mà bạn đang kết nối. Chính sách VPC Endpoint là chính sách tài nguyên IAM mà bạn đính kèm vào điểm cuối. Nếu bạn không đính kèm chính sách khi tạo điểm cuối, thì AWS sẽ đính kèm chính sách mặc định cho bạn để cho phép toàn quyền truy cập vào dịch vụ thông qua điểm cuối.
+#### Vì sao cần một mục riêng cho Flutter App
 
-Bạn có thể tạo chính sách chỉ hạn chế quyền truy cập vào các S3 bucket cụ thể. Điều này hữu ích nếu bạn chỉ muốn một số Bộ chứa S3 nhất định có thể truy cập được thông qua điểm cuối.
+Ba mục trước (Backend, OAuth Gmail) xây xong toàn bộ phần server, nhưng người dùng cuối không gọi trực tiếp API — họ cần một ứng dụng di động để đăng nhập, kết nối Gmail, và xem kết quả tóm tắt. Mục này ghi lại phần client Flutter và, quan trọng hơn, luồng **real-time push qua WebSocket** — phần khó nhất của cả dự án vì nó không lộ ra ngay trên diagram kiến trúc, nhưng lại là nơi phát sinh nhiều lỗi khó thấy nhất.
 
-Trong phần này, bạn sẽ tạo chính sách VPC Endpoint hạn chế quyền truy cập vào S3 bucket được chỉ định trong chính sách VPC Endpoint.
-
-![endpoint diagram](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/s3-bucket-policy.png)
-
-#### Kết nối tới EC2 và xác minh kết nối tới S3. 
-
-1. Bắt đầu một phiên AWS Session Manager mới trên máy chủ có tên là Test-Gateway-Endpoint. Từ phiên này, xác minh rằng bạn có thể liệt kê nội dung của bucket mà bạn đã tạo trong Phần 1: Truy cập S3 từ VPC.
+Luồng hoàn chỉnh từ lúc bấm nút đến lúc thấy kết quả:
 
 ```
-aws s3 ls s3://<your-bucket-name>
-```
-![test](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/test1.png)
-
-Nội dung của bucket bao gồm hai tệp có dung lượng 1GB đã được tải lên trước đó.
-
-2. Tạo một bucket S3 mới; tuân thủ mẫu đặt tên mà bạn đã sử dụng trong Phần 1, nhưng thêm '-2' vào tên. Để các trường khác là mặc định và nhấp vào **Create**.
-
-![create bucket](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/create-bucket.png)
-
-3. Tạo bucket thành công.
-
-![Success](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/create-bucket-success.png)
-
-Policy mặc định cho phép truy cập vào tất cả các S3 Buckets thông qua VPC endpoint.
-
-4. Trong giao diện **Edit Policy**, sao chép và dán theo policy sau, thay thế yourbucketname-2 với tên bucket thứ hai của bạn. Policy này sẽ cho phép truy cập đến bucket mới thông qua VPC endpoint, nhưng không cho phép truy cập đến các bucket còn lại. Chọn **Save** để kích hoạt policy.
-
-
-```
-{
-  "Id": "Policy1631305502445",
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Stmt1631305501021",
-      "Action": "s3:*",
-      "Effect": "Allow",
-      "Resource": [
-      				"arn:aws:s3:::yourbucketname-2",
-       				"arn:aws:s3:::yourbucketname-2/*"
-       ],
-      "Principal": "*"
-    }
-  ]
-}
+User bấm "Check Gmail" trên app
+  → App gửi connectionId (lấy qua route whoami) lên REST /check-gmail
+  → Lambda producer đẩy job vào SQS
+  → Lambda Worker nhận job từ SQS
+  → Worker gọi Gmail API lấy email chưa đọc, gọi GPT-4o-mini tóm tắt (song song)
+  → Worker lưu kết quả vào DynamoDB
+  → Worker push kết quả ngược lại app qua API Gateway WebSocket (PostToConnection)
+  → App nhận message qua WebSocket, hiển thị danh sách SummaryCard
 ```
 
-![custom policy](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/policy2.png)
+Điểm mấu chốt của thiết kế: kết quả **không** được lấy bằng cách polling REST định kỳ — không có endpoint `GET /summaries` nào cả. Toàn bộ kết quả được đẩy một chiều từ server xuống client qua WebSocket ngay khi xử lý xong, giúp giảm số lượt gọi API và cho cảm giác "real-time" đúng nghĩa. Cái giá phải trả là độ phức tạp: client phải tự quản lý vòng đời kết nối WebSocket, và phải tự biết khi nào kết nối đã "chết" để nối lại — vấn đề chiếm phần lớn thời gian debug của mục này.
 
-Cấu hình policy thành công.
+#### Kiến trúc client (instance-based)
 
-![success](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/success.png)
+Toàn bộ service của app (`AuthService`, `RestApiService`, `WebSocketService`, `GmailOAuthService`) được thiết kế theo kiểu **instance-based**, khởi tạo một lần ở tầng gốc của app và truyền xuống qua constructor, thay vì dùng static class hay singleton toàn cục. Cách này giúp việc test và quản lý vòng đời (dispose khi thoát màn hình) rõ ràng hơn, dù tốn thêm một chút boilerplate truyền tham số.
 
-5. Từ session của bạn trên Test-Gateway-Endpoint instance, kiểm tra truy cập đến S3 bucket bạn tạo ở bước đầu
+Cấu trúc thư mục chính:
 
 ```
-aws s3 ls s3://<yourbucketname>
+lib/
+├── config/app_config.dart          # Endpoint URLs, Cognito IDs
+├── services/
+│   ├── auth_service.dart           # Cognito login/signup
+│   ├── rest_api_service.dart       # HTTP calls
+│   ├── websocket_service.dart      # WebSocket connect + listen
+│   └── gmail_oauth_service.dart    # OAuth init + deep link handler
+├── models/email_summary.dart
+├── screens/{login,home}_screen.dart
+└── widgets/summary_card.dart
 ```
 
-Câu lệnh trả về lỗi bởi vì truy cập vào S3 bucket không có quyền trong VPC endpoint policy.
+#### Vấn đề gặp phải và cách xử lý
 
-![error](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/error.png)
+**1. `$connect` không thể trả `connectionId` an toàn ngay lập tức.** Gửi message ngay trong Lambda `$connect` có rủi ro `GoneException` vì kết nối chưa "sống" hoàn toàn tại thời điểm đó. Giải pháp: thêm route WebSocket riêng tên `whoami` — client chủ động gửi request sau khi kết nối, Lambda `ws-whoami` dùng `ApiGatewayManagementApiClient` trả lại `connectionId` một cách an toàn.
 
-6. Trở lại home directory của bạn trên EC2 instance ```cd~```
+**2. API Gateway không tự động re-deploy stage khi thêm route mới qua CloudFormation.** Route `whoami` được tạo thành công trong CloudFormation (`AWS::ApiGatewayV2::Route`), nhưng stage `prod` vẫn trỏ vào deployment cũ từ trước khi route đó tồn tại — dù đã khai `DependsOn` giữa `Deployment` và `Route`. Hệ quả: mọi request `whoami` bị API Gateway trả lỗi `Forbidden` ngay tại tầng routing, chưa từng chạm tới Lambda. Cách phát hiện: kiểm tra CloudWatch Logs của Lambda đích — log group còn chưa từng được tạo ra là dấu hiệu chắc chắn request chưa tới nơi. Cách sửa: chủ động **Deploy API** vào đúng stage sau mỗi lần thêm/sửa route, thay vì chỉ tin vào `sam deploy`.
 
-+ Tạo file ```fallocate -l 1G test-bucket2.xyz ```
-+ Sao chép file lên bucket thứ  2 ```aws s3 cp test-bucket2.xyz s3://<your-2nd-bucket-name>```
+**3. `WebSocketChannel.connect()` trong Flutter không chờ handshake hoàn tất.** Hàm trả về ngay lập tức dù kết nối thật sự còn đang xử lý phía sau (bao gồm cả Lambda Authorizer xác thực JWT). Dùng `Future.delayed` với thời gian cố định là một phỏng đoán không đáng tin — thay bằng `await channel.ready`, một Future chỉ hoàn thành đúng lúc handshake xong hoặc ném lỗi nếu thất bại.
 
-![success](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/test2.png)
+**4. Xử lý email tuần tự khiến thời gian phản hồi tăng tuyến tính và dễ mất cả batch vì một email lỗi.** Ban đầu Worker gọi GPT-4o-mini lần lượt cho từng email trong vòng lặp `for`. Với 10 email chưa đọc, mỗi lệnh gọi OpenAI có thể mất tới 15 giây (timeout tối đa) — nếu chạy tuần tự, tổng thời gian dễ vượt ngưỡng an toàn và tăng nguy cơ WebSocket bị đóng trước khi kịp trả kết quả. Đổi sang `Promise.allSettled` để xử lý song song, đồng thời đảm bảo một email lỗi (timeout, rate limit OpenAI) không làm mất kết quả của các email khác trong cùng batch — thay vì dùng `Promise.all`, vốn sẽ reject toàn bộ nếu chỉ một phần tử thất bại.
 
-Thao tác này được cho phép bởi VPC endpoint policy.
+**5. `connectionId` bị cache "cứng" ở tầng UI, không đồng bộ với trạng thái thật của kết nối.** Đây là nguyên nhân sâu xa nhất và khó phát hiện nhất trong toàn bộ quá trình debug: màn hình Home lưu `connectionId` vào state chỉ một lần lúc khởi tạo. Khi WebSocket rớt kết nối (do mất mạng, đổi mạng, hay hệ điều hành tạm ngưng kết nối nền), service tầng dưới tự dọn giá trị về `null`, nhưng state của màn hình không được cập nhật theo — dẫn đến việc gửi một `connectionId` đã chết lên server. Backend trả về lỗi `410 Gone` khi cố push kết quả, nhưng vì đây là lỗi xảy ra ở phía server sau khi REST call đã trả về thành công, người dùng không thấy bất kỳ thông báo lỗi nào — chỉ thấy màn hình xoay mãi không có kết quả.
 
-![success](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/test2-success.png)
+Bằng chứng xác nhận nguyên nhân: log của Lambda `ws-disconnect` cho thấy kết nối đã đóng *trước* thời điểm người dùng bấm nút Check Gmail, không phải trong lúc xử lý. Cách sửa: đọc `connectionId` trực tiếp từ service (nguồn dữ liệu sống) ngay tại thời điểm bấm nút thay vì tin vào giá trị đã cache trong state, và tự động kết nối lại nếu phát hiện giá trị đó là `null`.
 
-Sau đó chúng ta kiểm tra truy cập vào S3 bucket đầu tiên
+#### Nội dung
 
- ```aws s3 cp test-bucket2.xyz s3://<your-1st-bucket-name>```
+{{% children /%}}
 
- ![fail](/AWS-HUTECHintership-report/images/5-Workshop/5.5-Policy/test2-fail.png)
+#### Kết quả đạt được sau mục này
 
- Câu lệnh xảy ra lỗi bởi vì bucket không có quyền truy cập bởi VPC endpoint policy.
-
-Trong phần này, bạn đã tạo chính sách VPC Endpoint cho Amazon S3 và sử dụng AWS CLI để kiểm tra chính sách. Các hoạt động AWS CLI liên quan đến bucket S3 ban đầu của bạn thất bại vì bạn áp dụng một chính sách chỉ cho phép truy cập đến bucket thứ hai mà bạn đã tạo. Các hoạt động AWS CLI nhắm vào bucket thứ hai của bạn thành công vì chính sách cho phép chúng. Những chính sách này có thể hữu ích trong các tình huống khi bạn cần kiểm soát quyền truy cập vào tài nguyên thông qua VPC Endpoint.
+- Ứng dụng Flutter hoàn chỉnh chạy trên thiết bị Android thật (Samsung S23 Ultra), kiến trúc instance-based cho toàn bộ service tầng client
+- Luồng đăng nhập Cognito, deep link OAuth Gmail, và kết nối WebSocket real-time đều chạy ổn định end-to-end
+- Route `whoami` bổ sung cho WebSocket API để lấy `connectionId` an toàn, không phụ thuộc vào `$connect`
+- Worker xử lý email song song, chịu lỗi từng phần tử (partial failure tolerant) thay vì mất cả batch vì một email lỗi
+- Xác nhận và khắc phục một lớp lỗi tinh vi: trạng thái kết nối cache ở tầng UI không đồng bộ với trạng thái thật của kết nối mạng — một bài học chung áp dụng được cho bất kỳ ứng dụng real-time nào, không riêng gì WebSocket

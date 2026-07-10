@@ -20,7 +20,7 @@ Thay đổi cốt lõi trong tiến trình hiện đại hóa là việc dịch 
 **Kiến trúc giải pháp hiện đại hóa có thể được hình dung như sau:**
 **Kiến trúc giải pháp hiện đại hóa có thể được hình dung như sau:**
 
-![Hình 1. Sự dịch chuyển kiến trúc từ Monolithic sang Microservices kết hợp Event-driven và Serverless](/images/Blog3/blog3(0).jpg)
+![Hình 1. Sự dịch chuyển kiến trúc từ Monolithic sang Microservices kết hợp Event-driven và Serverless](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog3/blog3(0).jpg)
 
 > *Hình 1. Sự dịch chuyển kiến trúc từ Monolithic sang Microservices kết hợp Event-driven và Serverless.*
 
@@ -114,3 +114,8 @@ Ví dụ về một bản kế hoạch chuyển đổi (diff) do AI đề xuất
 + eventBridgeClient.putEvents(PutEventsRequest.builder().entries(eventEntry).build());
 
 ```
+
+## Ảnh chụp màn hình bài blog:
+![Ảnh chụp màn hình](/AWS-HUTECHintership-report/images/3-BlogsTranslated/Blog3/blog3(3).jpg)
+
+[Link blog](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2203947850370175/?rdid=7BOOKl3nPIX8iObk#)
