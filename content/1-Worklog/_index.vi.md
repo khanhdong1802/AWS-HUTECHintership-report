@@ -24,8 +24,8 @@ pre: " <b> 1. </b> "
 
 **Tuần 9:** [Quản lý và thao tác tài nguyên tự động qua giao diện dòng lệnh (AWS CLI)](1.9-week9/)
 
-**Tuần 10:** [Dự án InboxIQ - Đề xuất giải pháp và thiết kế kiến trúc Serverless Event-Driven](1.10-week10/)
+**Tuần 10:** [Dự án InboxIQ - Xây dựng ứng dụng Flutter và tích hợp xác thực Amazon Cognito](1.10-week10/)
 
-**Tuần 11:** [Dự án InboxIQ - Triển khai hạ tầng Core Backend (API Gateway, SQS, Lambda)](1.11-week11/)
+**Tuần 11:** [Dự án InboxIQ - Tích hợp Gmail OAuth bằng Deep Link và kết nối WebSocket thời gian thực](1.11-week11/)
 
-**Tuần 12:** [Dự án InboxIQ - Tích hợp Frontend, AI, kiểm thử toàn diện và nghiệm thu](1.12-week12/)
+**Tuần 12:** [Dự án InboxIQ - Kiểm thử tích hợp End-to-End, xử lý lỗi WebSocket và hoàn thiện giao diện](1.12-week12/)
