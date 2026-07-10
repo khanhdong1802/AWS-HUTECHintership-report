@@ -24,7 +24,7 @@ chapter: false
 
 &emsp; **Vị trí thực tập:** FCJ Cloud Intern
 
-&emsp; **Thời gian thực tập:** Từ ngày 20/04/2026 đến ngày 20/07/2026
+&emsp; **Thời gian thực tập:** Từ ngày 15/04/2026 đến ngày 30/07/2026
 
 ![Ảnh đại diện của bạn](/AWS-HUTECHintership-report/images/avatar.png)
 

@@ -29,7 +29,7 @@ chapter: false
 
 &emsp; **Internship Position:** FCJ Cloud Intern
 
-&emsp; **Internship Duration:** From 20/04/2026 to 20/07/2026
+&emsp; **Internship Duration:** From 15/04/2026 to 30/07/2026
 
 ![Your profile picture](/AWS-HUTECHintership-report/images/avatar.png)
 
