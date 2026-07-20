@@ -1,6 +1,6 @@
 ---
 title: "Worklog Week 7"
-date: 2026-06-08
+date: 2026-06-01
 weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.7. </b> "
 
 | Day | Tasks | Start Date | Completion Date | Reference |
 | --- | --- | --- | --- | --- |
-| Monday | - Read the Amazon CloudWatch workshop overview <br> - Learn the role of CloudWatch in AWS <br> - Prepare the lab environment | 08/06/2026 | 08/06/2026 | https://000008.awsstudygroup.com/1-introduction/ |
-| Tuesday | - Explore CloudWatch Metrics <br> - View and analyze Metrics <br> - Practice Search Expressions | 09/06/2026 | 09/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
-| Wednesday | - Practice Math Expressions <br> - Use Dynamic Labels <br> - Visualize metric data | 10/06/2026 | 10/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
-| Thursday | - Work with CloudWatch Logs <br> - Query logs using CloudWatch Logs Insights <br> - Create Metric Filters from Logs | 11/06/2026 | 11/06/2026 | https://000008.awsstudygroup.com/4-cloud-watch-logs/ |
-| Friday | - Create CloudWatch Alarms <br> - Configure SNS Notifications <br> - Test Alarm functionality | 12/06/2026 | 12/06/2026 | https://000008.awsstudygroup.com/5-cloud-watch-alarm/ |
-| Saturday | - Build CloudWatch Dashboards <br> - Add Metrics and Alarms to Dashboards <br> - Monitor data from a centralized view | 13/06/2026 | 13/06/2026 | https://000008.awsstudygroup.com/6-cloud-watch-dashboard/ |
-| Sunday | - Review created resources <br> - Perform resource cleanup <br> - Summarize knowledge gained during the week | 14/06/2026 | 14/06/2026 | https://000008.awsstudygroup.com/7-clean-up/ |
+| Monday | - Read the Amazon CloudWatch workshop overview <br> - Learn the role of CloudWatch in AWS <br> - Prepare the lab environment | 01/06/2026 | 01/06/2026 | https://000008.awsstudygroup.com/1-introduction/ |
+| Tuesday | - Explore CloudWatch Metrics <br> - View and analyze Metrics <br> - Practice Search Expressions | 02/06/2026 | 02/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
+| Wednesday | - Practice Math Expressions <br> - Use Dynamic Labels <br> - Visualize metric data | 03/06/2026 | 03/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
+| Thursday | - Work with CloudWatch Logs <br> - Query logs using CloudWatch Logs Insights <br> - Create Metric Filters from Logs | 04/06/2026 | 04/06/2026 | https://000008.awsstudygroup.com/4-cloud-watch-logs/ |
+| Friday | - Create CloudWatch Alarms <br> - Configure SNS Notifications <br> - Test Alarm functionality | 05/06/2026 | 05/06/2026 | https://000008.awsstudygroup.com/5-cloud-watch-alarm/ |
+| Saturday | - Build CloudWatch Dashboards <br> - Add Metrics and Alarms to Dashboards <br> - Monitor data from a centralized view | 06/06/2026 | 06/06/2026 | https://000008.awsstudygroup.com/6-cloud-watch-dashboard/ |
+| Sunday | - Review created resources <br> - Perform resource cleanup <br> - Summarize knowledge gained during the week | 07/06/2026 | 07/06/2026 | https://000008.awsstudygroup.com/7-clean-up/ |
 
 ---
 
