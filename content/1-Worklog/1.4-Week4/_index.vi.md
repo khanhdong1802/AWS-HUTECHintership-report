@@ -1,36 +1,36 @@
 ---
 title: "Worklog Tuần 4"
-date: 2026-05-18
+date: 2026-05-11
 weight: 4
 chapter: false
-pre: " <b> 1.4. </b> "
+pre: "  1.4.  "
 ---
 
 ### Mục tiêu tuần 4:
 
-- Tìm hiểu tổng quan về Amazon RDS và vai trò của RDS trong hệ thống cơ sở dữ liệu trên Cloud.
-- Nắm được đặc điểm của RDS như managed service, backup tự động, scaling, Multi-AZ và Read Replica.
-- Thực hành tạo VPC, Subnet, Security Group cho EC2 và RDS.
-- Tạo DB Subnet Group để chuẩn bị môi trường triển khai database.
-- Khởi tạo EC2 Instance làm máy chủ ứng dụng kết nối đến RDS.
-- Tạo RDS Database Instance và kiểm tra Endpoint, Port, Username.
-- Triển khai ứng dụng AWS FCJ Management kết nối với cơ sở dữ liệu RDS.
-- Thực hành backup, snapshot và restore database.
-- Dọn dẹp tài nguyên sau khi hoàn thành lab để tránh phát sinh chi phí.
+* Khám phá bức tranh toàn cảnh về Amazon RDS cũng như tầm quan trọng của dịch vụ này trong kiến trúc cơ sở dữ liệu đám mây.
+* Hiểu rõ các tính năng cốt lõi của RDS bao gồm: dịch vụ được quản lý (managed service), tự động sao lưu, khả năng mở rộng, kiến trúc Multi-AZ và Read Replica.
+* Tiến hành thiết lập mạng VPC, Subnet và cấu hình Security Group phục vụ cho cả EC2 và RDS.
+* Xây dựng DB Subnet Group nhằm tạo lập không gian mạng chuẩn cho việc triển khai cơ sở dữ liệu.
+* Cài đặt và khởi chạy máy ảo EC2 đóng vai trò là server ứng dụng kết nối trực tiếp với RDS.
+* Thiết lập RDS Database Instance, đồng thời thu thập các thông tin quan trọng như Endpoint, Port và Username.
+* Đưa ứng dụng AWS FCJ Management lên môi trường và cấu hình để giao tiếp với database RDS.
+* Làm quen với các thao tác sao lưu (backup), chụp bản ghi (snapshot) và phục hồi (restore) cơ sở dữ liệu.
+* Thực hiện xóa bỏ các tài nguyên đã khởi tạo sau khi kết thúc bài thực hành nhằm tối ưu chi phí.
 
 ---
 
 ### Các công việc cần triển khai trong tuần này:
 
-| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| Thứ | Hạng mục công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc phần Introduction về Amazon RDS <br> - Tìm hiểu RDS là gì, OLTP, DB Instance, Endpoint <br> - Nắm các database engine được hỗ trợ như MySQL, PostgreSQL, MariaDB, SQL Server, Oracle, Aurora | 18/05/2026 | 18/05/2026 | https://000005.awsstudygroup.com/ |
-| 3 | - Module 2.1: Create a VPC <br> - Tạo VPC, Public Subnet, Private Subnet <br> - Cấu hình nhiều Availability Zone để chuẩn bị cho RDS | 19/05/2026 | 19/05/2026 | https://000005.awsstudygroup.com/ |
-| 4 | - Module 2.2: Create EC2 Security Group <br> - Module 2.3: Create RDS Security Group <br> - Mở các port cần thiết cho EC2 và giới hạn RDS chỉ nhận kết nối từ EC2 Security Group | 20/05/2026 | 20/05/2026 | https://000005.awsstudygroup.com/ |
-| 5 | - Module 2.4: Create DB Subnet Group <br> - Module 3: Create EC2 Instance <br> - Launch Amazon Linux EC2, gán Key Pair và kết nối SSH bằng MobaXterm | 21/05/2026 | 21/05/2026 | https://000005.awsstudygroup.com/ |
-| 6 | - Module 4: Create RDS Database Instance <br> - Tạo database instance, cấu hình engine, username, password, VPC, Security Group <br> - Kiểm tra trạng thái Available, Endpoint và Port của RDS | 22/05/2026 | 22/05/2026 | https://000005.awsstudygroup.com/ |
-| 7 | - Module 5: Application Deployment <br> - Clone source code AWS FCJ Management <br> - Cài Node.js, npm package, MySQL client <br> - Tạo database, table user và chạy ứng dụng qua port 5000 | 23/05/2026 | 23/05/2026 | https://000005.awsstudygroup.com/ |
-| CN | - Module 6: Backup and Restore <br> - Kiểm tra backup, snapshot và restore RDS <br> - Module 7: Clean up resources <br> - Xóa EC2, RDS, Snapshot, Subnet Group, Security Group, VPC để tránh phát sinh phí | 24/05/2026 | 24/05/2026 | https://000005.awsstudygroup.com/ |
+| 2 | - Nghiên cứu tài liệu giới thiệu về Amazon RDS. <br> - Làm rõ các khái niệm: RDS, hệ thống OLTP, DB Instance, Endpoint. <br> - Liệt kê các engine được hỗ trợ: MySQL, PostgreSQL, MariaDB, SQL Server, Oracle và Aurora. | 11/05/2026 | 11/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
+| 3 | - Module 2.1: Create a VPC. <br> - Thiết lập mạng VPC bao gồm cả Public và Private Subnet. <br> - Triển khai trên nhiều Availability Zone nhằm đảm bảo tính sẵn sàng cho RDS. | 12/05/2026 | 12/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
+| 4 | - Module 2.2: Create EC2 Security Group. <br> - Module 2.3: Create RDS Security Group. <br> - Thiết lập các quy tắc tường lửa (mở port) cho EC2 và cấu hình RDS sao cho chỉ cho phép traffic đi vào từ Security Group của EC2. | 13/05/2026 | 13/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
+| 5 | - Module 2.4: Create DB Subnet Group. <br> - Module 3: Create EC2 Instance. <br> - Khởi tạo máy ảo Amazon Linux, đính kèm Key Pair và thực hiện kết nối từ xa qua SSH bằng phần mềm MobaXterm. | 14/05/2026 | 14/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
+| 6 | - Module 4: Create RDS Database Instance. <br> - Tiến hành tạo database, lựa chọn engine, thiết lập tài khoản, mật khẩu, cũng như gắn VPC và Security Group tương ứng. <br> - Xác nhận trạng thái Available và lấy thông tin kết nối (Endpoint, Port). | 15/05/2026 | 15/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
+| 7 | - Module 5: Application Deployment. <br> - Tải source code AWS FCJ Management từ kho lưu trữ. <br> - Cài đặt môi trường Node.js, các thư viện npm và MySQL client. <br> - Khởi tạo database, bảng dữ liệu (user) và khởi chạy ứng dụng trên cổng 5000. | 16/05/2026 | 16/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
+| CN | - Module 6: Backup and Restore. <br> - Thử nghiệm các tính năng sao lưu, tạo snapshot và khôi phục RDS. <br> - Module 7: Clean up resources. <br> - Xóa toàn bộ tài nguyên (EC2, RDS, Snapshot, Security Group, VPC,...) để không bị tính thêm phí. | 17/05/2026 | 17/05/2026 | [https://000005.awsstudygroup.com/](https://000005.awsstudygroup.com/) |
 
 ---
 
@@ -40,73 +40,75 @@ pre: " <b> 1.4. </b> "
 
 **Amazon RDS là gì?**
 
-- Hiểu Amazon RDS là dịch vụ cơ sở dữ liệu quan hệ được quản lý bởi AWS.
-- RDS giúp người dùng tạo và vận hành database mà không cần tự quản lý server vật lý hoặc máy ảo database.
-- RDS phù hợp với các hệ thống xử lý giao dịch như quản lý người dùng, đơn hàng, thanh toán hoặc dữ liệu có cấu trúc.
-- RDS hỗ trợ nhiều database engine như Amazon Aurora, MySQL, MariaDB, Oracle, SQL Server và PostgreSQL.
+* Nắm bắt được đây là một dịch vụ cơ sở dữ liệu quan hệ được quản lý hoàn toàn bởi hệ sinh thái AWS.
+* Nhận thấy sự tiện lợi của RDS khi cho phép vận hành database mà không cần bận tâm đến việc bảo trì máy chủ vật lý hay hệ điều hành.
+* Ứng dụng tốt cho các hệ thống yêu cầu xử lý giao dịch khắt khe (đơn hàng, người dùng, thanh toán) hay các kho dữ liệu có cấu trúc rõ ràng.
+* Biết được danh sách các engine tương thích bao gồm: Amazon Aurora, Oracle, SQL Server, MySQL, PostgreSQL và MariaDB.
 
 **Managed Service trong RDS**
 
-- Hiểu RDS là managed service, vì vậy người dùng không cần trực tiếp quản lý hệ điều hành bên dưới DB Instance.
-- AWS hỗ trợ các tác vụ như backup, patching, software update, scaling, Multi-AZ và failover.
-- Người dùng có thể tập trung nhiều hơn vào thiết kế database, bảo mật kết nối và vận hành ứng dụng.
+* Hiểu rõ bản chất "managed service" giúp người dùng thoát khỏi gánh nặng quản trị hệ điều hành máy chủ.
+* Các công việc bảo trì định kỳ như vá lỗi (patching), cập nhật phần mềm, sao lưu, mở rộng hay chuyển đổi dự phòng (failover) đều do AWS tự động xử lý.
+* Tiết kiệm thời gian để đội ngũ kỹ thuật có thể tập trung vào việc tối ưu hóa cấu trúc dữ liệu và phát triển ứng dụng.
 
 **VPC, Subnet và DB Subnet Group**
 
-- Hiểu VPC là mạng riêng ảo dùng để cô lập tài nguyên AWS.
-- Biết cách tạo VPC với public subnet và private subnet.
-- Public subnet phù hợp cho EC2 cần truy cập Internet.
-- Private subnet phù hợp cho RDS để hạn chế truy cập trực tiếp từ Internet.
-- Biết DB Subnet Group là tập hợp các subnet được chỉ định cho RDS.
-- DB Subnet Group nên có subnet ở ít nhất hai Availability Zone để hỗ trợ tính sẵn sàng cao.
+* Nắm được khái niệm VPC là môi trường mạng ảo độc lập giúp bảo vệ các tài nguyên trên AWS.
+* Phân biệt và biết cách triển khai hai loại subnet: public và private.
+* Public subnet được phân bổ cho máy ảo EC2 để có thể giao tiếp với Internet.
+* Private subnet dùng để chứa RDS, giúp ẩn database khỏi các rủi ro từ mạng công cộng.
+* Nắm được định nghĩa DB Subnet Group là một cụm các subnet dành riêng cho hệ thống RDS.
+* Hiểu nguyên tắc thiết kế DB Subnet Group là phải trải dài trên ít nhất 2 Availability Zone để dự phòng sự cố.
 
 **Security Group cho EC2 và RDS**
 
-- Hiểu Security Group hoạt động như firewall cho EC2 và RDS.
-- EC2 Security Group cần mở các port cần thiết như:
-  - SSH: `22`
-  - HTTP: `80`
-  - HTTPS: `443`
-  - Application port: `5000`
-- RDS Security Group cần mở port database, ví dụ MySQL/Aurora sử dụng port `3306`.
-- Nên cấu hình RDS chỉ cho phép kết nối từ EC2 Security Group thay vì mở public IP rộng rãi.
+* Xem Security Group như một lớp tường lửa ảo bảo vệ ở cấp độ instance (cho cả EC2 và RDS).
+* Đối với EC2, cần thiết lập mở các cổng giao tiếp cơ bản:
+* `22` cho SSH
+* `80` cho HTTP
+* `443` cho HTTPS
+* `5000` cho ứng dụng
+
+
+* Đối với RDS (ví dụ dùng MySQL/Aurora), cần cho phép truy cập qua cổng `3306`.
+* Áp dụng nguyên tắc bảo mật tối thiểu: Không mở cổng database ra Internet, mà chỉ cho phép luồng dữ liệu (inbound) xuất phát từ Security Group của máy ảo EC2.
 
 **EC2 Instance dùng làm Application Server**
 
-- Biết cách tạo Amazon Linux EC2 Instance.
-- Biết chọn AMI Amazon Linux 2023.
-- Biết chọn Instance Type phù hợp như `t2.micro` hoặc `t3.micro`.
-- Biết gán Key Pair để SSH vào máy chủ.
-- Biết kết nối EC2 bằng MobaXterm thông qua Public IP hoặc Public DNS.
+* Nắm vững các bước khởi tạo một máy ảo EC2 chạy Amazon Linux.
+* Lựa chọn đúng image (AMI Amazon Linux 2023).
+* Cấu hình loại instance tiết kiệm chi phí (`t2.micro` hoặc `t3.micro`).
+* Quản lý Key Pair để xác thực bảo mật khi kết nối.
+* Sử dụng MobaXterm để SSH vào hệ thống thông qua Public IP/DNS.
 
 **RDS Database Instance**
 
-- Biết cách tạo RDS Database Instance bằng chế độ Standard create.
-- Biết cấu hình engine, version, template, master username, password, VPC và Security Group.
-- Biết kiểm tra trạng thái RDS từ `Creating` sang `Available`.
-- Biết lấy Endpoint, Port và Username để ứng dụng hoặc EC2 kết nối đến database.
+* Thành thạo việc thiết lập một RDS Database Instance qua tùy chọn Standard create.
+* Biết cách tùy chỉnh các thông số: loại engine, phiên bản, thông tin đăng nhập (master user/pass), cũng như gán mạng VPC và Security Group.
+* Nhận biết quá trình chuyển đổi trạng thái của database từ lúc `Creating` cho đến khi `Available`.
+* Biết cách trích xuất chuỗi kết nối (Endpoint) và thông tin port để phục vụ việc cấu hình trên app server.
 
 **Triển khai ứng dụng kết nối RDS**
 
-- Biết clone source code từ GitHub về EC2.
-- Biết cài Node.js, npm và các package cần thiết như Express, dotenv, MySQL.
-- Biết tạo file `.env` để lưu thông tin kết nối database gồm Endpoint, Database Name, Username và Password.
-- Biết tạo database `first_cloud_users`, tạo bảng `user` và thêm dữ liệu mẫu.
-- Biết chạy ứng dụng bằng `npm start` và truy cập ứng dụng qua port `5000`.
+* Biết cách tải mã nguồn từ GitHub xuống môi trường máy chủ EC2.
+* Hoàn thiện việc cài đặt Node.js, trình quản lý gói npm cùng các dependency (Express, dotenv, MySQL).
+* Khai báo file môi trường `.env` nhằm bảo mật các thông tin nhạy cảm: Endpoint, tên database, tài khoản và mật khẩu.
+* Thực hiện kết nối vào database mới tạo, lập cơ sở dữ liệu `first_cloud_users`, tạo bảng `user` và insert dữ liệu chạy thử.
+* Khởi động ứng dụng thông qua lệnh `npm start` và kiểm tra hoạt động trên trình duyệt qua port `5000`.
 
 **Backup và Restore trong RDS**
 
-- Hiểu RDS hỗ trợ automated backup và manual snapshot.
-- Biết kiểm tra backup trong tab Maintenance & backups.
-- Biết tạo snapshot và restore snapshot thành một DB Instance mới.
-- Hiểu rằng database được restore sẽ có Endpoint mới, vì vậy ứng dụng cần cập nhật lại chuỗi kết nối nếu sử dụng database mới.
+* Nắm được sự khác biệt giữa sao lưu tự động (automated backup) và tạo bản sao thủ công (manual snapshot).
+* Theo dõi các bản backup trong khu vực Maintenance & backups trên console.
+* Biết cách xuất snapshot cũng như dùng snapshot đó để dựng lại một DB Instance hoàn toàn mới.
+* Hiểu được rằng sau khi phục hồi, hệ thống sẽ cấp một Endpoint khác, đòi hỏi phải cập nhật lại cấu hình kết nối trên phía ứng dụng.
 
 **Dọn dẹp tài nguyên**
 
-- Biết xóa RDS Database Instance, DB Snapshot và DB Subnet Group.
-- Biết terminate EC2 Instance sau khi hoàn thành lab.
-- Biết xóa Security Group, NAT Gateway, Elastic IP và VPC nếu không còn sử dụng.
-- Hiểu tầm quan trọng của việc kiểm tra Billing Dashboard hoặc Cost Explorer sau khi cleanup để tránh phát sinh chi phí.
+* Thành thạo quy trình gỡ bỏ RDS Database Instance, các Snapshot và DB Subnet Group liên quan.
+* Chấm dứt hoạt động (terminate) của máy ảo EC2 ngay sau khi xong bài thực hành.
+* Lần lượt xóa bỏ các thành phần mạng như Security Group, NAT Gateway, Elastic IP và VPC.
+* Ý thức được việc phải kiểm tra chéo trên Cost Explorer hoặc Billing Dashboard để đảm bảo không bị tính phí "oan" do sót tài nguyên.
 
 ---
 
@@ -114,111 +116,106 @@ pre: " <b> 1.4. </b> "
 
 **Module 1 — Introduction**
 
-- Đọc tổng quan về Amazon RDS.
-- Tìm hiểu RDS là managed relational database service.
-- Phân biệt RDS với database tự cài trên EC2.
-- Tìm hiểu các khái niệm:
-  - DB Instance
-  - Endpoint
-  - Database Engine
-  - Maintenance Window
-  - Backup
-  - Snapshot
-  - Multi-AZ
-  - Read Replica
--  _Ảnh minh chứng: Trang Introduction của workshop Amazon RDS._
+* Nghiên cứu phần giới thiệu chung về giải pháp Amazon RDS.
+* Làm rõ bản chất của một dịch vụ cơ sở dữ liệu quan hệ được quản lý.
+* So sánh sự khác biệt giữa dùng RDS và tự dựng database trên máy ảo EC2.
+* Làm quen với bộ thuật ngữ chuyên ngành:
+* DB Instance
+* Chuỗi kết nối (Endpoint)
+* Database Engine
+* Cửa sổ bảo trì (Maintenance Window)
+* Backup & Snapshot
+* Kiến trúc Multi-AZ
+* Read Replica
+
 
 **Module 2.1 — Create a VPC**
 
-- Tạo VPC cho môi trường triển khai RDS.
-- Cấu hình IPv4 CIDR block.
-- Tạo public subnet cho EC2.
-- Tạo private subnet cho RDS.
-- Chọn ít nhất hai Availability Zone để tăng tính sẵn sàng.
-- Kiểm tra auto-assign public IPv4 cho subnet phù hợp.
--  _Ảnh minh chứng: VPC đã tạo thành công._
--  _Ảnh minh chứng: Public subnet và private subnet._
+* Thiết lập không gian mạng ảo (VPC) phục vụ cho lab RDS.
+* Khai báo dải mạng IPv4 CIDR.
+* Cấu hình public subnet dành riêng cho EC2.
+* Cấu hình private subnet dành riêng cho database RDS.
+* Lựa chọn 2 vùng Availability Zone khác nhau để tăng tính chống chịu lỗi.
+* Bật tính năng tự động cấp phát IP public (auto-assign public IPv4) cho subnet phù hợp.
+
 
 **Module 2.2 — Create EC2 Security Group**
 
-- Tạo Security Group dành cho EC2 Instance.
-- Cấu hình inbound rules:
-  - SSH port `22`
-  - HTTP port `80`
-  - HTTPS port `443`
-  - Custom TCP port `5000`
-- Giới hạn SSH theo IP cá nhân để tăng bảo mật.
-- Ghi lại Security Group ID để dùng khi tạo EC2 và cấu hình RDS.
--  _Ảnh minh chứng: EC2 Security Group đã tạo._
--  _Ảnh minh chứng: Inbound rules của EC2 Security Group._
+* Xây dựng Security Group đóng vai trò màng lọc cho máy chủ EC2.
+* Bổ sung các quy tắc Inbound:
+* Cổng `22` (Dùng cho SSH)
+* Cổng `80` (Dùng cho HTTP)
+* Cổng `443` (Dùng cho HTTPS)
+* Cổng TCP `5000` (Cho ứng dụng custom)
+
+
+* Siết chặt bảo mật bằng cách chỉ cho phép SSH từ địa chỉ IP của máy cá nhân.
+* Lưu trữ lại ID của Security Group này để sử dụng ở các bước sau.
 
 **Module 2.3 — Create RDS Security Group**
 
-- Tạo Security Group riêng cho RDS.
-- Cấu hình inbound rule cho MySQL/Aurora port `3306`.
-- Chọn source là EC2 Security Group thay vì mở public Internet.
-- Kiểm tra RDS Security Group đã nằm trong đúng VPC.
--  _Ảnh minh chứng: RDS Security Group đã tạo._
--  _Ảnh minh chứng: Rule cho phép EC2 kết nối đến RDS._
+* Thiết lập một màng lọc mạng độc lập cho RDS.
+* Tạo quy tắc Inbound cho phép cổng `3306` (dành cho MySQL/Aurora) hoạt động.
+* Ở mục Source, chỉ định nhận traffic từ EC2 Security Group đã tạo ở trên, tuyệt đối không chọn Anywhere.
+* Xác nhận RDS Security Group đã được đặt đúng vào mạng VPC của bài lab.
+
 
 **Module 2.4 — Create DB Subnet Group**
 
-- Truy cập Amazon RDS Console.
-- Tạo DB Subnet Group.
-- Chọn VPC đã tạo ở bước trước.
-- Chọn subnet ở ít nhất hai Availability Zone.
-- Ưu tiên chọn private subnet cho database.
-- Kiểm tra DB Subnet Group sau khi tạo thành công.
--  _Ảnh minh chứng: DB Subnet Group đã tạo._
--  _Ảnh minh chứng: Các subnet được thêm vào DB Subnet Group._
+* Đăng nhập vào giao diện quản trị Amazon RDS.
+* Điều hướng đến phần khởi tạo DB Subnet Group.
+* Ràng buộc vào mạng VPC vừa dựng.
+* Lựa chọn các subnet thuộc tối thiểu 2 Availability Zone khác biệt.
+* Đảm bảo chỉ add các private subnet để tăng cường an ninh cho database.
+* Xác minh lại thông tin sau khi hệ thống báo tạo thành công.
+
 
 **Module 3 — Create EC2 Instance**
 
-- Tạo Amazon Linux EC2 Instance.
-- Chọn AMI Amazon Linux 2023.
-- Chọn Instance Type phù hợp với lab.
-- Gán Key Pair để đăng nhập SSH.
-- Gán EC2 Security Group đã tạo.
-- Launch instance và chờ trạng thái `running`.
-- Kết nối EC2 bằng MobaXterm.
-- Kiểm tra terminal sau khi SSH thành công.
--  _Ảnh minh chứng: EC2 Instance ở trạng thái running._
--  _Ảnh minh chứng: SSH thành công vào EC2._
+* Tiến hành Launch một instance Amazon Linux mới.
+* Chỉ định hệ điều hành là Amazon Linux 2023 AMI.
+* Cấu hình cấu hình phần cứng cơ bản phù hợp với nhu cầu học tập.
+* Chỉ định Key Pair để có thể truy cập SSH.
+* Gắn EC2 Security Group đã chuẩn bị từ trước.
+* Kích hoạt instance và chờ đến khi trạng thái báo `running`.
+* Sử dụng MobaXterm để kết nối vào máy chủ.
+* Kiểm tra dấu nhắc lệnh (terminal) xác nhận đăng nhập thành công.
+
 
 **Module 4 — Create RDS Database Instance**
 
-- Truy cập Amazon RDS Console.
-- Chọn Create database.
-- Chọn Standard create.
-- Chọn database engine phù hợp với workshop.
-- Cấu hình DB Instance identifier.
-- Thiết lập master username và master password.
-- Chọn VPC, DB Subnet Group và RDS Security Group.
-- Tạo database instance.
-- Chờ trạng thái RDS chuyển sang `Available`.
-- Kiểm tra Endpoint, Port và Username.
--  _Ảnh minh chứng: RDS Database Instance đang tạo._
--  _Ảnh minh chứng: RDS ở trạng thái Available._
--  _Ảnh minh chứng: Endpoint và Port của RDS._
+* Trở lại màn hình quản lý Amazon RDS.
+* Nhấp chọn Create database.
+* Bật tùy chọn Standard create để có thể tự do cấu hình.
+* Lựa chọn loại engine cơ sở dữ liệu tương ứng theo hướng dẫn.
+* Đặt tên định danh cho DB Instance (identifier).
+* Cung cấp thông tin tài khoản quản trị (master username) và mật khẩu (password).
+* Kết nối instance vào VPC, DB Subnet Group và RDS Security Group tương ứng.
+* Bắt đầu quá trình tạo database.
+* Đợi đến khi trạng thái chuyển từ `Creating` qua `Available`.
+* Ghi lại các thông tin: Endpoint, Port và Username.
+
 
 **Module 5 — Application Deployment**
 
-- SSH vào EC2 Instance.
-- Cài đặt Git trên Amazon Linux.
-- Clone repository AWS FCJ Management.
-- Cài Node.js và npm.
-- Cài các package cần thiết cho ứng dụng.
-- Cài MySQL client để kết nối đến RDS.
-- Tạo file `.env` chứa thông tin:
-  - `DB_HOST`
-  - `DB_NAME`
-  - `DB_USER`
-  - `DB_PASS`
-- Kết nối đến RDS bằng Endpoint.
-- Tạo database `first_cloud_users`.
-- Tạo bảng `user`.
-- Thêm dữ liệu mẫu vào bảng.
-- Chạy ứng dụng bằng lệnh:
+* Kết nối SSH vào máy chủ EC2.
+* Cài đặt công cụ Git lên nền tảng Amazon Linux.
+* Clone dự án AWS FCJ Management về máy ảo.
+* Thiết lập môi trường thực thi Node.js cùng bộ quản lý gói npm.
+* Cài đặt đầy đủ các thư viện phụ thuộc của ứng dụng.
+* Cài đặt gói MySQL client để giao tiếp với database từ command line.
+* Khởi tạo tệp tin biến môi trường `.env` với các tham số:
+* `DB_HOST`
+* `DB_NAME`
+* `DB_USER`
+* `DB_PASS`
+
+
+* Dùng thông tin Endpoint để test kết nối tới RDS.
+* Khởi tạo database mang tên `first_cloud_users`.
+* Xây dựng bảng dữ liệu `user`.
+* Insert một số bản ghi mẫu để kiểm thử.
+* Khởi động web app bằng câu lệnh:
 
 ```bash
-chmod 400 first-kp.pem
+npm start
