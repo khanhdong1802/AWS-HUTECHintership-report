@@ -1,6 +1,6 @@
 ---
 title: "Worklog Week 8"
-date: 2026-06-15
+date: 2026-06-08
 weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.8. </b> "
 
 | Day | Tasks | Start Date | Completion Date | Reference |
 | --- | --- | --- | --- | --- |
-| Monday | - Read the IAM workshop introduction <br> - Learn the importance of Identity and Access Management <br> - Prepare the AWS practice environment | 15/06/2026 | 15/06/2026 | https://000009.awsstudygroup.com/ |
-| Tuesday | - Explore IAM Users, Groups, Roles, and Policies <br> - Create IAM users and groups <br> - Assign permissions using managed policies | 16/06/2026 | 16/06/2026 | https://000009.awsstudygroup.com/ |
-| Wednesday | - Learn Multi-Factor Authentication (MFA) <br> - Configure MFA for IAM users <br> - Review AWS security best practices | 17/06/2026 | 17/06/2026 | https://000009.awsstudygroup.com/ |
-| Thursday | - Read the Amazon VPC workshop introduction <br> - Learn VPC architecture and networking concepts <br> - Explore VPC components | 18/06/2026 | 18/06/2026 | https://000010.awsstudygroup.com/ |
-| Friday | - Create a Virtual Private Cloud (VPC) <br> - Configure Public and Private Subnets <br> - Configure Route Tables and Internet Gateway | 19/06/2026 | 19/06/2026 | https://000010.awsstudygroup.com/ |
-| Saturday | - Configure Security Groups and Network ACLs <br> - Test network connectivity <br> - Review VPC configurations | 20/06/2026 | 20/06/2026 | https://000010.awsstudygroup.com/ |
-| Sunday | - Review all IAM and VPC resources <br> - Perform cleanup of created resources <br> - Summarize the knowledge gained during the week | 21/06/2026 | 21/06/2026 | https://000009.awsstudygroup.com/ <br> https://000010.awsstudygroup.com/ |
+| Monday | - Read the IAM workshop introduction <br> - Learn the importance of Identity and Access Management <br> - Prepare the AWS practice environment | 08/06/2026 | 08/06/2026 | https://000009.awsstudygroup.com/ |
+| Tuesday | - Explore IAM Users, Groups, Roles, and Policies <br> - Create IAM users and groups <br> - Assign permissions using managed policies | 09/06/2026 | 09/06/2026 | https://000009.awsstudygroup.com/ |
+| Wednesday | - Learn Multi-Factor Authentication (MFA) <br> - Configure MFA for IAM users <br> - Review AWS security best practices | 10/06/2026 | 10/06/2026 | https://000009.awsstudygroup.com/ |
+| Thursday | - Read the Amazon VPC workshop introduction <br> - Learn VPC architecture and networking concepts <br> - Explore VPC components | 11/06/2026 | 11/06/2026 | https://000010.awsstudygroup.com/ |
+| Friday | - Create a Virtual Private Cloud (VPC) <br> - Configure Public and Private Subnets <br> - Configure Route Tables and Internet Gateway | 12/06/2026 | 12/06/2026 | https://000010.awsstudygroup.com/ |
+| Saturday | - Configure Security Groups and Network ACLs <br> - Test network connectivity <br> - Review VPC configurations | 13/06/2026 | 13/06/2026 | https://000010.awsstudygroup.com/ |
+| Sunday | - Review all IAM and VPC resources <br> - Perform cleanup of created resources <br> - Summarize the knowledge gained during the week | 14/06/2026 | 14/06/2026 | https://000009.awsstudygroup.com/ <br> https://000010.awsstudygroup.com/ |
 
 ---
 
