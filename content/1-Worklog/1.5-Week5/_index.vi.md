@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 5"
-date: 2026-05-25
+date: 2026-05-18
 weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.5. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc Introduction của workshop Deploying FCJ Management Application with Auto Scaling Group <br> - Tìm hiểu mục tiêu triển khai ứng dụng có khả năng mở rộng tự động <br> - Tạo VPC `AutoScaling-Lab`, cấu hình public subnet, private subnet và nhiều Availability Zone <br> - Tạo Security Group cho ứng dụng và database | 25/05/2026 | 25/05/2026 | https://000006.awsstudygroup.com/ |
-| 3 | - Tạo EC2 Instance `FCJ-Management` dùng Amazon Linux 2023 <br> - Gán Key Pair, Public Subnet và Security Group cho EC2 <br> - Tạo DB Subnet Group và RDS MySQL Instance <br> - Kết nối EC2 đến RDS, tạo database, bảng `user` và thêm dữ liệu mẫu | 26/05/2026 | 26/05/2026 | https://000006.awsstudygroup.com/ |
-| 4 | - Cài đặt Git, MariaDB client, Node.js và NPM trên EC2 <br> - Clone source code FCJ Management từ GitHub <br> - Cấu hình file `.env` để kết nối ứng dụng với RDS <br> - Cài PM2, chạy ứng dụng bằng `npm start` và cấu hình tự khởi động lại khi reboot <br> - Chuẩn bị metric giả lập cho Predictive Scaling và upload lên CloudWatch | 27/05/2026 | 27/05/2026 | https://000006.awsstudygroup.com/ |
-| 5 | - Tạo AMI từ EC2 đã cài đặt ứng dụng <br> - Tạo Launch Template `FCJ-Management-template` từ AMI <br> - Cấu hình Instance Type, Key Pair, Subnet và Security Group trong Launch Template <br> - Tạo Target Group `FCJ-Management-TG` dùng giao thức HTTP và port `5000` | 28/05/2026 | 28/05/2026 | https://000006.awsstudygroup.com/ |
-| 6 | - Tạo Application Load Balancer `FCJ-Management-LB` <br> - Chọn Internet-facing, IPv4 và public subnet ở nhiều Availability Zone <br> - Gắn Load Balancer với Target Group <br> - Kiểm tra DNS của Load Balancer, truy cập ứng dụng và test chức năng CRUD | 29/05/2026 | 29/05/2026 | https://000006.awsstudygroup.com/ |
-| 7 | - Tạo Auto Scaling Group `FCJ-Management-ASG` từ Launch Template <br> - Cấu hình Desired Capacity, Minimum Capacity và Maximum Capacity <br> - Gắn ASG với Target Group của Load Balancer <br> - Bật Elastic Load Balancing Health Checks và CloudWatch group metrics <br> - Kiểm thử Manual Scaling và Scheduled Scaling | 30/05/2026 | 30/05/2026 | https://000006.awsstudygroup.com/ |
-| CN | - Cấu hình Dynamic Scaling Policy dựa trên ALB Request Count Per Target <br> - Tạo Predictive Scaling Policy bằng custom metrics trên CloudWatch <br> - Đọc biểu đồ Load, Capacity và phân tích thời điểm ASG dự đoán cần scale out <br> - Dọn dẹp tài nguyên: ASG, Load Balancer, Target Group, Launch Template, AMI, EC2, RDS, Subnet Group và kiểm tra Billing | 31/05/2026 | 31/05/2026 | https://000006.awsstudygroup.com/ |
+| 2 | - Đọc Introduction của workshop Deploying FCJ Management Application with Auto Scaling Group <br> - Tìm hiểu mục tiêu triển khai ứng dụng có khả năng mở rộng tự động <br> - Tạo VPC `AutoScaling-Lab`, cấu hình public subnet, private subnet và nhiều Availability Zone <br> - Tạo Security Group cho ứng dụng và database | 18/05/2026 | 18/05/2026 | https://000006.awsstudygroup.com/ |
+| 3 | - Tạo EC2 Instance `FCJ-Management` dùng Amazon Linux 2023 <br> - Gán Key Pair, Public Subnet và Security Group cho EC2 <br> - Tạo DB Subnet Group và RDS MySQL Instance <br> - Kết nối EC2 đến RDS, tạo database, bảng `user` và thêm dữ liệu mẫu | 19/05/2026 | 19/05/2026 | https://000006.awsstudygroup.com/ |
+| 4 | - Cài đặt Git, MariaDB client, Node.js và NPM trên EC2 <br> - Clone source code FCJ Management từ GitHub <br> - Cấu hình file `.env` để kết nối ứng dụng với RDS <br> - Cài PM2, chạy ứng dụng bằng `npm start` và cấu hình tự khởi động lại khi reboot <br> - Chuẩn bị metric giả lập cho Predictive Scaling và upload lên CloudWatch | 20/05/2026 | 20/05/2026 | https://000006.awsstudygroup.com/ |
+| 5 | - Tạo AMI từ EC2 đã cài đặt ứng dụng <br> - Tạo Launch Template `FCJ-Management-template` từ AMI <br> - Cấu hình Instance Type, Key Pair, Subnet và Security Group trong Launch Template <br> - Tạo Target Group `FCJ-Management-TG` dùng giao thức HTTP và port `5000` | 21/05/2026 | 21/05/2026 | https://000006.awsstudygroup.com/ |
+| 6 | - Tạo Application Load Balancer `FCJ-Management-LB` <br> - Chọn Internet-facing, IPv4 và public subnet ở nhiều Availability Zone <br> - Gắn Load Balancer với Target Group <br> - Kiểm tra DNS của Load Balancer, truy cập ứng dụng và test chức năng CRUD | 22/05/2026 | 22/05/2026 | https://000006.awsstudygroup.com/ |
+| 7 | - Tạo Auto Scaling Group `FCJ-Management-ASG` từ Launch Template <br> - Cấu hình Desired Capacity, Minimum Capacity và Maximum Capacity <br> - Gắn ASG với Target Group của Load Balancer <br> - Bật Elastic Load Balancing Health Checks và CloudWatch group metrics <br> - Kiểm thử Manual Scaling và Scheduled Scaling | 23/05/2026 | 23/05/2026 | https://000006.awsstudygroup.com/ |
+| CN | - Cấu hình Dynamic Scaling Policy dựa trên ALB Request Count Per Target <br> - Tạo Predictive Scaling Policy bằng custom metrics trên CloudWatch <br> - Đọc biểu đồ Load, Capacity và phân tích thời điểm ASG dự đoán cần scale out <br> - Dọn dẹp tài nguyên: ASG, Load Balancer, Target Group, Launch Template, AMI, EC2, RDS, Subnet Group và kiểm tra Billing | 24/05/2026 | 24/05/2026 | https://000006.awsstudygroup.com/ |
 
 ---
 
