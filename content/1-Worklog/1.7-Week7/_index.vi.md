@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 7"
-date: 2026-06-08
+date: 2026-06-01
 weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.7. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc tổng quan workshop Amazon CloudWatch <br> - Tìm hiểu vai trò của CloudWatch trong AWS <br> - Chuẩn bị môi trường thực hành | 08/06/2026 | 08/06/2026 | https://000008.awsstudygroup.com/1-introduction/ |
-| 3 | - Tìm hiểu CloudWatch Metrics <br> - Xem và phân tích Metrics <br> - Thực hành Search Expressions | 09/06/2026 | 09/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
-| 4 | - Thực hành Math Expressions <br> - Sử dụng Dynamic Labels <br> - Trực quan hóa dữ liệu Metrics | 10/06/2026 | 10/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
-| 5 | - Làm việc với CloudWatch Logs <br> - Truy vấn log bằng CloudWatch Logs Insights <br> - Tạo Metric Filters từ Logs | 11/06/2026 | 11/06/2026 | https://000008.awsstudygroup.com/4-cloud-watch-logs/ |
-| 6 | - Tạo CloudWatch Alarms <br> - Cấu hình SNS Notifications <br> - Kiểm tra hoạt động của Alarms | 12/06/2026 | 12/06/2026 | https://000008.awsstudygroup.com/5-cloud-watch-alarm/ |
-| 7 | - Xây dựng CloudWatch Dashboards <br> - Thêm Metrics và Alarms vào Dashboard <br> - Theo dõi dữ liệu tập trung | 13/06/2026 | 13/06/2026 | https://000008.awsstudygroup.com/6-cloud-watch-dashboard/ |
-| CN | - Kiểm tra các tài nguyên đã tạo <br> - Thực hiện Cleanup Resources <br> - Tổng kết kiến thức đã học trong tuần | 14/06/2026 | 14/06/2026 | https://000008.awsstudygroup.com/7-clean-up/ |
+| 2 | - Đọc tổng quan workshop Amazon CloudWatch <br> - Tìm hiểu vai trò của CloudWatch trong AWS <br> - Chuẩn bị môi trường thực hành | 01/06/2026 | 01/06/2026 | https://000008.awsstudygroup.com/1-introduction/ |
+| 3 | - Tìm hiểu CloudWatch Metrics <br> - Xem và phân tích Metrics <br> - Thực hành Search Expressions | 02/06/2026 | 02/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
+| 4 | - Thực hành Math Expressions <br> - Sử dụng Dynamic Labels <br> - Trực quan hóa dữ liệu Metrics | 03/06/2026 | 03/06/2026 | https://000008.awsstudygroup.com/3-cloud-watch-metric/ |
+| 5 | - Làm việc với CloudWatch Logs <br> - Truy vấn log bằng CloudWatch Logs Insights <br> - Tạo Metric Filters từ Logs | 04/06/2026 | 04/06/2026 | https://000008.awsstudygroup.com/4-cloud-watch-logs/ |
+| 6 | - Tạo CloudWatch Alarms <br> - Cấu hình SNS Notifications <br> - Kiểm tra hoạt động của Alarms | 05/06/2026 | 05/06/2026 | https://000008.awsstudygroup.com/5-cloud-watch-alarm/ |
+| 7 | - Xây dựng CloudWatch Dashboards <br> - Thêm Metrics và Alarms vào Dashboard <br> - Theo dõi dữ liệu tập trung | 06/06/2026 | 06/06/2026 | https://000008.awsstudygroup.com/6-cloud-watch-dashboard/ |
+| CN | - Kiểm tra các tài nguyên đã tạo <br> - Thực hiện Cleanup Resources <br> - Tổng kết kiến thức đã học trong tuần | 07/06/2026 | 07/06/2026 | https://000008.awsstudygroup.com/7-clean-up/ |
 
 ---
 
