@@ -1,6 +1,6 @@
 ---
 title: "Week 3 Worklog"
-date: 2026-05-11
+date: 2026-05-04
 weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
@@ -22,13 +22,13 @@ pre: " <b> 1.3. </b> "
 
 | Day | Tasks | Start Date | Completion Date | Reference |
 | --- | --- | --- | --- | --- |
-| Monday | - Read the Introduction to Amazon EC2 section <br> - Understand the workshop overview and hands-on architecture <br> - Prepare AWS account, Region, Key Pair, and connection environment | 11/05/2026 | 11/05/2026 | https://000004.awsstudygroup.com/ |
-| Tuesday | - Module 2.1: Create a Linux VPC <br> - Module 2.2: Create VPC for Windows Instance <br> - Module 2.3: Create Security Group for Linux Instance <br> - Module 2.4: Create Security Group for Windows Instance | 12/05/2026 | 12/05/2026 | https://000004.awsstudygroup.com/ |
-| Wednesday | - Module 3.1: Launch Microsoft Windows Server 2022 Instance <br> - Module 3.2: Connect from Computer to Windows Instance <br> - Verify Remote Desktop and Windows key pair login | 13/05/2026 | 13/05/2026 | https://000004.awsstudygroup.com/ |
-| Thursday | - Module 4.1: Launch Amazon Linux Instance <br> - Module 4.2: Connect to Amazon Linux Instance <br> - Practice SSH connection to Linux Instance using key pair | 14/05/2026 | 14/05/2026 | https://000004.awsstudygroup.com/ |
-| Friday | - Module 5.1: Modify EC2 Instance Type <br> - Module 5.2: Create and Manage EBS Snapshots <br> - Module 5.3: Create Custom AMI <br> - Module 5.4: Launch Instance from Custom AMI <br> - Module 5.5 - 5.7: Recover access and Remote Desktop to Ubuntu | 15/05/2026 | 15/05/2026 | https://000004.awsstudygroup.com/ |
-| Saturday | - Module 6: Deploy AWS User Management Application on Amazon Linux <br> - Install LAMP Server, configure database, phpMyAdmin, Node.js, and deploy the application | 16/05/2026 | 16/05/2026 | https://000004.awsstudygroup.com/ |
-| Sunday | - Module 7: Deploy Node.js Application on Windows EC2 <br> - Module 8: Cost & Usage Governance with IAM <br> - Module 9: Clean up resources | 17/05/2026 | 17/05/2026 | https://000004.awsstudygroup.com/ |
+| Monday | - Read the Introduction to Amazon EC2 section <br> - Understand the workshop overview and hands-on architecture <br> - Prepare AWS account, Region, Key Pair, and connection environment | 04/05/2026 | 04/05/2026 | https://000004.awsstudygroup.com/ |
+| Tuesday | - Module 2.1: Create a Linux VPC <br> - Module 2.2: Create VPC for Windows Instance <br> - Module 2.3: Create Security Group for Linux Instance <br> - Module 2.4: Create Security Group for Windows Instance | 05/05/2026 | 05/05/2026 | https://000004.awsstudygroup.com/ |
+| Wednesday | - Module 3.1: Launch Microsoft Windows Server 2022 Instance <br> - Module 3.2: Connect from Computer to Windows Instance <br> - Verify Remote Desktop and Windows key pair login | 06/05/2026 | 06/05/2026 | https://000004.awsstudygroup.com/ |
+| Thursday | - Module 4.1: Launch Amazon Linux Instance <br> - Module 4.2: Connect to Amazon Linux Instance <br> - Practice SSH connection to Linux Instance using key pair | 07/05/2026 | 07/05/2026 | https://000004.awsstudygroup.com/ |
+| Friday | - Module 5.1: Modify EC2 Instance Type <br> - Module 5.2: Create and Manage EBS Snapshots <br> - Module 5.3: Create Custom AMI <br> - Module 5.4: Launch Instance from Custom AMI <br> - Module 5.5 - 5.7: Recover access and Remote Desktop to Ubuntu | 08/05/2026 | 08/05/2026 | https://000004.awsstudygroup.com/ |
+| Saturday | - Module 6: Deploy AWS User Management Application on Amazon Linux <br> - Install LAMP Server, configure database, phpMyAdmin, Node.js, and deploy the application | 09/05/2026 | 09/05/2026 | https://000004.awsstudygroup.com/ |
+| Sunday | - Module 7: Deploy Node.js Application on Windows EC2 <br> - Module 8: Cost & Usage Governance with IAM <br> - Module 9: Clean up resources | 10/05/2026 | 10/05/2026 | https://000004.awsstudygroup.com/ |
 
 ---
 
@@ -88,91 +88,112 @@ pre: " <b> 1.3. </b> "
 
 #### Hands-on Practice
 
-**Networking Preparation**
+**Module 2 — Preparation**
 
-- Created Linux VPC and Windows VPC.
-- Configured Security Groups for:
-  - Linux EC2 (SSH, HTTP)
-  - Windows EC2 (RDP)
--  _Evidence: Successfully configured VPCs and Security Groups._
+* Create a VPC for the Linux Instance.
+* Create a VPC for the Windows Instance.
+* Create a Security Group for Linux:
+* Allow SSH from a personal IP.
+* Allow HTTP if running a web server is needed.
 
-**Windows EC2 Deployment**
 
-- Launched Microsoft Windows Server 2022 EC2 Instance.
-- Configured key pair authentication.
-- Connected successfully using Remote Desktop.
--  _Evidence: Windows EC2 instance in running state._
--  _Evidence: Successful RDP connection._
+* Create a Security Group for Windows:
+* Allow RDP from a personal IP.
+* Do not open `0.0.0.0/0` unless necessary.
 
-**Amazon Linux EC2 Deployment**
 
-- Launched Amazon Linux EC2 Instance.
-- Connected successfully through SSH terminal.
-- Configured Linux environment for deployment.
--  _Evidence: Amazon Linux EC2 running successfully._
--  _Evidence: SSH connection established._
 
-**EC2 Basic Operations**
+**Module 3 — Launch Microsoft Windows Server 2022 Instance**
 
-- Changed EC2 Instance Type.
-- Created EBS Snapshots.
-- Created Custom AMI.
-- Launched EC2 from Custom AMI.
--  _Evidence: Snapshot successfully created._
--  _Evidence: Custom AMI available._
--  _Evidence: EC2 launched from AMI._
+* Select the Microsoft Windows Server 2022 AMI.
+* Choose an Instance Type suitable for the Free Tier or lab.
+* Assign a Key Pair to retrieve the password.
+* Configure the Security Group to allow RDP.
+* Launch the Windows EC2 Instance.
+* Decrypt the password using the key pair file.
+* Connect to the Windows Instance using Remote Desktop.
 
-**Deploy Application on Amazon Linux**
+**Module 4 — Launch Amazon Linux Instance**
 
-- Installed Apache and PHP.
-- Configured database services.
-- Installed phpMyAdmin.
-- Installed Node.js runtime.
-- Deployed AWS User Management Application.
--  _Evidence: Apache test page working._
--  _Evidence: phpMyAdmin accessible._
--  _Evidence: Application running successfully._
+* Select the Amazon Linux AMI.
+* Choose an appropriate Instance Type.
+* Assign a Key Pair.
+* Configure the Security Group to allow SSH.
+* Launch the Linux EC2 Instance.
+* Connect to the instance via SSH using a terminal.
 
-**Deploy Application on Windows EC2**
+**Module 5 — Amazon EC2 Basic**
 
-- Installed XAMPP.
-- Installed Node.js environment.
-- Deployed sample Node.js application.
-- Tested application through browser.
--  _Evidence: Node.js application running on Windows Server._
+* Practice changing the Instance Type.
+* Create and manage an EBS Snapshot.
+* Create a Custom AMI from a configured EC2 Instance.
+* Launch a new EC2 Instance from the Custom AMI.
+* Learn how to restore access to a Windows Instance.
+* Learn how to restore access to a Linux Instance.
+* Practice using Remote Desktop into an Ubuntu EC2.
 
-**IAM Governance Practice**
+**Module 6 — Deploy AWS User Management Application on Amazon Linux**
 
-- Created IAM Policies to restrict EC2 usage.
-- Restricted actions based on Region and Instance Type.
-- Tested governance restrictions successfully.
--  _Evidence: IAM Policy restrictions functioning correctly._
+* Install a LAMP Web Server.
+* Verify that Apache/PHP is working.
+* Configure the database server.
+* Install phpMyAdmin.
+* Install Node.js on Amazon Linux.
+* Deploy the AWS User Management application.
+* Test the basic CRUD functions of the application.
 
-**Resource Cleanup**
+**Module 7 — Deploy Node.js Application on EC2 Windows**
 
-- Terminated EC2 Instances after lab completion.
-- Deleted Snapshots and unused AMIs.
-- Removed unnecessary Security Groups and networking resources.
-- Checked Billing Dashboard to verify no abnormal charges.
--  _Evidence: All resources cleaned up successfully._
+* Install XAMPP on the Windows Instance.
+* Install Node.js on the Windows Instance.
+* Deploy the AWS User Management Application on the Windows Server.
+* Test the application via a web browser.
+
+**Module 8 — Cost & Usage Governance with IAM**
+
+* Create an IAM Policy to limit service usage by Region.
+* Create a Policy to limit EC2 by Instance Family.
+* Create a Policy to limit EC2 by Instance Type.
+* Create a Policy to manage allowed EBS Volume types.
+* Create a Policy to restrict resource deletion permissions by company IP.
+* Create a Policy to restrict resource deletion permissions by time.
+
+**Module 9 — Clean up resources**
+
+* Terminate unused EC2 Instances.
+* Delete unnecessary EBS Volumes.
+* Delete Snapshots if no longer used.
+* Delete the AMIs created in the lab.
+* Delete Security Groups, VPCs, or supplementary resources if no longer needed.
+* Check the Billing Dashboard after cleanup.
 
 ---
 
-#### Difficulties and Solutions
+#### Challenges and Solutions
 
-**Difficulties:**
+**Challenges:**
 
-- Initially confused between networking components such as VPC and Security Groups.
-- Remote connection failed when inbound rules were configured incorrectly.
-- SSH authentication failed due to incorrect `.pem` file permissions.
-- Some AWS resources continued generating charges if not cleaned up.
-- Deployment issues occurred because of firewall and database configuration errors.
+* Initially, it is easy to confuse VPCs, Subnets, and Security Groups.
+* When connecting to a Windows Instance, you need to decrypt the password using the exact key pair.
+* When SSH-ing into Linux, errors easily occur due to incorrect `.pem` file permissions.
+* If the wrong port or wrong source IP is opened in the Security Group, connection is impossible.
+* Certain resources like EBS Snapshots, AMIs, and Elastic IPs may incur charges if you forget to delete them.
+* When deploying the app, you may encounter package, firewall, port, or database connection errors.
 
 **Solutions:**
 
-- Reviewed AWS networking concepts before deployment.
-- Restricted SSH and RDP access to personal IP only.
-- Fixed SSH permission issue using:
+* Double-check the network architecture before launching an instance.
+* Name resources clearly following a format:
+* `fcj-linux-vpc`
+* `fcj-windows-vpc`
+* `fcj-linux-sg`
+* `fcj-windows-sg`
+
+
+* Only open SSH/RDP to your personal IP; avoid opening it to the entire Internet.
+* For Linux, run the key pair permission command before SSH:
 
 ```bash
 chmod 400 first-kp.pem
+
+```
