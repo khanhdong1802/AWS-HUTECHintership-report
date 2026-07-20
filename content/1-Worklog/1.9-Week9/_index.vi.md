@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 9"
-date: 2026-06-22
+date: 2026-06-15
 weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.9. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc tổng quan workshop AWS CLI <br> - Tìm hiểu vai trò của AWS CLI <br> - Chuẩn bị môi trường thực hành | 22/06/2026 | 22/06/2026 | https://000011.awsstudygroup.com/1-introduction/ |
-| 3 | - Cài đặt AWS CLI <br> - Cấu hình Access Key và Region <br> - Kiểm tra kết nối AWS CLI | 23/06/2026 | 23/06/2026 | https://000011.awsstudygroup.com/2-prerequiste/ <br> https://000011.awsstudygroup.com/3-installation/ |
-| 4 | - Kiểm tra thông tin tài nguyên AWS <br> - Thực hành các lệnh AWS CLI cơ bản | 24/06/2026 | 24/06/2026 | https://000011.awsstudygroup.com/4-check-resource/ |
-| 5 | - Thực hành quản lý Amazon S3 bằng AWS CLI <br> - Tạo Bucket <br> - Upload và Download dữ liệu | 25/06/2026 | 25/06/2026 | https://000011.awsstudygroup.com/5-cli-with-s3/ |
-| 6 | - Thực hành Amazon SNS bằng AWS CLI <br> - Tạo Topic <br> - Gửi và kiểm tra Notification | 26/06/2026 | 26/06/2026 | https://000011.awsstudygroup.com/6-cli-with-sns/ |
-| 7 | - Quản lý IAM bằng AWS CLI <br> - Làm việc với Amazon VPC <br> - Khởi tạo EC2 bằng AWS CLI | 27/06/2026 | 27/06/2026 | https://000011.awsstudygroup.com/7-cli-with-iam/ <br> https://000011.awsstudygroup.com/8-cli-with-vpc/ <br> https://000011.awsstudygroup.com/9-create-ec2/ |
-| CN | - Kiểm tra các tài nguyên đã tạo <br> - Thực hiện Cleanup Resources <br> - Tổng kết kiến thức đã học | 28/06/2026 | 28/06/2026 | https://000011.awsstudygroup.com/11-clean-up/ |
+| 2 | - Đọc tổng quan workshop AWS CLI <br> - Tìm hiểu vai trò của AWS CLI <br> - Chuẩn bị môi trường thực hành | 15/06/2026 | 15/06/2026 | https://000011.awsstudygroup.com/1-introduction/ |
+| 3 | - Cài đặt AWS CLI <br> - Cấu hình Access Key và Region <br> - Kiểm tra kết nối AWS CLI | 16/06/2026 | 16/06/2026 | https://000011.awsstudygroup.com/2-prerequiste/ <br> https://000011.awsstudygroup.com/3-installation/ |
+| 4 | - Kiểm tra thông tin tài nguyên AWS <br> - Thực hành các lệnh AWS CLI cơ bản | 17/06/2026 | 17/06/2026 | https://000011.awsstudygroup.com/4-check-resource/ |
+| 5 | - Thực hành quản lý Amazon S3 bằng AWS CLI <br> - Tạo Bucket <br> - Upload và Download dữ liệu | 18/06/2026 | 18/06/2026 | https://000011.awsstudygroup.com/5-cli-with-s3/ |
+| 6 | - Thực hành Amazon SNS bằng AWS CLI <br> - Tạo Topic <br> - Gửi và kiểm tra Notification | 19/06/2026 | 19/06/2026 | https://000011.awsstudygroup.com/6-cli-with-sns/ |
+| 7 | - Quản lý IAM bằng AWS CLI <br> - Làm việc với Amazon VPC <br> - Khởi tạo EC2 bằng AWS CLI | 20/06/2026 | 20/06/2026 | https://000011.awsstudygroup.com/7-cli-with-iam/ <br> https://000011.awsstudygroup.com/8-cli-with-vpc/ <br> https://000011.awsstudygroup.com/9-create-ec2/ |
+| CN | - Kiểm tra các tài nguyên đã tạo <br> - Thực hiện Cleanup Resources <br> - Tổng kết kiến thức đã học | 21/06/2026 | 21/06/2026 | https://000011.awsstudygroup.com/11-clean-up/ |
 
 ---
 
