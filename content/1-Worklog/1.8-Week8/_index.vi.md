@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 8"
-date: 2026-06-15
+date: 2026-06-08
 weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.8. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc tổng quan workshop AWS IAM <br> - Tìm hiểu vai trò của IAM trong AWS <br> - Chuẩn bị môi trường thực hành | 15/06/2026 | 15/06/2026 | https://000009.awsstudygroup.com/ |
-| 3 | - Tìm hiểu IAM User, Group, Role và Policy <br> - Thực hành tạo User và Group <br> - Cấp quyền bằng Managed Policy | 16/06/2026 | 16/06/2026 | https://000009.awsstudygroup.com/ |
-| 4 | - Tìm hiểu Multi-Factor Authentication (MFA) <br> - Cấu hình MFA cho tài khoản <br> - Nghiên cứu các nguyên tắc bảo mật AWS | 17/06/2026 | 17/06/2026 | https://000009.awsstudygroup.com/ |
-| 5 | - Đọc tổng quan workshop Amazon VPC <br> - Tìm hiểu kiến trúc mạng VPC <br> - Làm quen với các thành phần mạng | 18/06/2026 | 18/06/2026 | https://000010.awsstudygroup.com/ |
-| 6 | - Tạo Virtual Private Cloud (VPC) <br> - Cấu hình Public và Private Subnet <br> - Thiết lập Internet Gateway và Route Table | 19/06/2026 | 19/06/2026 | https://000010.awsstudygroup.com/ |
-| 7 | - Cấu hình Security Group và Network ACL <br> - Kiểm tra kết nối giữa các tài nguyên <br> - Hoàn thiện cấu hình mạng | 20/06/2026 | 20/06/2026 | https://000010.awsstudygroup.com/ |
-| CN | - Kiểm tra các tài nguyên đã tạo <br> - Thực hiện Cleanup Resources <br> - Tổng kết kiến thức đã học trong tuần | 21/06/2026 | 21/06/2026 | https://000009.awsstudygroup.com/ <br> https://000010.awsstudygroup.com/ |
+| 2 | - Đọc tổng quan workshop AWS IAM <br> - Tìm hiểu vai trò của IAM trong AWS <br> - Chuẩn bị môi trường thực hành | 08/06/2026 | 08/06/2026 | https://000009.awsstudygroup.com/ |
+| 3 | - Tìm hiểu IAM User, Group, Role và Policy <br> - Thực hành tạo User và Group <br> - Cấp quyền bằng Managed Policy | 09/06/2026 | 09/06/2026 | https://000009.awsstudygroup.com/ |
+| 4 | - Tìm hiểu Multi-Factor Authentication (MFA) <br> - Cấu hình MFA cho tài khoản <br> - Nghiên cứu các nguyên tắc bảo mật AWS | 10/06/2026 | 10/06/2026 | https://000009.awsstudygroup.com/ |
+| 5 | - Đọc tổng quan workshop Amazon VPC <br> - Tìm hiểu kiến trúc mạng VPC <br> - Làm quen với các thành phần mạng | 11/06/2026 | 11/06/2026 | https://000010.awsstudygroup.com/ |
+| 6 | - Tạo Virtual Private Cloud (VPC) <br> - Cấu hình Public và Private Subnet <br> - Thiết lập Internet Gateway và Route Table | 12/06/2026 | 12/06/2026 | https://000010.awsstudygroup.com/ |
+| 7 | - Cấu hình Security Group và Network ACL <br> - Kiểm tra kết nối giữa các tài nguyên <br> - Hoàn thiện cấu hình mạng | 13/06/2026 | 13/06/2026 | https://000010.awsstudygroup.com/ |
+| CN | - Kiểm tra các tài nguyên đã tạo <br> - Thực hiện Cleanup Resources <br> - Tổng kết kiến thức đã học trong tuần | 14/06/2026 | 14/06/2026 | https://000009.awsstudygroup.com/ <br> https://000010.awsstudygroup.com/ |
 
 ---
 
