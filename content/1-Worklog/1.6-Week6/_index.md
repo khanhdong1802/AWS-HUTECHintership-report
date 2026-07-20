@@ -1,6 +1,6 @@
 ---
 title: "Worklog Week 6"
-date: 2026-06-01
+date: 2026-05-25
 weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.6. </b> "
 
 | Day | Task | Start Date | Completion Date | Reference |
 | --- | --- | --- | --- | --- |
-| Monday | - Read the overview of the Cost Management with AWS Budgets workshop <br> - Learn the role of AWS Budgets in AWS cost management <br> - Access AWS Billing and Cost Management <br> - Get familiar with the Budgets interface in AWS Console | 01/06/2026 | 01/06/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
-| Tuesday | - Create a Budget using an available template <br> - Select the Monthly cost budget template <br> - Enter the Budget name, monthly budget amount, and alert threshold <br> - Check the created Budget and view Budget history | 02/06/2026 | 02/06/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
-| Wednesday | - Create a Cost Budget using Customize mode <br> - Select Cost budget as the budget type <br> - Configure Period, Budget effective dates, Budgeting method, and Budgeted amount <br> - Configure Budget scope for All AWS services and Unblended costs | 03/06/2026 | 03/06/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
-| Thursday | - Configure alert thresholds for the Cost Budget <br> - Add an email address to receive budget alerts <br> - Review the Cost Budget configuration <br> - Create the Budget and confirm its active status | 04/06/2026 | 04/06/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
-| Friday | - Create a Usage Budget to monitor resource usage <br> - Select Usage budget in Budget types <br> - Configure Usage type groups, such as EC2: ELB - Running Hours <br> - Set usage limits and alert thresholds | 05/06/2026 | 05/06/2026 | https://000007.awsstudygroup.com/3-usage-budget/ |
-| Saturday | - Learn about Reservation Budget for Reserved Instances <br> - Learn about Savings Plans Budget for Savings Plans <br> - Practice or review the steps to create RI Budget and Savings Plans Budget <br> - Configure coverage threshold, utilization threshold, and email alerts | 06/06/2026 | 06/06/2026 | https://000007.awsstudygroup.com/4-reservation-budget/ <br> https://000007.awsstudygroup.com/5-saving-plans-budget/ |
-| Sunday | - Check the list of created Budgets <br> - View Budget health and Budget history <br> - Delete the Budgets created during the lab <br> - Record results, difficulties, solutions, and lessons learned | 07/06/2026 | 07/06/2026 | https://000007.awsstudygroup.com/6-clean-up/ |
+| Monday | - Read the overview of the Cost Management with AWS Budgets workshop <br> - Learn the role of AWS Budgets in AWS cost management <br> - Access AWS Billing and Cost Management <br> - Get familiar with the Budgets interface in AWS Console | 25/05/2026 | 25/05/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
+| Tuesday | - Create a Budget using an available template <br> - Select the Monthly cost budget template <br> - Enter the Budget name, monthly budget amount, and alert threshold <br> - Check the created Budget and view Budget history | 26/05/2026 | 26/05/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
+| Wednesday | - Create a Cost Budget using Customize mode <br> - Select Cost budget as the budget type <br> - Configure Period, Budget effective dates, Budgeting method, and Budgeted amount <br> - Configure Budget scope for All AWS services and Unblended costs | 27/05/2026 | 27/05/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
+| Thursday | - Configure alert thresholds for the Cost Budget <br> - Add an email address to receive budget alerts <br> - Review the Cost Budget configuration <br> - Create the Budget and confirm its active status | 28/05/2026 | 28/05/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
+| Friday | - Create a Usage Budget to monitor resource usage <br> - Select Usage budget in Budget types <br> - Configure Usage type groups, such as EC2: ELB - Running Hours <br> - Set usage limits and alert thresholds | 29/05/2026 | 29/05/2026 | https://000007.awsstudygroup.com/3-usage-budget/ |
+| Saturday | - Learn about Reservation Budget for Reserved Instances <br> - Learn about Savings Plans Budget for Savings Plans <br> - Practice or review the steps to create RI Budget and Savings Plans Budget <br> - Configure coverage threshold, utilization threshold, and email alerts | 30/05/2026 | 30/05/2026 | https://000007.awsstudygroup.com/4-reservation-budget/ <br> https://000007.awsstudygroup.com/5-saving-plans-budget/ |
+| Sunday | - Check the list of created Budgets <br> - View Budget health and Budget history <br> - Delete the Budgets created during the lab <br> - Record results, difficulties, solutions, and lessons learned | 31/05/2026 | 31/05/2026 | https://000007.awsstudygroup.com/6-clean-up/ |
 
 ---
 
