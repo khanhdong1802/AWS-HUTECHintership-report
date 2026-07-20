@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 3"
-date: 2026-05-11
+date: 2026-05-04
 weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
@@ -22,13 +22,13 @@ pre: " <b> 1.3. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc phần Introduction từ Amazon EC2 <br> - Nắm tổng quan workshop và kiến trúc thực hành <br> - Chuẩn bị tài khoản AWS, Region, Key Pair và môi trường kết nối | 11/05/2026 | 11/05/2026 | https://000004.awsstudygroup.com/ |
-| 3 | - Module 2.1: Create a Linux VPC <br> - Module 2.2: Create VPC for Windows Instance <br> - Module 2.3: Create Security Group for Linux Instance <br> - Module 2.4: Create Security Group for Windows Instance | 12/05/2026 | 12/05/2026 | https://000004.awsstudygroup.com/ |
-| 4 | - Module 3.1: Launch Microsoft Windows Server 2022 Instance <br> - Module 3.2: Connect from Computer to Windows Instance <br> - Kiểm tra Remote Desktop và key pair đăng nhập Windows | 13/05/2026 | 13/05/2026 | https://000004.awsstudygroup.com/ |
-| 5 | - Module 4.1: Launch Amazon Linux Instance <br> - Module 4.2: Connect to Amazon Linux Instance <br> - Thực hành SSH vào Linux Instance bằng key pair | 14/05/2026 | 14/05/2026 | https://000004.awsstudygroup.com/ |
-| 6 | - Module 5.1: Modify EC2 Instance Type <br> - Module 5.2: Create and Manage EBS Snapshots <br> - Module 5.3: Create Custom AMI <br> - Module 5.4: Launch Instance from Custom AMI <br> - Module 5.5 - 5.7: Recover access và Remote Desktop Ubuntu | 15/05/2026 | 15/05/2026 | https://000004.awsstudygroup.com/ |
-| 7 | - Module 6: Deploy AWS User Management Application on Amazon Linux <br> - Cài LAMP Server, cấu hình database, phpMyAdmin, Node.js và deploy app | 16/05/2026 | 16/05/2026 | https://000004.awsstudygroup.com/ |
-| CN | - Module 7: Deploy Node.js Application on Windows EC2 <br> - Module 8: Cost & Usage Governance with IAM <br> - Module 9: Clean up resources | 17/05/2026 | 17/05/2026 | https://000004.awsstudygroup.com/ |
+| 2 | - Đọc phần Introduction từ Amazon EC2 <br> - Nắm tổng quan workshop và kiến trúc thực hành <br> - Chuẩn bị tài khoản AWS, Region, Key Pair và môi trường kết nối | 04/05/2026 | 04/05/2026 | https://000004.awsstudygroup.com/ |
+| 3 | - Module 2.1: Create a Linux VPC <br> - Module 2.2: Create VPC for Windows Instance <br> - Module 2.3: Create Security Group for Linux Instance <br> - Module 2.4: Create Security Group for Windows Instance | 05/05/2026 | 05/05/2026 | https://000004.awsstudygroup.com/ |
+| 4 | - Module 3.1: Launch Microsoft Windows Server 2022 Instance <br> - Module 3.2: Connect from Computer to Windows Instance <br> - Kiểm tra Remote Desktop và key pair đăng nhập Windows | 06/05/2026 | 06/05/2026 | https://000004.awsstudygroup.com/ |
+| 5 | - Module 4.1: Launch Amazon Linux Instance <br> - Module 4.2: Connect to Amazon Linux Instance <br> - Thực hành SSH vào Linux Instance bằng key pair | 07/05/2026 | 07/05/2026 | https://000004.awsstudygroup.com/ |
+| 6 | - Module 5.1: Modify EC2 Instance Type <br> - Module 5.2: Create and Manage EBS Snapshots <br> - Module 5.3: Create Custom AMI <br> - Module 5.4: Launch Instance from Custom AMI <br> - Module 5.5 - 5.7: Recover access và Remote Desktop Ubuntu | 08/05/2026 | 08/05/2026 | https://000004.awsstudygroup.com/ |
+| 7 | - Module 6: Deploy AWS User Management Application on Amazon Linux <br> - Cài LAMP Server, cấu hình database, phpMyAdmin, Node.js và deploy app | 09/05/2026 | 09/05/2026 | https://000004.awsstudygroup.com/ |
+| CN | - Module 7: Deploy Node.js Application on Windows EC2 <br> - Module 8: Cost & Usage Governance with IAM <br> - Module 9: Clean up resources | 10/05/2026 | 10/05/2026 | https://000004.awsstudygroup.com/ |
 ---
 
 ### Kết quả đạt được tuần 3:
@@ -100,7 +100,7 @@ pre: " <b> 1.3. </b> "
 - Tạo Security Group cho Windows:
   - Cho phép RDP từ IP cá nhân.
   - Không mở `0.0.0.0/0` nếu không cần thiết.
--  _Ảnh minh chứng: VPC và Security Group đã tạo thành công._
+
 
 **Module 3 — Launch Microsoft Windows Server 2022 Instance**
 
@@ -111,8 +111,7 @@ pre: " <b> 1.3. </b> "
 - Khởi tạo Windows EC2 Instance.
 - Decrypt password bằng file key pair.
 - Kết nối vào Windows Instance bằng Remote Desktop.
--  _Ảnh minh chứng: Windows EC2 ở trạng thái running._
--  _Ảnh minh chứng: Remote Desktop kết nối thành công._
+
 
 **Module 4 — Launch Amazon Linux Instance**
 
@@ -122,8 +121,7 @@ pre: " <b> 1.3. </b> "
 - Cấu hình Security Group cho phép SSH.
 - Khởi tạo Linux EC2 Instance.
 - Kết nối SSH vào instance bằng terminal.
--  _Ảnh minh chứng: Amazon Linux EC2 running._
--  _Ảnh minh chứng: SSH thành công vào Linux Instance._
+
 
 **Module 5 — Amazon EC2 Basic**
 
@@ -134,9 +132,7 @@ pre: " <b> 1.3. </b> "
 - Tìm hiểu cách khôi phục truy cập Windows Instance.
 - Tìm hiểu cách khôi phục truy cập Linux Instance.
 - Thực hành Remote Desktop vào EC2 Ubuntu.
--  _Ảnh minh chứng: Snapshot đã tạo._
--  _Ảnh minh chứng: Custom AMI đã tạo._
--  _Ảnh minh chứng: Instance launch từ AMI thành công._
+
 
 **Module 6 — Deploy AWS User Management Application on Amazon Linux**
 
@@ -147,9 +143,6 @@ pre: " <b> 1.3. </b> "
 - Cài Node.js trên Amazon Linux.
 - Deploy ứng dụng AWS User Management.
 - Kiểm tra chức năng CRUD cơ bản của ứng dụng.
--  _Ảnh minh chứng: Apache test page._
--  _Ảnh minh chứng: phpMyAdmin hoạt động._
--  _Ảnh minh chứng: ứng dụng AWS User Management chạy thành công._
 
 **Module 7 — Deploy Node.js Application on EC2 Windows**
 
@@ -157,8 +150,6 @@ pre: " <b> 1.3. </b> "
 - Cài Node.js trên Windows Instance.
 - Deploy AWS User Management Application trên Windows Server.
 - Kiểm tra ứng dụng qua trình duyệt.
--  _Ảnh minh chứng: XAMPP chạy trên Windows._
--  _Ảnh minh chứng: Node.js application hoạt động._
 
 **Module 8 — Cost & Usage Governance with IAM**
 
@@ -168,8 +159,6 @@ pre: " <b> 1.3. </b> "
 - Tạo Policy quản lý loại EBS Volume được phép dùng.
 - Tạo Policy giới hạn quyền xóa tài nguyên theo IP công ty.
 - Tạo Policy giới hạn quyền xóa tài nguyên theo thời gian.
--  _Ảnh minh chứng: IAM Policy đã tạo._
--  _Ảnh minh chứng: thao tác bị chặn khi không đúng điều kiện policy._
 
 **Module 9 — Clean up resources**
 
@@ -179,8 +168,6 @@ pre: " <b> 1.3. </b> "
 - Xóa AMI đã tạo trong lab.
 - Xóa Security Group, VPC hoặc tài nguyên phụ nếu không còn cần.
 - Kiểm tra Billing Dashboard sau khi dọn dẹp.
--  _Ảnh minh chứng: không còn instance running._
--  _Ảnh minh chứng: Billing không phát sinh bất thường._
 
 ---
 
@@ -208,3 +195,5 @@ pre: " <b> 1.3. </b> "
 
 ```bash
 chmod 400 first-kp.pem
+
+```
