@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 6"
-date: 2026-06-01
+date: 2026-05-25
 weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
@@ -25,13 +25,13 @@ pre: " <b> 1.6. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Đọc tổng quan workshop Cost Management with AWS Budgets <br> - Tìm hiểu vai trò của AWS Budgets trong quản lý chi phí AWS <br> - Truy cập AWS Billing and Cost Management <br> - Làm quen với giao diện Budgets trong AWS Console | 01/06/2026 | 01/06/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
-| 3 | - Tạo Budget bằng template có sẵn <br> - Chọn template Monthly cost budget <br> - Nhập tên Budget, số tiền ngân sách hàng tháng và ngưỡng cảnh báo <br> - Kiểm tra Budget đã tạo thành công và xem Budget history | 02/06/2026 | 02/06/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
-| 4 | - Tạo Cost Budget bằng chế độ Customize <br> - Chọn loại ngân sách Cost budget <br> - Cấu hình Period, Budget effective dates, Budgeting method và Budgeted amount <br> - Cấu hình Budget scope áp dụng cho All AWS services và Unblended costs | 03/06/2026 | 03/06/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
-| 5 | - Cấu hình alert threshold cho Cost Budget <br> - Thêm email nhận cảnh báo khi chi phí vượt ngưỡng <br> - Review lại toàn bộ cấu hình Cost Budget <br> - Tạo Budget và xác nhận trạng thái hoạt động | 04/06/2026 | 04/06/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
-| 6 | - Tạo Usage Budget để theo dõi mức sử dụng tài nguyên <br> - Chọn Usage budget trong Budget types <br> - Cấu hình Usage type groups, ví dụ EC2: ELB - Running Hours <br> - Thiết lập giới hạn usage hours và alert threshold | 05/06/2026 | 05/06/2026 | https://000007.awsstudygroup.com/3-usage-budget/ |
-| 7 | - Tìm hiểu Reservation Budget cho Reserved Instances <br> - Tìm hiểu Savings Plans Budget cho Savings Plans <br> - Thực hành hoặc xem hướng dẫn tạo RI Budget và Savings Plans Budget <br> - Cấu hình coverage threshold, utilization threshold và email alert | 06/06/2026 | 06/06/2026 | https://000007.awsstudygroup.com/4-reservation-budget/ <br> https://000007.awsstudygroup.com/5-saving-plans-budget/ |
-| CN | - Kiểm tra danh sách Budget đã tạo <br> - Xem Budget health và Budget history <br> - Xóa các Budget đã tạo trong quá trình thực hành <br> - Ghi nhận kết quả, khó khăn, hướng khắc phục và bài học rút ra | 07/06/2026 | 07/06/2026 | https://000007.awsstudygroup.com/6-clean-up/ |
+| 2 | - Đọc tổng quan workshop Cost Management with AWS Budgets <br> - Tìm hiểu vai trò của AWS Budgets trong quản lý chi phí AWS <br> - Truy cập AWS Billing and Cost Management <br> - Làm quen với giao diện Budgets trong AWS Console | 25/05/2026 | 25/05/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
+| 3 | - Tạo Budget bằng template có sẵn <br> - Chọn template Monthly cost budget <br> - Nhập tên Budget, số tiền ngân sách hàng tháng và ngưỡng cảnh báo <br> - Kiểm tra Budget đã tạo thành công và xem Budget history | 26/05/2026 | 26/05/2026 | https://000007.awsstudygroup.com/1-create-budget/ |
+| 4 | - Tạo Cost Budget bằng chế độ Customize <br> - Chọn loại ngân sách Cost budget <br> - Cấu hình Period, Budget effective dates, Budgeting method và Budgeted amount <br> - Cấu hình Budget scope áp dụng cho All AWS services và Unblended costs | 27/05/2026 | 27/05/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
+| 5 | - Cấu hình alert threshold cho Cost Budget <br> - Thêm email nhận cảnh báo khi chi phí vượt ngưỡng <br> - Review lại toàn bộ cấu hình Cost Budget <br> - Tạo Budget và xác nhận trạng thái hoạt động | 28/05/2026 | 28/05/2026 | https://000007.awsstudygroup.com/2-cost-budgets/ |
+| 6 | - Tạo Usage Budget để theo dõi mức sử dụng tài nguyên <br> - Chọn Usage budget trong Budget types <br> - Cấu hình Usage type groups, ví dụ EC2: ELB - Running Hours <br> - Thiết lập giới hạn usage hours và alert threshold | 29/05/2026 | 29/05/2026 | https://000007.awsstudygroup.com/3-usage-budget/ |
+| 7 | - Tìm hiểu Reservation Budget cho Reserved Instances <br> - Tìm hiểu Savings Plans Budget cho Savings Plans <br> - Thực hành hoặc xem hướng dẫn tạo RI Budget và Savings Plans Budget <br> - Cấu hình coverage threshold, utilization threshold và email alert | 30/05/2026 | 30/05/2026 | https://000007.awsstudygroup.com/4-reservation-budget/ <br> https://000007.awsstudygroup.com/5-saving-plans-budget/ |
+| CN | - Kiểm tra danh sách Budget đã tạo <br> - Xem Budget health và Budget history <br> - Xóa các Budget đã tạo trong quá trình thực hành <br> - Ghi nhận kết quả, khó khăn, hướng khắc phục và bài học rút ra | 31/05/2026 | 31/05/2026 | https://000007.awsstudygroup.com/6-clean-up/ |
 
 ---
 
